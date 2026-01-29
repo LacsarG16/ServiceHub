@@ -1,78 +1,145 @@
 import React from 'react';
-import { Search, MapPin, ArrowRight, Shield, Star, Clock } from 'lucide-react';
-import { motion } from 'framer-motion';
+import GlassSearch from './GlassSearch';
+import { Sparkles, ArrowRight, Zap, Home, Camera } from 'lucide-react';
+import { motion } from 'framer-motion'; // eslint-disable-line no-unused-vars
+
+const ServiceCard = ({ icon: Icon, title, desc, delay }) => (
+    <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay, duration: 0.6 }}
+        className="glass-card"
+        style={{
+            padding: '2rem',
+            display: 'flex',
+            flexDirection: 'column',
+            flex: 1,
+            minWidth: '250px',
+            cursor: 'pointer'
+        }}
+    >
+        <div style={{
+            width: '60px',
+            height: '60px',
+            borderRadius: '16px',
+            background: 'rgba(6, 182, 212, 0.1)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            marginBottom: '1.5rem',
+            color: 'var(--primary)'
+        }}>
+            <Icon size={30} />
+        </div>
+        <h3 style={{ fontSize: '1.4rem', marginBottom: '0.75rem' }}>{title}</h3>
+        <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', lineHeight: '1.6', marginBottom: '1.5rem' }}>{desc}</p>
+        <div style={{ marginTop: 'auto', display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--secondary)', fontWeight: '700', fontSize: '0.9rem', letterSpacing: '0.5px' }}>
+            View Providers <ArrowRight size={16} />
+        </div>
+    </motion.div>
+);
 
 const Hero = () => {
     return (
         <section style={{
             padding: '160px 0 100px',
-            background: 'linear-gradient(135deg, #f8fafc 0%, #e0f2fe 100%)',
             position: 'relative',
-            overflow: 'hidden'
+            overflow: 'visible' // Allow floaters to not be clipped
         }}>
-            {/* Decorative blobs */}
-            <div style={{ position: 'absolute', top: '-100px', right: '-100px', width: '400px', height: '400px', borderRadius: '50%', background: 'var(--primary)', opacity: 0.05, filter: 'blur(80px)' }} />
-            <div style={{ position: 'absolute', bottom: '-100px', left: '-100px', width: '300px', height: '300px', borderRadius: '50%', background: 'var(--secondary)', opacity: 0.1, filter: 'blur(80px)' }} />
+            <div className="container" style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
 
-            <div className="container">
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '4rem', alignItems: 'center' }} className="hero-grid">
-                    <motion.div
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.6 }}
-                    >
-                        <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', backgroundColor: 'rgba(59, 130, 246, 0.1)', color: 'var(--primary)', padding: '0.5rem 1rem', borderRadius: 'var(--radius-full)', fontSize: '0.85rem', fontWeight: '700', marginBottom: '1.5rem' }}>
-                            <Shield size={16} /> Verified Professionals Only
-                        </div>
-                        <h1 style={{ fontSize: 'clamp(2.5rem, 5vw, 3.75rem)', marginBottom: '1.5rem', color: 'var(--text-main)', letterSpacing: '-1.5px' }}>
-                            Find the perfect <span style={{ color: 'var(--primary)' }}>service</span> for your home & business.
-                        </h1>
-                        <p style={{ fontSize: '1.25rem', color: 'var(--text-muted)', marginBottom: '2.5rem', maxWidth: '600px' }}>
-                            Connect with top-rated local professionals. From cleaning and tutors to personal trainers and handymen. Book in seconds.
-                        </p>
+                <motion.div
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.5 }}
+                    style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '0.5rem',
+                        padding: '0.5rem 1.25rem',
+                        borderRadius: '999px',
+                        background: 'rgba(255,255,255,0.6)',
+                        border: '1px solid var(--glass-border)',
+                        backdropFilter: 'blur(10px)',
+                        fontSize: '0.85rem',
+                        fontWeight: '600',
+                        marginBottom: '2rem',
+                        boxShadow: 'var(--shadow-sm)'
+                    }}
+                >
+                    <Sparkles size={16} color="var(--secondary)" />
+                    <span className="text-gradient">The Future of Service Booking</span>
+                </motion.div>
 
-                        <div className="glass" style={{ padding: '0.75rem', borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-lg)', display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
-                            <div style={{ flex: 2, minWidth: '200px', position: 'relative' }}>
-                                <Search size={20} style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
-                                <input
-                                    type="text"
-                                    placeholder="What service do you need?"
-                                    style={{ width: '100%', padding: '0.85rem 1rem 0.85rem 3rem', border: '1px solid #e2e8f0', borderRadius: 'var(--radius-md)', fontSize: '1rem' }}
-                                />
-                            </div>
-                            <div style={{ flex: 1, minWidth: '150px', position: 'relative' }}>
-                                <MapPin size={20} style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
-                                <input
-                                    type="text"
-                                    placeholder="Location"
-                                    style={{ width: '100%', padding: '0.85rem 1rem 0.85rem 3rem', border: '1px solid #e2e8f0', borderRadius: 'var(--radius-md)', fontSize: '1rem' }}
-                                />
-                            </div>
-                            <button className="btn-primary" style={{ padding: '0.85rem 2rem' }}>
-                                Search Services
-                            </button>
-                        </div>
+                <motion.h1
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.1 }}
+                    style={{
+                        fontSize: 'clamp(2.5rem, 6vw, 5rem)',
+                        fontWeight: '800',
+                        marginBottom: '1.5rem',
+                        lineHeight: '1.1',
+                        letterSpacing: '-2px',
+                        maxWidth: '900px'
+                    }}
+                >
+                    Experience the <br />
+                    <span className="text-gradient-primary">Extraordinary.</span>
+                </motion.h1>
 
-                        <div style={{ display: 'flex', gap: '2rem', marginTop: '2.5rem' }}>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                                <div style={{ color: 'var(--accent)', display: 'flex' }}><Star size={18} fill="currentColor" /></div>
-                                <span style={{ fontWeight: '600' }}>4.9/5</span>
-                                <span style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>User Rating</span>
-                            </div>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                                <div style={{ color: 'var(--secondary)', display: 'flex' }}><Clock size={18} /></div>
-                                <span style={{ fontWeight: '600' }}>24h</span>
-                                <span style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>Fast Response</span>
-                            </div>
-                        </div>
-                    </motion.div>
+                <motion.p
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.2 }}
+                    style={{
+                        fontSize: '1.25rem',
+                        color: 'var(--text-muted)',
+                        marginBottom: '3.5rem',
+                        maxWidth: '650px',
+                        lineHeight: '1.7'
+                    }}
+                >
+                    Connect with elite professionals in an immersive environment designed for clarity, trust, and speed.
+                </motion.p>
+
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.3 }}
+                    style={{ width: '100%', marginBottom: '6rem' }}
+                >
+                    <GlassSearch />
+                </motion.div>
+
+                <div style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+                    gap: '2rem',
+                    width: '100%',
+                    padding: '0 0.5rem'
+                }}>
+                    <ServiceCard
+                        icon={Home}
+                        title="Smart Home"
+                        desc="Automate your living space with verified IoT experts."
+                        delay={0.4}
+                    />
+                    <ServiceCard
+                        icon={Camera}
+                        title="Creative Studio"
+                        desc="Photographers and videographers for your next big project."
+                        delay={0.5}
+                    />
+                    <ServiceCard
+                        icon={Zap}
+                        title="Rapid Repair"
+                        desc="Emergency electrical and plumbing services under 1hr."
+                        delay={0.6}
+                    />
                 </div>
+
             </div>
-            <style>{`
-        @media (min-width: 992px) {
-          .hero-grid { grid-template-columns: 1.2fr 0.8fr; }
-        }
-      `}</style>
         </section>
     );
 };

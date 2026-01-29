@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Search, Menu, X, User, Briefcase } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { Menu, X, User, Briefcase, Sun, Moon } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion'; // eslint-disable-line no-unused-vars
+import { useTheme } from '../context/ThemeContext';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const { theme, toggleTheme } = useTheme();
   const location = useLocation();
 
   useEffect(() => {
@@ -31,10 +33,11 @@ const Navbar = () => {
       className={`fixed w-full z-[100] transition-all duration-500`}
       style={{
         padding: scrolled ? '0.75rem 0' : '1.5rem 0',
-        backgroundColor: scrolled ? 'rgba(255, 255, 255, 0.8)' : 'transparent',
-        backdropFilter: scrolled ? 'blur(16px)' : 'none',
-        borderBottom: scrolled ? '1px solid rgba(255, 255, 255, 0.3)' : '1px solid transparent',
-        boxShadow: scrolled ? '0 10px 30px -10px rgba(0,0,0,0.1)' : 'none'
+        background: scrolled ? 'var(--navbar-bg-scrolled)' : 'transparent',
+        backdropFilter: scrolled ? 'blur(20px) saturate(180%)' : 'none',
+        WebkitBackdropFilter: scrolled ? 'blur(20px) saturate(180%)' : 'none',
+        borderBottom: scrolled ? '1px solid var(--navbar-border-scrolled)' : '1px solid transparent',
+        boxShadow: scrolled ? '0 4px 30px rgba(0, 0, 0, 0.05)' : 'none'
       }}
     >
       <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -110,6 +113,24 @@ const Navbar = () => {
             >
               <User size={18} /> <span>Provider Portal</span>
             </Link>
+
+            <button
+              onClick={toggleTheme}
+              style={{
+                background: 'rgba(125, 125, 125, 0.1)',
+                border: '1px solid var(--glass-border)',
+                borderRadius: '50%',
+                width: '40px',
+                height: '40px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: 'var(--text-main)',
+                backdropFilter: 'blur(10px)'
+              }}
+            >
+              {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
+            </button>
           </div>
         </div>
 
@@ -195,6 +216,26 @@ const Navbar = () => {
                 <User size={20} /> Provider Portal
               </Link>
             </motion.div>
+
+            <div style={{ display: 'flex', justifyContent: 'center', marginTop: '1rem' }}>
+              <button
+                onClick={toggleTheme}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.5rem',
+                  padding: '0.75rem 1.5rem',
+                  borderRadius: '99px',
+                  background: 'var(--glass-bg)',
+                  border: '1px solid var(--glass-border)',
+                  color: 'var(--text-main)',
+                  fontWeight: '600'
+                }}
+              >
+                {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
+                <span>{theme === 'dark' ? 'Light Mode' : 'Dark Mode'}</span>
+              </button>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

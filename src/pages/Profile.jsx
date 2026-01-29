@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
-import { Star, MapPin, Clock, Shield, Check, Calendar, MessageSquare, ArrowLeft, Share2, Heart, Award, ChevronLeft, ChevronRight, Send } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
+import { Star, MapPin, Clock, Shield, Check, MessageSquare, Share2, Heart, ChevronLeft, ChevronRight, Send } from 'lucide-react';
+import { motion } from 'framer-motion'; // eslint-disable-line no-unused-vars
 
 const providersData = [
     {
@@ -42,7 +42,6 @@ const providersData = [
 ];
 
 const Profile = () => {
-    const { id } = useParams();
     const [selectedDate, setSelectedDate] = useState(10);
     const [selectedTime, setSelectedTime] = useState("01:00 PM");
     const [showConfirmation, setShowConfirmation] = useState(false);
@@ -70,10 +69,10 @@ const Profile = () => {
                 </div>
 
                 <div className="profile-layout" style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 2fr) 350px', gap: '24px' }}>
-                    
+
                     {/* Main Content Area */}
                     <div className="main-content" style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-                        
+
                         {/* Header Section */}
                         <div className="card" style={{ backgroundColor: 'white', borderRadius: '16px', padding: '24px', position: 'relative', border: '1px solid #e2e8f0' }}>
                             <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
@@ -207,7 +206,7 @@ const Profile = () => {
                                         <ChevronRight size={18} style={{ color: '#94a3b8' }} />
                                     </div>
                                 </div>
-                                
+
                                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: '4px', textAlign: 'center', marginBottom: '8px' }}>
                                     {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
                                         <span key={day} style={{ fontSize: '0.7rem', color: '#94a3b8', textTransform: 'uppercase' }}>{day}</span>
@@ -225,9 +224,22 @@ const Profile = () => {
                                     <span style={{ padding: '8px', fontSize: '0.85rem', color: '#475569' }}>7</span>
                                     <span style={{ padding: '8px', fontSize: '0.85rem', color: '#475569' }}>8</span>
                                     <span style={{ padding: '8px', fontSize: '0.85rem', color: '#475569' }}>9</span>
-                                    <button 
+                                    <button
                                         onClick={() => setSelectedDate(10)}
-                                        style={{ width: '32px', height: '32px', margin: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: '#3b82f6', color: 'white', borderRadius: '50%', fontWeight: '600', border: 'none' }}
+                                        style={{
+                                            width: '32px',
+                                            height: '32px',
+                                            margin: 'auto',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            backgroundColor: selectedDate === 10 ? '#3b82f6' : 'transparent',
+                                            color: selectedDate === 10 ? 'white' : '#475569',
+                                            borderRadius: '50%',
+                                            fontWeight: '600',
+                                            border: 'none',
+                                            boxShadow: selectedDate === 10 ? '0 4px 6px -1px rgba(59, 130, 246, 0.5)' : 'none'
+                                        }}
                                     >
                                         10
                                     </button>

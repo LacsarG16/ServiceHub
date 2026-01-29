@@ -10,13 +10,15 @@ import Dashboard from './pages/Dashboard';
 import ForProviders from './pages/ForProviders';
 import Contact from './pages/Contact';
 import About from './pages/About';
+import AuroraBackground from './components/AuroraBackground';
 
 function App() {
   const location = useLocation();
   const isDashboard = location.pathname === '/dashboard';
 
   return (
-    <div className="app">
+    <div className="app cinematic-wrapper">
+      <AuroraBackground />
       <Navbar />
       <main style={{ minHeight: '80vh' }}>
         <Routes>

@@ -4,7 +4,13 @@ import { Mail, Phone, MapPin, Facebook, Twitter, Instagram, Linkedin, Briefcase 
 
 const Footer = () => {
     return (
-        <footer style={{ backgroundColor: '#1e293b', color: 'white', paddingTop: '4rem', paddingBottom: '2rem' }}>
+        <footer style={{
+            background: 'linear-gradient(to top, rgba(255,255,255,0.5), transparent)',
+            color: 'var(--text-main)',
+            paddingTop: '4rem',
+            paddingBottom: '2rem',
+            borderTop: '1px solid var(--glass-border)'
+        }}>
             <div className="container">
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '3rem', marginBottom: '3rem' }}>
                     {/* Brand Col */}
@@ -17,7 +23,7 @@ const Footer = () => {
                                 Service<span style={{ color: 'var(--primary)' }}>Hub</span>
                             </span>
                         </Link>
-                        <p style={{ color: '#94a3b8', fontSize: '0.95rem', marginBottom: '1.5rem', maxWidth: '300px' }}>
+                        <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', marginBottom: '1.5rem', maxWidth: '300px' }}>
                             The #1 marketplace for discovering and booking premium local services. Quality, reliability, and convenience in one place.
                         </p>
                         <div style={{ display: 'flex', gap: '1rem' }}>
@@ -34,7 +40,7 @@ const Footer = () => {
                         <h4 style={{ marginBottom: '1.5rem', fontSize: '1.1rem' }}>Services</h4>
                         <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                             {['Home Cleaning', 'Personal Training', 'Tutoring', 'Handyman', 'Pet Services'].map((link) => (
-                                <li key={link}><Link to="/directory" style={{ color: '#94a3b8', fontSize: '0.9rem' }}>{link}</Link></li>
+                                <li key={link}><Link to="/directory" style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>{link}</Link></li>
                             ))}
                         </ul>
                     </div>
@@ -44,7 +50,7 @@ const Footer = () => {
                         <h4 style={{ marginBottom: '1.5rem', fontSize: '1.1rem' }}>Company</h4>
                         <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                             {['About Us', 'Careers', 'Contact', 'Privacy Policy', 'Terms of Service'].map((link) => (
-                                <li key={link}><Link to={`/${link.toLowerCase().replace(' ', '-')}`} style={{ color: '#94a3b8', fontSize: '0.9rem' }}>{link}</Link></li>
+                                <li key={link}><Link to={`/${link.toLowerCase().replace(' ', '-')}`} style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>{link}</Link></li>
                             ))}
                         </ul>
                     </div>
@@ -67,7 +73,7 @@ const Footer = () => {
                 </div>
 
                 <div style={{ borderTop: '1px solid #334155', paddingTop: '2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
-                    <p style={{ color: '#64748b', fontSize: '0.85rem' }}>
+                    <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>
                         © {new Date().getFullYear()} ServiceHub Inc. All rights reserved.
                     </p>
                     <div style={{ display: 'flex', gap: '2rem' }}>
