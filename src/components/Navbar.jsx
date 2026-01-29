@@ -39,31 +39,29 @@ const Navbar = () => {
     >
       <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         {/* Brand */}
-        {!isDashboard && (
-          <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', zIndex: 110 }}>
-            <div style={{
-              backgroundColor: 'var(--primary)',
-              color: 'white',
-              padding: '0.5rem',
-              borderRadius: '12px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              boxShadow: '0 4px 12px rgba(59, 130, 246, 0.3)'
-            }}>
-              <Briefcase size={22} strokeWidth={2.5} />
-            </div>
-            <span style={{
-              fontSize: '1.5rem',
-              fontWeight: '800',
-              color: 'var(--text-main)',
-              letterSpacing: '-1px',
-              fontFamily: "'Montserrat', sans-serif"
-            }}>
-              Service<span style={{ color: 'var(--primary)' }}>Hub</span>
-            </span>
-          </Link>
-        )}
+        <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', zIndex: 110 }}>
+          <div style={{
+            backgroundColor: 'var(--primary)',
+            color: 'white',
+            padding: '0.5rem',
+            borderRadius: '12px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            boxShadow: '0 4px 12px rgba(59, 130, 246, 0.3)'
+          }}>
+            <Briefcase size={22} strokeWidth={2.5} />
+          </div>
+          <span style={{
+            fontSize: '1.5rem',
+            fontWeight: '800',
+            color: 'var(--text-main)',
+            letterSpacing: '-1px',
+            fontFamily: "'Montserrat', sans-serif"
+          }}>
+            Service<span style={{ color: 'var(--primary)' }}>Hub</span>
+          </span>
+        </Link>
 
         {/* Desktop Nav */}
         <div style={{ display: 'none' }} className="desktop-links">

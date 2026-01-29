@@ -104,13 +104,13 @@ const Dashboard = () => {
     ];
 
     return (
-        <div style={{ display: 'flex', minHeight: '100vh', backgroundColor: '#f8fafc' }}>
+        <div style={{ display: 'flex', minHeight: '100vh', backgroundColor: '#fcfdfe' }}>
             {/* Sidebar */}
             <aside style={{
                 width: '280px',
-                backgroundColor: 'white',
-                borderRight: '1px solid #e2e8f0',
-                padding: '100px 1.5rem 2.5rem', // Increased top padding for top navbar
+                backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                borderRight: '1px solid #eef2f6',
+                padding: '100px 1.5rem 2.5rem',
                 position: 'fixed',
                 height: '100vh',
                 left: 0,
@@ -118,18 +118,10 @@ const Dashboard = () => {
                 zIndex: 10,
                 display: 'flex',
                 flexDirection: 'column',
-                gap: '2.5rem'
+                gap: '2.5rem',
+                boxShadow: 'var(--shadow-premium)'
             }}>
-                {/* Sidebar Logo */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '0 0.5rem' }}>
-                    <div style={{ backgroundColor: 'var(--primary)', color: 'white', padding: '0.6rem', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                        <Briefcase size={22} />
-                    </div>
-                    <span style={{ fontSize: '1.5rem', fontWeight: '800', color: 'var(--text-main)', letterSpacing: '-0.5px' }}>
-                        Service<span style={{ color: 'var(--primary)' }}>Hub</span>
-                    </span>
-                </div>
-
+                {/* Navigation Items */}
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                     {sidebarItems.map((item) => (
                         <button
@@ -138,19 +130,49 @@ const Dashboard = () => {
                             style={{
                                 display: 'flex',
                                 alignItems: 'center',
-                                gap: '0.75rem',
-                                padding: '1rem',
-                                borderRadius: 'var(--radius-md)',
-                                background: activeTab === item.id ? 'var(--primary)' : 'transparent',
-                                color: activeTab === item.id ? 'white' : 'var(--text-muted)',
-                                fontWeight: '600',
-                                transition: 'all 0.2s',
+                                gap: '1rem',
+                                padding: '1rem 1.25rem',
+                                borderRadius: '16px',
+                                background: activeTab === item.id ? 'rgba(59, 130, 246, 0.08)' : 'transparent',
+                                color: activeTab === item.id ? 'var(--primary)' : 'var(--text-muted)',
+                                fontWeight: '700',
+                                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                                 border: 'none',
                                 textAlign: 'left',
-                                cursor: 'pointer'
+                                cursor: 'pointer',
+                                position: 'relative',
+                                overflow: 'hidden'
                             }}
+                            className="hover-lift"
                         >
-                            {item.icon} {item.label}
+                            {/* Active Indicator */}
+                            {activeTab === item.id && (
+                                <motion.div
+                                    layoutId="activeTab"
+                                    style={{
+                                        position: 'absolute',
+                                        left: 0,
+                                        top: '20%',
+                                        height: '60%',
+                                        width: '4px',
+                                        backgroundColor: 'var(--primary)',
+                                        borderTopRightRadius: '4px',
+                                        borderBottomRightRadius: '4px'
+                                    }}
+                                />
+                            )}
+                            <span style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                padding: '0.4rem',
+                                borderRadius: '10px',
+                                background: activeTab === item.id ? 'white' : 'transparent',
+                                boxShadow: activeTab === item.id ? '0 4px 6px -1px rgba(0,0,0,0.05)' : 'none'
+                            }}>
+                                {React.cloneElement(item.icon, { size: 18, strokeWidth: activeTab === item.id ? 2.5 : 2 })}
+                            </span>
+                            <span style={{ fontSize: '0.95rem' }}>{item.label}</span>
                         </button>
                     ))}
                 </div>
@@ -159,22 +181,43 @@ const Dashboard = () => {
             {/* Main Content */}
             <main style={{
                 flex: 1,
-                padding: '100px 2.5rem 2.5rem', // Increased top padding for top navbar
+                padding: '100px 3rem 3rem',
                 marginLeft: '280px',
-                minWidth: 0 // Prevent content from overflowing flex container
+                minWidth: 0
             }}>
-                <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2.5rem' }}>
+                <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '3rem' }}>
                     <div>
-                        <h1 style={{ fontSize: '1.75rem', marginBottom: '0.25rem' }}>Good morning, John!</h1>
-                        <p style={{ color: 'var(--text-muted)' }}>Here's what's happening with your business today.</p>
+                        <h1 style={{ fontSize: '2.25rem', fontWeight: '850', color: 'var(--text-main)', letterSpacing: '-1px', marginBottom: '0.5rem' }}>Good morning, John!</h1>
+                        <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem', fontWeight: '500' }}>Here's what's happening with your business today.</p>
                     </div>
                     <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
+                        {/* Notification Bell */}
                         <div
                             onClick={() => setIsDrawerOpen(true)}
-                            style={{ position: 'relative', cursor: 'pointer', padding: '0.5rem', borderRadius: '50%', background: 'white', border: '1px solid #e2e8f0' }}
+                            style={{
+                                position: 'relative',
+                                cursor: 'pointer',
+                                padding: '0.75rem',
+                                borderRadius: '16px',
+                                background: 'white',
+                                border: '1px solid #eff3f7',
+                                boxShadow: 'var(--shadow-sm)'
+                            }}
+                            className="hover-lift"
                         >
-                            <Bell size={20} color="var(--text-muted)" />
-                            <span style={{ position: 'absolute', top: '8px', right: '8px', width: '8px', height: '8px', backgroundColor: 'var(--accent)', borderRadius: '50%', border: '2px solid white' }}></span>
+                            <Bell size={22} color="var(--text-main)" />
+                            {/* Pulsing indicator */}
+                            <span style={{
+                                position: 'absolute',
+                                top: '10px',
+                                right: '10px',
+                                width: '10px',
+                                height: '10px',
+                                backgroundColor: 'var(--accent)',
+                                borderRadius: '50%',
+                                border: '2px solid white',
+                                boxShadow: '0 0 0 2px rgba(245, 158, 11, 0.2)'
+                            }}></span>
                         </div>
                     </div>
                 </header>

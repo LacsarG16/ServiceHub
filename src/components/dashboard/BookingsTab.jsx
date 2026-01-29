@@ -291,28 +291,53 @@ const BookingsTab = ({ onBookingClick, onAddBooking }) => {
 
             {view === 'list' ? (
                 <>
-                    <div className="glass" style={{ padding: '1.5rem', borderRadius: 'var(--radius-lg)', background: 'white', marginBottom: '2.5rem' }}>
-                        <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
-                            <div style={{ flex: 1, position: 'relative', minWidth: '200px' }}>
-                                <Search size={18} style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
-                                <input type="text" placeholder="Search bookings..." style={{ width: '100%', padding: '0.75rem 1rem 0.75rem 2.75rem', borderRadius: 'var(--radius-md)', border: '1px solid #e2e8f0', outline: 'none' }} />
+                    <div style={{
+                        padding: '1.5rem 2rem',
+                        borderRadius: 'var(--radius-xl)',
+                        background: 'white',
+                        marginBottom: '2.5rem',
+                        border: '1px solid rgba(226, 232, 240, 0.6)',
+                        boxShadow: '0 4px 20px rgba(0,0,0,0.02)'
+                    }}>
+                        <div style={{ display: 'flex', gap: '1.5rem', flexWrap: 'wrap' }}>
+                            <div style={{ flex: 1, position: 'relative', minWidth: '300px' }}>
+                                <Search size={20} style={{ position: 'absolute', left: '1.25rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
+                                <input
+                                    type="text"
+                                    placeholder="Search by customer name or service..."
+                                    style={{
+                                        width: '100%',
+                                        padding: '0.85rem 1rem 0.85rem 3.25rem',
+                                        borderRadius: '14px',
+                                        border: '1px solid #eef2f6',
+                                        background: '#fcfdfe',
+                                        outline: 'none',
+                                        fontSize: '0.95rem'
+                                    }}
+                                />
                             </div>
-                            <button style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1.25rem', borderRadius: 'var(--radius-md)', background: '#f8fafc', border: '1px solid #e2e8f0', color: 'var(--text-main)', fontWeight: '600' }}>
+                            <button className="hover-lift" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '0.85rem 1.5rem', borderRadius: '14px', background: 'white', border: '1px solid #eef2f6', color: 'var(--text-main)', fontWeight: '700', fontSize: '0.9rem' }}>
                                 <Filter size={18} /> Filters
                             </button>
                         </div>
                     </div>
 
-                    <div className="glass" style={{ padding: '0', borderRadius: 'var(--radius-lg)', background: 'white', overflow: 'hidden' }}>
-                        <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-                            <thead style={{ background: '#f8fafc' }}>
+                    <div style={{
+                        borderRadius: 'var(--radius-xl)',
+                        background: 'white',
+                        overflow: 'hidden',
+                        border: '1px solid rgba(226, 232, 240, 0.6)',
+                        boxShadow: '0 10px 30px -5px rgba(0,0,0,0.03)'
+                    }}>
+                        <table style={{ width: '100%', borderCollapse: 'separate', borderSpacing: '0' }}>
+                            <thead style={{ background: '#fcfdfe' }}>
                                 <tr style={{ textAlign: 'left' }}>
-                                    <th style={{ padding: '1.25rem 1.5rem', color: 'var(--text-muted)', fontWeight: '600', fontSize: '0.9rem' }}>Customer</th>
-                                    <th style={{ padding: '1.25rem 1.5rem', color: 'var(--text-muted)', fontWeight: '600', fontSize: '0.9rem' }}>Service</th>
-                                    <th style={{ padding: '1.25rem 1.5rem', color: 'var(--text-muted)', fontWeight: '600', fontSize: '0.9rem' }}>Date & Time</th>
-                                    <th style={{ padding: '1.25rem 1.5rem', color: 'var(--text-muted)', fontWeight: '600', fontSize: '0.9rem' }}>Amount</th>
-                                    <th style={{ padding: '1.25rem 1.5rem', color: 'var(--text-muted)', fontWeight: '600', fontSize: '0.9rem' }}>Status</th>
-                                    <th style={{ padding: '1.25rem 1.5rem', color: 'var(--text-muted)', fontWeight: '600', fontSize: '0.9rem' }}></th>
+                                    <th style={{ padding: '1.25rem 2rem', color: 'var(--text-muted)', fontWeight: '700', fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Customer</th>
+                                    <th style={{ padding: '1.25rem 2rem', color: 'var(--text-muted)', fontWeight: '700', fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Service</th>
+                                    <th style={{ padding: '1.25rem 2rem', color: 'var(--text-muted)', fontWeight: '700', fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Date & Time</th>
+                                    <th style={{ padding: '1.25rem 2rem', color: 'var(--text-muted)', fontWeight: '700', fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Amount</th>
+                                    <th style={{ padding: '1.25rem 2rem', color: 'var(--text-muted)', fontWeight: '700', fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Status</th>
+                                    <th style={{ padding: '1.25rem 2rem' }}></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -320,40 +345,56 @@ const BookingsTab = ({ onBookingClick, onAddBooking }) => {
                                     <tr
                                         key={booking.id}
                                         onClick={() => onBookingClick(booking)}
-                                        style={{ borderBottom: '1px solid #f1f5f9', cursor: 'pointer' }}
-                                        onMouseEnter={(e) => e.currentTarget.style.background = '#f8fafc'}
+                                        style={{ borderBottom: '1px solid #f8fafc', cursor: 'pointer', transition: 'all 0.2s' }}
+                                        onMouseEnter={(e) => e.currentTarget.style.background = '#fcfdfe'}
                                         onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
                                     >
-                                        <td style={{ padding: '1.25rem 1.5rem' }}>
-                                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                                                <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'var(--primary)', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.8rem', fontWeight: '700' }}>
+                                        <td style={{ padding: '1.25rem 2rem' }}>
+                                            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                                                <div style={{
+                                                    width: '40px',
+                                                    height: '40px',
+                                                    borderRadius: '12px',
+                                                    background: 'linear-gradient(135deg, var(--primary) 0%, #1e40af 100%)',
+                                                    color: 'white',
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    justifyContent: 'center',
+                                                    fontSize: '0.9rem',
+                                                    fontWeight: '800',
+                                                    boxShadow: '0 4px 10px rgba(59, 130, 246, 0.3)'
+                                                }}>
                                                     {booking.customer.charAt(0)}
                                                 </div>
-                                                <span style={{ fontWeight: '600' }}>{booking.customer}</span>
+                                                <span style={{ fontWeight: '700', color: 'var(--text-main)' }}>{booking.customer}</span>
                                             </div>
                                         </td>
-                                        <td style={{ padding: '1.25rem 1.5rem' }}>{booking.service}</td>
-                                        <td style={{ padding: '1.25rem 1.5rem' }}>
+                                        <td style={{ padding: '1.25rem 2rem', color: 'var(--text-muted)', fontWeight: '500' }}>{booking.service}</td>
+                                        <td style={{ padding: '1.25rem 2rem' }}>
                                             <div style={{ display: 'flex', flexDirection: 'column' }}>
-                                                <span style={{ fontSize: '0.9rem', fontWeight: '500' }}>{format(booking.date, 'MMM dd, yyyy')}</span>
-                                                <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>{booking.time}</span>
+                                                <span style={{ fontSize: '0.95rem', fontWeight: '700', color: 'var(--text-main)' }}>{format(booking.date, 'MMM dd, yyyy')}</span>
+                                                <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', fontWeight: '500' }}>{booking.time}</span>
                                             </div>
                                         </td>
-                                        <td style={{ padding: '1.25rem 1.5rem', fontWeight: '700' }}>{booking.amount}</td>
-                                        <td style={{ padding: '1.25rem 1.5rem' }}>
+                                        <td style={{ padding: '1.25rem 2rem', fontWeight: '800', color: 'var(--text-main)', fontSize: '1rem' }}>{booking.amount}</td>
+                                        <td style={{ padding: '1.25rem 2rem' }}>
                                             <span style={{
-                                                padding: '0.25rem 0.75rem',
+                                                padding: '0.45rem 1rem',
                                                 borderRadius: 'var(--radius-full)',
                                                 fontSize: '0.75rem',
-                                                fontWeight: '700',
-                                                backgroundColor: booking.status === 'Upcoming' ? 'rgba(59, 130, 246, 0.1)' : booking.status === 'Completed' ? 'rgba(16, 185, 129, 0.1)' : 'rgba(239, 68, 68, 0.1)',
-                                                color: booking.status === 'Upcoming' ? 'var(--primary)' : booking.status === 'Completed' ? '#10b981' : '#ef4444'
+                                                fontWeight: '800',
+                                                backgroundColor: booking.status === 'Upcoming' ? 'rgba(59, 130, 246, 0.08)' : booking.status === 'Completed' ? 'rgba(16, 185, 129, 0.08)' : 'rgba(239, 68, 68, 0.08)',
+                                                color: booking.status === 'Upcoming' ? 'var(--primary)' : booking.status === 'Completed' ? '#10b981' : '#ef4444',
+                                                textTransform: 'uppercase',
+                                                letterSpacing: '0.5px'
                                             }}>
                                                 {booking.status}
                                             </span>
                                         </td>
-                                        <td style={{ padding: '1.25rem 1.5rem', textAlign: 'right' }}>
-                                            <button style={{ color: 'var(--text-muted)', background: 'none', border: 'none' }}><MoreHorizontal size={20} /></button>
+                                        <td style={{ padding: '1.25rem 2rem', textAlign: 'right' }}>
+                                            <button style={{ color: 'var(--text-muted)', background: 'none', border: 'none', padding: '0.5rem', borderRadius: '8px' }} className="hover-lift">
+                                                <MoreHorizontal size={20} />
+                                            </button>
                                         </td>
                                     </tr>
                                 ))}
@@ -362,8 +403,14 @@ const BookingsTab = ({ onBookingClick, onAddBooking }) => {
                     </div>
                 </>
             ) : (
-                <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '2rem' }}>
-                    <div className="glass" style={{ padding: '2rem', borderRadius: 'var(--radius-lg)', background: 'white' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: '1.8fr 1fr', gap: '2.5rem' }}>
+                    <div style={{
+                        padding: '2.5rem',
+                        borderRadius: 'var(--radius-xl)',
+                        background: 'white',
+                        border: '1px solid rgba(226, 232, 240, 0.6)',
+                        boxShadow: '0 10px 30px -5px rgba(0,0,0,0.03)'
+                    }}>
                         {renderHeader()}
                         {renderDays()}
                         {renderCells()}

@@ -16,7 +16,11 @@
   --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
   --radius-md: 0.5rem;
   --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
   --radius-full: 9999px;
+  --glass-premium: rgba(255, 255, 255, 0.85);
+  --shadow-premium: 0 10px 40px -10px rgba(0,0,0,0.08);
+  --shadow-xl: 0 20px 50px -12px rgb(0 0 0 / 0.15);
 }
 
 * {
