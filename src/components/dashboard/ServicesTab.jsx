@@ -1,7 +1,7 @@
 import React from 'react';
 import { Plus, MoreVertical, Star, Edit2, Trash2 } from 'lucide-react';
 
-const ServicesTab = () => {
+const ServicesTab = ({ onAddService, onEditService }) => {
     const services = [
         { id: 1, name: "Elite Cleaning", category: "Cleaning", price: "$45/hr", rating: 4.8, bookings: 124, status: "Active" },
         { id: 2, name: "Deep Carpet Clean", category: "Cleaning", price: "$80/room", rating: 4.9, bookings: 56, status: "Active" },
@@ -12,7 +12,7 @@ const ServicesTab = () => {
         <div>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
                 <h2 style={{ fontSize: '1.5rem' }}>My Services</h2>
-                <button className="btn-primary" style={{ padding: '0.65rem 1.25rem' }}>
+                <button onClick={onAddService} className="btn-primary" style={{ padding: '0.65rem 1.25rem' }}>
                     <Plus size={18} /> Create New Service
                 </button>
             </div>
@@ -25,7 +25,7 @@ const ServicesTab = () => {
                                 <span style={{ fontSize: '0.75rem', fontWeight: '700', color: 'var(--primary)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{service.category}</span>
                                 <h3 style={{ fontSize: '1.15rem', marginTop: '0.25rem' }}>{service.name}</h3>
                             </div>
-                            <button style={{ background: 'none', border: 'none', color: 'var(--text-muted)' }}><MoreVertical size={20} /></button>
+                            <button style={{ background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer' }}><MoreVertical size={20} /></button>
                         </div>
 
                         <div style={{ display: 'flex', gap: '1.5rem', marginBottom: '1.5rem' }}>
@@ -58,8 +58,8 @@ const ServicesTab = () => {
                                 {service.status}
                             </span>
                             <div style={{ display: 'flex', gap: '0.5rem' }}>
-                                <button style={{ pading: '0.5rem', borderRadius: '8px', background: '#f8fafc', color: 'var(--text-muted)' }}><Edit2 size={16} /></button>
-                                <button style={{ pading: '0.5rem', borderRadius: '8px', background: '#f8fafc', color: '#ef4444' }}><Trash2 size={16} /></button>
+                                <button onClick={() => onEditService(service)} style={{ padding: '0.5rem', borderRadius: '8px', background: '#f8fafc', color: 'var(--text-muted)', border: 'none', cursor: 'pointer' }}><Edit2 size={16} /></button>
+                                <button style={{ padding: '0.5rem', borderRadius: '8px', background: '#f8fafc', color: '#ef4444', border: 'none', cursor: 'pointer' }}><Trash2 size={16} /></button>
                             </div>
                         </div>
                     </div>

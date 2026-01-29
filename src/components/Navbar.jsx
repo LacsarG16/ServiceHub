@@ -24,11 +24,11 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'glass py-3 shadow-md' : 'bg-transparent py-5'}`} 
-         style={{ 
-           backgroundColor: scrolled ? 'rgba(255, 255, 255, 0.8)' : 'transparent',
-           backdropFilter: scrolled ? 'blur(10px)' : 'none'
-         }}>
+    <nav className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'glass py-3 shadow-md' : 'bg-transparent py-5'}`}
+      style={{
+        backgroundColor: scrolled ? 'rgba(255, 255, 255, 0.8)' : 'transparent',
+        backdropFilter: scrolled ? 'blur(10px)' : 'none'
+      }}>
       <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
           <div style={{ backgroundColor: 'var(--primary)', color: 'white', padding: '0.5rem', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -43,11 +43,11 @@ const Navbar = () => {
         <div style={{ display: 'none' }} className="desktop-links"> {/* Handled via CSS usually, but adding inline for now to ensure visibility */}
           <div style={{ display: 'flex', gap: '2rem', alignItems: 'center' }}>
             {navLinks.map((link) => (
-              <Link 
-                key={link.name} 
+              <Link
+                key={link.name}
                 to={link.path}
-                style={{ 
-                  fontWeight: '500', 
+                style={{
+                  fontWeight: '500',
                   color: location.pathname === link.path ? 'var(--primary)' : 'var(--text-main)',
                   position: 'relative'
                 }}

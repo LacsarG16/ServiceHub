@@ -27,10 +27,12 @@ import {
     isToday
 } from 'date-fns';
 
-const BookingsTab = () => {
+const BookingsTab = ({ onBookingClick, onAddBooking }) => {
     const [view, setView] = useState('calendar');
     const [currentMonth, setCurrentMonth] = useState(new Date(2026, 1, 1)); // February 2026
     const [selectedDate, setSelectedDate] = useState(new Date(2026, 1, 25)); // Default selection
+
+    // ... internal bookings and status logic ...
 
     const bookings = [
         { id: 1, customer: "Alice Johnson", service: "Elite Cleaning", date: new Date(2026, 1, 25), time: "09:00 AM", status: "Upcoming", amount: "$120" },
@@ -152,17 +154,24 @@ const BookingsTab = () => {
 
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
                                 {dayBookings.slice(0, 2).map((b, idx) => (
-                                    <div key={idx} style={{
-                                        fontSize: '0.65rem',
-                                        padding: '2px 6px',
-                                        borderRadius: '4px',
-                                        background: b.status === 'Cancelled' ? 'rgba(239, 68, 68, 0.1)' : 'rgba(59, 130, 246, 0.1)',
-                                        color: b.status === 'Cancelled' ? '#ef4444' : 'var(--primary)',
-                                        fontWeight: '700',
-                                        whiteSpace: 'nowrap',
-                                        overflow: 'hidden',
-                                        textOverflow: 'ellipsis'
-                                    }}>
+                                    <div
+                                        key={idx}
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            onBookingClick(b);
+                                        }}
+                                        style={{
+                                            fontSize: '0.65rem',
+                                            padding: '2px 6px',
+                                            borderRadius: '4px',
+                                            background: b.status === 'Cancelled' ? 'rgba(239, 68, 68, 0.1)' : 'rgba(59, 130, 246, 0.1)',
+                                            color: b.status === 'Cancelled' ? '#ef4444' : 'var(--primary)',
+                                            fontWeight: '700',
+                                            whiteSpace: 'nowrap',
+                                            overflow: 'hidden',
+                                            textOverflow: 'ellipsis'
+                                        }}
+                                    >
                                         {b.customer.split(' ')[0]} - {b.time}
                                     </div>
                                 ))}
@@ -203,7 +212,13 @@ const BookingsTab = () => {
                 {dayBookings.length > 0 ? (
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                         {dayBookings.map(b => (
-                            <div key={b.id} style={{ padding: '1.25rem', borderRadius: 'var(--radius-md)', background: '#f8fafc', border: '1px solid #f1f5f9', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <div
+                                key={b.id}
+                                onClick={() => onBookingClick(b)}
+                                style={{ padding: '1.25rem', borderRadius: 'var(--radius-md)', background: '#f8fafc', border: '1px solid #f1f5f9', display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer' }}
+                                onMouseEnter={(e) => e.currentTarget.style.background = '#f1f5f9'}
+                                onMouseLeave={(e) => e.currentTarget.style.background = '#f8fafc'}
+                            >
                                 <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
                                     <div style={{ width: '40px', height: '40px', borderRadius: '12px', background: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #e2e8f0' }}>
                                         <User size={20} color="var(--primary)" />
@@ -233,7 +248,12 @@ const BookingsTab = () => {
                     <div style={{ textAlign: 'center', padding: '3rem 1rem', color: 'var(--text-muted)' }}>
                         <CalendarIcon size={40} style={{ opacity: 0.2, marginBottom: '1rem' }} />
                         <p>No bookings scheduled for this date.</p>
-                        <button style={{ marginTop: '1.5rem', background: 'none', color: 'var(--primary)', fontWeight: '700', fontSize: '0.9rem' }}>+ Create Manual Entry</button>
+                        <button
+                            onClick={onAddBooking}
+                            style={{ marginTop: '1.5rem', background: 'none', color: 'var(--primary)', fontWeight: '700', fontSize: '0.9rem', border: 'none', cursor: 'pointer' }}
+                        >
+                            + Create Manual Entry
+                        </button>
                     </div>
                 )}
             </div>
@@ -244,19 +264,28 @@ const BookingsTab = () => {
         <div>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
                 <h2 style={{ fontSize: '1.5rem' }}>Bookings</h2>
-                <div style={{ display: 'flex', background: 'white', borderRadius: 'var(--radius-md)', padding: '0.25rem', border: '1px solid #e2e8f0' }}>
+                <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
                     <button
-                        onClick={() => setView('list')}
-                        style={{ padding: '0.5rem 1rem', borderRadius: '6px', background: view === 'list' ? 'var(--primary)' : 'transparent', color: view === 'list' ? 'white' : 'var(--text-muted)', fontWeight: '600' }}
+                        onClick={onAddBooking}
+                        className="btn-primary"
+                        style={{ padding: '0.6rem 1.2rem', fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}
                     >
-                        List
+                        + New Booking
                     </button>
-                    <button
-                        onClick={() => setView('calendar')}
-                        style={{ padding: '0.5rem 1rem', borderRadius: '6px', background: view === 'calendar' ? 'var(--primary)' : 'transparent', color: view === 'calendar' ? 'white' : 'var(--text-muted)', fontWeight: '600' }}
-                    >
-                        Calendar
-                    </button>
+                    <div style={{ display: 'flex', background: 'white', borderRadius: 'var(--radius-md)', padding: '0.25rem', border: '1px solid #e2e8f0' }}>
+                        <button
+                            onClick={() => setView('list')}
+                            style={{ padding: '0.5rem 1rem', borderRadius: '6px', background: view === 'list' ? 'var(--primary)' : 'transparent', color: view === 'list' ? 'white' : 'var(--text-muted)', fontWeight: '600', border: 'none', cursor: 'pointer' }}
+                        >
+                            List
+                        </button>
+                        <button
+                            onClick={() => setView('calendar')}
+                            style={{ padding: '0.5rem 1rem', borderRadius: '6px', background: view === 'calendar' ? 'var(--primary)' : 'transparent', color: view === 'calendar' ? 'white' : 'var(--text-muted)', fontWeight: '600', border: 'none', cursor: 'pointer' }}
+                        >
+                            Calendar
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -288,7 +317,13 @@ const BookingsTab = () => {
                             </thead>
                             <tbody>
                                 {bookings.map((booking) => (
-                                    <tr key={booking.id} style={{ borderBottom: '1px solid #f1f5f9' }}>
+                                    <tr
+                                        key={booking.id}
+                                        onClick={() => onBookingClick(booking)}
+                                        style={{ borderBottom: '1px solid #f1f5f9', cursor: 'pointer' }}
+                                        onMouseEnter={(e) => e.currentTarget.style.background = '#f8fafc'}
+                                        onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
+                                    >
                                         <td style={{ padding: '1.25rem 1.5rem' }}>
                                             <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
                                                 <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'var(--primary)', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.8rem', fontWeight: '700' }}>
@@ -318,7 +353,7 @@ const BookingsTab = () => {
                                             </span>
                                         </td>
                                         <td style={{ padding: '1.25rem 1.5rem', textAlign: 'right' }}>
-                                            <button style={{ color: 'var(--text-muted)', background: 'none' }}><MoreHorizontal size={20} /></button>
+                                            <button style={{ color: 'var(--text-muted)', background: 'none', border: 'none' }}><MoreHorizontal size={20} /></button>
                                         </td>
                                     </tr>
                                 ))}

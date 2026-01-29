@@ -1,7 +1,7 @@
 import React from 'react';
 import { Calendar, Users, DollarSign, CheckCircle2 } from 'lucide-react';
 
-const OverviewTab = ({ stats, recentBookings }) => {
+const OverviewTab = ({ stats, recentBookings, onBookingClick, onUpgrade }) => {
     return (
         <>
             {/* Stats Grid */}
@@ -39,11 +39,17 @@ const OverviewTab = ({ stats, recentBookings }) => {
                         </thead>
                         <tbody>
                             {recentBookings.map((booking) => (
-                                <tr key={booking.id} style={{ borderBottom: '1px solid #f1f5f9' }}>
+                                <tr
+                                    key={booking.id}
+                                    onClick={() => onBookingClick(booking)}
+                                    style={{ borderBottom: '1px solid #f1f5f9', cursor: 'pointer' }}
+                                    onMouseEnter={(e) => e.currentTarget.style.background = '#f8fafc'}
+                                    onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
+                                >
                                     <td style={{ padding: '1.25rem 0', fontWeight: '600' }}>{booking.customer}</td>
                                     <td style={{ padding: '1.25rem 0' }}>{booking.service}</td>
                                     <td style={{ padding: '1.25rem 0' }}>
-                                        <p style={{ fontSize: '0.9rem' }}>{booking.date}</p>
+                                        <p style={{ fontSize: '0.9rem' }}>{booking.date instanceof Date ? booking.date.toLocaleDateString() : booking.date}</p>
                                         <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>{booking.time}</p>
                                     </td>
                                     <td style={{ padding: '1.25rem 0' }}>
@@ -90,7 +96,10 @@ const OverviewTab = ({ stats, recentBookings }) => {
                     <div style={{ background: 'linear-gradient(135deg, var(--primary) 0%, #1e40af 100%)', padding: '2rem', borderRadius: 'var(--radius-lg)', color: 'white' }}>
                         <h3 style={{ marginBottom: '1rem' }}>Upgrade Plan</h3>
                         <p style={{ opacity: 0.9, fontSize: '0.9rem', marginBottom: '1.5rem' }}>Get verified badge and appear at the top of search results.</p>
-                        <button style={{ width: '100%', padding: '0.85rem', borderRadius: 'var(--radius-md)', background: 'white', color: 'var(--primary)', fontWeight: '700' }}>
+                        <button
+                            onClick={onUpgrade}
+                            style={{ width: '100%', padding: '0.85rem', borderRadius: 'var(--radius-md)', background: 'white', color: 'var(--primary)', fontWeight: '700' }}
+                        >
                             Explore Pro Plans
                         </button>
                     </div>

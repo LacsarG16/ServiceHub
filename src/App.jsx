@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 
@@ -11,9 +11,10 @@ import ForProviders from './pages/ForProviders';
 import Contact from './pages/Contact';
 import About from './pages/About';
 
-// No placeholder pages needed anymore
-
 function App() {
+  const location = useLocation();
+  const isDashboard = location.pathname === '/dashboard';
+
   return (
     <div className="app">
       <Navbar />
@@ -28,7 +29,7 @@ function App() {
           <Route path="/about" element={<About />} />
         </Routes>
       </main>
-      <Footer />
+      {!isDashboard && <Footer />}
     </div>
   );
 }
