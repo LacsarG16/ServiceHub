@@ -58,14 +58,19 @@ const Profile = () => {
     };
 
     return (
-        <div className="profile-page" style={{ backgroundColor: '#f4f7f9', padding: '40px 0' }}>
-            <div className="container">
+        <div className="profile-page" style={{ position: 'relative', overflow: 'hidden', minHeight: '100vh', padding: '120px 0 80px' }}>
+            {/* Aurora Background Blobs */}
+            <div className="aurora-blob blob-1"></div>
+            <div className="aurora-blob blob-2"></div>
+            <div className="aurora-blob blob-3"></div>
+
+            <div className="container" style={{ position: 'relative', zIndex: 1 }}>
                 {/* Breadcrumbs */}
-                <div className="breadcrumbs" style={{ fontSize: '0.85rem', color: '#64748b', marginBottom: '20px', display: 'flex', gap: '8px', alignItems: 'center' }}>
-                    <Link to="/">Home</Link> <span>›</span>
-                    <Link to="/directory">Home Services</Link> <span>›</span>
-                    <span>Electricians</span> <span>›</span>
-                    <span style={{ color: '#1e293b', fontWeight: '500' }}>{provider.name}</span>
+                <div className="breadcrumbs" style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '20px', display: 'flex', gap: '8px', alignItems: 'center' }}>
+                    <Link to="/" style={{ color: 'var(--primary)', fontWeight: '500' }}>Home</Link> <span style={{ opacity: 0.5 }}>›</span>
+                    <Link to="/directory" style={{ color: 'var(--primary)', fontWeight: '500' }}>Home Services</Link> <span style={{ opacity: 0.5 }}>›</span>
+                    <span>Electricians</span> <span style={{ opacity: 0.5 }}>›</span>
+                    <span style={{ color: 'var(--text-main)', fontWeight: '600' }}>{provider.name}</span>
                 </div>
 
                 <div className="profile-layout" style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 2fr) 350px', gap: '24px' }}>
@@ -74,51 +79,51 @@ const Profile = () => {
                     <div className="main-content" style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
 
                         {/* Header Section */}
-                        <div className="card" style={{ backgroundColor: 'white', borderRadius: '16px', padding: '24px', position: 'relative', border: '1px solid #e2e8f0' }}>
+                        <div className="glass-card" style={{ padding: '24px', position: 'relative' }}>
                             <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
                                 <div style={{ position: 'relative' }}>
-                                    <img src={provider.image} alt={provider.name} style={{ width: '100px', height: '100px', borderRadius: '50%', objectFit: 'cover' }} />
-                                    <div style={{ position: 'absolute', bottom: '5px', right: '5px', width: '15px', height: '15px', backgroundColor: '#22c55e', borderRadius: '50%', border: '2px solid white' }}></div>
+                                    <img src={provider.image} alt={provider.name} style={{ width: '100px', height: '100px', borderRadius: '50%', objectFit: 'cover', border: '3px solid var(--white)', boxShadow: 'var(--shadow-md)' }} />
+                                    <div style={{ position: 'absolute', bottom: '5px', right: '5px', width: '15px', height: '15px', backgroundColor: '#22c55e', borderRadius: '50%', border: '2px solid var(--white)' }}></div>
                                 </div>
                                 <div style={{ flex: 1 }}>
                                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                                         <div>
-                                            <h1 style={{ fontSize: '1.5rem', fontWeight: '700', color: '#1e293b', marginBottom: '4px' }}>{provider.name}</h1>
-                                            <p style={{ color: '#64748b', fontSize: '0.9rem', marginBottom: '8px' }}>{provider.title}</p>
+                                            <h1 style={{ fontSize: '1.75rem', fontWeight: '800', color: 'var(--text-main)', marginBottom: '4px', letterSpacing: '-0.5px' }}>{provider.name}</h1>
+                                            <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', marginBottom: '8px', fontWeight: '500' }}>{provider.title}</p>
                                         </div>
                                         <div style={{ display: 'flex', gap: '12px' }}>
-                                            <button style={{ backgroundColor: '#f1f5f9', border: 'none', borderRadius: '8px', padding: '8px', color: '#64748b' }}><Heart size={20} /></button>
-                                            <button style={{ backgroundColor: '#f1f5f9', border: 'none', borderRadius: '8px', padding: '8px', color: '#64748b' }}><Share2 size={20} /></button>
+                                            <button className="hover-lift" style={{ backgroundColor: 'rgba(255,255,255,0.1)', backdropFilter: 'blur(5px)', border: '1px solid var(--glass-border)', borderRadius: '12px', padding: '10px', color: 'var(--text-muted)' }}><Heart size={20} /></button>
+                                            <button className="hover-lift" style={{ backgroundColor: 'rgba(255,255,255,0.1)', backdropFilter: 'blur(5px)', border: '1px solid var(--glass-border)', borderRadius: '12px', padding: '10px', color: 'var(--text-muted)' }}><Share2 size={20} /></button>
                                         </div>
                                     </div>
-                                    <div style={{ display: 'flex', alignItems: 'center', gap: '16px', fontSize: '0.9rem', color: '#64748b' }}>
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '16px', fontSize: '0.9rem', color: 'var(--text-muted)' }}>
                                         <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                                            <MapPin size={16} /> {provider.location}
+                                            <MapPin size={16} color="var(--primary)" /> {provider.location}
                                         </div>
-                                        <div style={{ display: 'flex', alignItems: 'center', gap: '4px', color: '#14b8a6', fontWeight: '500' }}>
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '4px', color: 'var(--secondary)', fontWeight: '600' }}>
                                             <Check size={16} /> Licensed & Insured
                                         </div>
                                     </div>
-                                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginTop: '8px' }}>
-                                        <span style={{ fontWeight: '700', fontSize: '1rem', color: '#1e293b' }}>{provider.rating}</span>
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginTop: '12px' }}>
+                                        <span style={{ fontWeight: '800', fontSize: '1.1rem', color: 'var(--text-main)' }}>{provider.rating}</span>
                                         <div style={{ display: 'flex', color: '#fbbf24' }}>
                                             {[...Array(5)].map((_, i) => (
-                                                <Star key={i} size={16} fill={i < 4 ? "currentColor" : "none"} color={i < 4 ? "#fbbf24" : "#cbd5e1"} />
+                                                <Star key={i} size={18} fill={i < 4 ? "currentColor" : "none"} color={i < 4 ? "#fbbf24" : "var(--text-muted)"} />
                                             ))}
                                         </div>
-                                        <span style={{ color: '#64748b', fontSize: '0.9rem' }}>({provider.reviews} reviews)</span>
+                                        <span style={{ color: 'var(--text-muted)', fontSize: '0.9rem', fontWeight: '500' }}>({provider.reviews} trusted reviews)</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         {/* About Me Section */}
-                        <div className="card" style={{ backgroundColor: 'white', borderRadius: '16px', padding: '24px', border: '1px solid #e2e8f0' }}>
-                            <h2 style={{ fontSize: '1.1rem', fontWeight: '700', color: '#1e293b', marginBottom: '16px' }}>About Me</h2>
-                            <p style={{ color: '#64748b', fontSize: '0.95rem', lineHeight: '1.6', marginBottom: '20px' }}>{provider.description}</p>
+                        <div className="glass-card" style={{ padding: '24px' }}>
+                            <h2 style={{ fontSize: '1.25rem', fontWeight: '800', color: 'var(--text-main)', marginBottom: '16px' }}>About Me</h2>
+                            <p style={{ color: 'var(--text-muted)', fontSize: '1rem', lineHeight: '1.7', marginBottom: '24px' }}>{provider.description}</p>
                             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
                                 {provider.expertise.map((skill, idx) => (
-                                    <span key={idx} style={{ backgroundColor: '#f1f5f9', color: '#475569', padding: '6px 14px', borderRadius: 'full', fontSize: '0.85rem', whiteSpace: 'nowrap' }}>
+                                    <span key={idx} className="glass" style={{ color: 'var(--text-main)', padding: '8px 16px', borderRadius: '12px', fontSize: '0.85rem', fontWeight: '600', border: '1px solid var(--glass-border)' }}>
                                         {skill}
                                     </span>
                                 ))}
@@ -126,106 +131,109 @@ const Profile = () => {
                         </div>
 
                         {/* Recent Projects Section */}
-                        <div className="card" style={{ backgroundColor: 'white', borderRadius: '16px', padding: '24px', border: '1px solid #e2e8f0' }}>
-                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-                                <h2 style={{ fontSize: '1.1rem', fontWeight: '700', color: '#1e293b' }}>Recent Projects</h2>
-                                <button style={{ color: '#3b82f6', fontSize: '0.85rem', fontWeight: '600', background: 'none', border: 'none' }}>View All</button>
+                        <div className="glass-card" style={{ padding: '24px' }}>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+                                <h2 style={{ fontSize: '1.25rem', fontWeight: '800', color: 'var(--text-main)' }}>Recent Projects</h2>
+                                <button style={{ color: 'var(--primary)', fontSize: '0.9rem', fontWeight: '700', background: 'none', border: 'none' }}>View All Projects</button>
                             </div>
-                            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '12px' }}>
+                            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px' }}>
                                 {provider.projects.map((proj, idx) => (
-                                    <img key={idx} src={proj} alt={`Project ${idx + 1}`} style={{ width: '100%', height: '160px', borderRadius: '8px', objectFit: 'cover' }} />
+                                    <div key={idx} className="hover-lift" style={{ borderRadius: '12px', overflow: 'hidden', height: '180px', border: '1px solid var(--glass-border)' }}>
+                                        <img src={proj} alt={`Project ${idx + 1}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                    </div>
                                 ))}
                             </div>
                         </div>
 
                         {/* Client Reviews Section */}
-                        <div className="card" style={{ backgroundColor: 'white', borderRadius: '16px', padding: '24px', border: '1px solid #e2e8f0' }}>
-                            <h2 style={{ fontSize: '1.1rem', fontWeight: '700', color: '#1e293b', marginBottom: '20px' }}>Client Reviews</h2>
-                            <div style={{ display: 'flex', gap: '40px', marginBottom: '32px', flexWrap: 'wrap' }}>
-                                <div style={{ textAlign: 'center', minWidth: '100px' }}>
-                                    <div style={{ fontSize: '3rem', fontWeight: '800', color: '#1e293b', lineHeight: '1' }}>{provider.reviewData.average}</div>
-                                    <div style={{ display: 'flex', color: '#fbbf24', justifyContent: 'center', margin: '8px 0' }}>
+                        <div className="glass-card" style={{ padding: '24px' }}>
+                            <h2 style={{ fontSize: '1.25rem', fontWeight: '800', color: 'var(--text-main)', marginBottom: '24px' }}>Client Reviews</h2>
+                            <div style={{ display: 'flex', gap: '40px', marginBottom: '40px', flexWrap: 'wrap' }}>
+                                <div style={{ textAlign: 'center', minWidth: '120px' }}>
+                                    <div style={{ fontSize: '3.5rem', fontWeight: '900', color: 'var(--text-main)', lineHeight: '1' }}>{provider.reviewData.average}</div>
+                                    <div style={{ display: 'flex', color: '#fbbf24', justifyContent: 'center', margin: '12px 0' }}>
                                         {[...Array(5)].map((_, i) => (
-                                            <Star key={i} size={20} fill={i < 4 ? "currentColor" : "none"} color={i < 4 ? "#fbbf24" : "#cbd5e1"} />
+                                            <Star key={i} size={22} fill={i < 4 ? "currentColor" : "none"} color={i < 4 ? "#fbbf24" : "var(--text-muted)"} />
                                         ))}
                                     </div>
-                                    <div style={{ color: '#64748b', fontSize: '0.85rem' }}>{provider.reviewData.total} Reviews</div>
+                                    <div style={{ color: 'var(--text-muted)', fontSize: '0.9rem', fontWeight: '500' }}>{provider.reviewData.total} Reviews</div>
                                 </div>
-                                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '10px' }}>
                                     {provider.reviewData.breakdown.map((row) => (
                                         <div key={row.rating} style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                                            <span style={{ width: '10px', fontSize: '0.85rem', color: '#64748b' }}>{row.rating}</span>
-                                            <div style={{ flex: 1, height: '8px', backgroundColor: '#f1f5f9', borderRadius: '4px', overflow: 'hidden' }}>
-                                                <div style={{ width: `${row.percentage}%`, height: '100%', backgroundColor: '#fbbf24', borderRadius: '4px' }}></div>
+                                            <span style={{ width: '15px', fontSize: '0.85rem', color: 'var(--text-muted)', fontWeight: '600' }}>{row.rating}</span>
+                                            <div style={{ flex: 1, height: '10px', backgroundColor: 'var(--glass-bg)', borderRadius: '5px', overflow: 'hidden', border: '1px solid var(--glass-border)' }}>
+                                                <div style={{ width: `${row.percentage}%`, height: '100%', background: 'linear-gradient(to right, #fbbf24, #f59e0b)', borderRadius: '5px' }}></div>
                                             </div>
-                                            <span style={{ width: '30px', fontSize: '0.85rem', color: '#64748b', textAlign: 'right' }}>{row.percentage}%</span>
+                                            <span style={{ width: '40px', fontSize: '0.85rem', color: 'var(--text-muted)', textAlign: 'right', fontWeight: '600' }}>{row.percentage}%</span>
                                         </div>
                                     ))}
                                 </div>
                             </div>
 
-                            <div style={{ borderTop: '1px solid #f1f5f9', paddingTop: '20px' }}>
-                                <div style={{ display: 'flex', gap: '12px', alignItems: 'center', marginBottom: '12px' }}>
-                                    <div style={{ width: '40px', height: '40px', borderRadius: '50%', backgroundColor: '#e2e8f0', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
+                            <div style={{ borderTop: '1px solid var(--glass-border)', paddingTop: '24px' }}>
+                                <div style={{ display: 'flex', gap: '12px', alignItems: 'center', marginBottom: '16px' }}>
+                                    <div style={{ width: '48px', height: '48px', borderRadius: '50%', border: '2px solid var(--primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
                                         <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=100" alt="Sarah M." style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                                     </div>
                                     <div>
-                                        <div style={{ fontWeight: '700', color: '#1e293b', fontSize: '0.9rem' }}>{provider.reviewData.latest.name}</div>
-                                        <div style={{ display: 'flex', gap: '4px', alignItems: 'center' }}>
+                                        <div style={{ fontWeight: '800', color: 'var(--text-main)', fontSize: '1rem' }}>{provider.reviewData.latest.name}</div>
+                                        <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
                                             <div style={{ display: 'flex', color: '#fbbf24' }}>
-                                                {[...Array(5)].map((_, i) => <Star key={i} size={12} fill="currentColor" />)}
+                                                {[...Array(5)].map((_, i) => <Star key={i} size={14} fill="currentColor" />)}
                                             </div>
-                                            <span style={{ color: '#94a3b8', fontSize: '0.75rem' }}>{provider.reviewData.latest.date}</span>
+                                            <span style={{ color: 'var(--text-muted)', fontSize: '0.8rem', fontWeight: '500' }}>{provider.reviewData.latest.date}</span>
                                         </div>
                                     </div>
                                 </div>
-                                <p style={{ fontSize: '0.9rem', color: '#475569', lineHeight: '1.5' }}>{provider.reviewData.latest.comment}</p>
+                                <p style={{ fontSize: '1rem', color: 'var(--text-muted)', lineHeight: '1.6', fontStyle: 'italic' }}>"{provider.reviewData.latest.comment}"</p>
                             </div>
                         </div>
                     </div>
 
                     {/* Sidebar Booking Section */}
                     <aside className="sidebar">
-                        <div className="card sticky-sidebar" style={{ backgroundColor: 'white', borderRadius: '16px', padding: '24px', border: '1px solid #e2e8f0', position: 'sticky', top: '24px' }}>
+                        <div className="glass-card sticky-sidebar" style={{ padding: '24px', position: 'sticky', top: '100px' }}>
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '24px' }}>
                                 <div>
-                                    <p style={{ color: '#64748b', fontSize: '0.8rem' }}>Starting at</p>
-                                    <div style={{ fontSize: '1.75rem', fontWeight: '800', color: '#1e293b' }}>${provider.price} <span style={{ fontSize: '0.9rem', fontWeight: '400', color: '#64748b' }}>/ hour</span></div>
+                                    <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem', fontWeight: '600' }}>Price per hour</p>
+                                    <div style={{ fontSize: '2rem', fontWeight: '900', color: 'var(--text-main)', letterSpacing: '-1px' }}>${provider.price} <span style={{ fontSize: '0.9rem', fontWeight: '500', color: 'var(--text-muted)' }}>/ hr</span></div>
                                 </div>
-                                <button style={{ display: 'flex', alignItems: 'center', gap: '8px', backgroundColor: '#f0fdfa', color: '#14b8a6', border: '1px solid #ccfbf1', padding: '8px 16px', borderRadius: '8px', fontWeight: '600', fontSize: '0.9rem' }}>
-                                    <MessageSquare size={18} /> Message
+                                <button className="hover-lift" style={{ display: 'flex', alignItems: 'center', gap: '8px', backgroundColor: 'var(--primary)', color: 'white', border: 'none', padding: '10px 18px', borderRadius: '12px', fontWeight: '700', fontSize: '0.9rem', boxShadow: '0 8px 16px rgba(6, 182, 212, 0.3)' }}>
+                                    <MessageSquare size={18} /> Chat
                                 </button>
                             </div>
 
                             <div style={{ marginBottom: '24px' }}>
                                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-                                    <span style={{ fontWeight: '700', color: '#1e293b' }}>Select Date</span>
+                                    <span style={{ fontWeight: '800', color: 'var(--text-main)', fontSize: '1rem' }}>Select Date</span>
                                     <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                                        <ChevronLeft size={18} style={{ color: '#94a3b8' }} />
-                                        <span style={{ fontSize: '0.9rem', fontWeight: '600' }}>October 2023</span>
-                                        <ChevronRight size={18} style={{ color: '#94a3b8' }} />
+                                        <ChevronLeft size={18} style={{ color: 'var(--text-muted)', cursor: 'pointer' }} />
+                                        <span style={{ fontSize: '0.9rem', fontWeight: '700', color: 'var(--text-main)' }}>October 2023</span>
+                                        <ChevronRight size={18} style={{ color: 'var(--text-muted)', cursor: 'pointer' }} />
                                     </div>
                                 </div>
 
                                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: '4px', textAlign: 'center', marginBottom: '8px' }}>
-                                    {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
-                                        <span key={day} style={{ fontSize: '0.7rem', color: '#94a3b8', textTransform: 'uppercase' }}>{day}</span>
+                                    {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map(day => (
+                                        <span key={day} style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: '700' }}>{day}</span>
                                     ))}
                                 </div>
                                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: '4px', textAlign: 'center' }}>
                                     <span style={{ padding: '8px', fontSize: '0.85rem', color: 'transparent' }}>-</span>
                                     <span style={{ padding: '8px', fontSize: '0.85rem', color: 'transparent' }}>-</span>
-                                    <span style={{ padding: '8px', fontSize: '0.85rem', color: '#cbd5e1' }}>1</span>
-                                    <span style={{ padding: '8px', fontSize: '0.85rem', color: '#cbd5e1' }}>2</span>
-                                    <span style={{ padding: '8px', fontSize: '0.85rem', color: '#cbd5e1' }}>3</span>
-                                    <span style={{ padding: '8px', fontSize: '0.85rem', color: '#cbd5e1' }}>4</span>
-                                    <span style={{ padding: '8px', fontSize: '0.85rem', color: '#cbd5e1' }}>5</span>
-                                    <span style={{ padding: '8px', fontSize: '0.85rem', color: '#475569' }}>6</span>
-                                    <span style={{ padding: '8px', fontSize: '0.85rem', color: '#475569' }}>7</span>
-                                    <span style={{ padding: '8px', fontSize: '0.85rem', color: '#475569' }}>8</span>
-                                    <span style={{ padding: '8px', fontSize: '0.85rem', color: '#475569' }}>9</span>
+                                    <span style={{ padding: '8px', fontSize: '0.85rem', color: 'var(--text-muted)', opacity: 0.3 }}>1</span>
+                                    <span style={{ padding: '8px', fontSize: '0.85rem', color: 'var(--text-muted)', opacity: 0.3 }}>2</span>
+                                    <span style={{ padding: '8px', fontSize: '0.85rem', color: 'var(--text-muted)', opacity: 0.3 }}>3</span>
+                                    <span style={{ padding: '8px', fontSize: '0.85rem', color: 'var(--text-muted)', opacity: 0.3 }}>4</span>
+                                    <span style={{ padding: '8px', fontSize: '0.85rem', color: 'var(--text-muted)', opacity: 0.3 }}>5</span>
+                                    <span style={{ padding: '8px', fontSize: '0.85rem', color: 'var(--text-main)', fontWeight: '600' }}>6</span>
+                                    <span style={{ padding: '8px', fontSize: '0.85rem', color: 'var(--text-main)', fontWeight: '600' }}>7</span>
+                                    <span style={{ padding: '8px', fontSize: '0.85rem', color: 'var(--text-main)', fontWeight: '600' }}>8</span>
+                                    <span style={{ padding: '8px', fontSize: '0.85rem', color: 'var(--text-main)', fontWeight: '600' }}>9</span>
                                     <button
                                         onClick={() => setSelectedDate(10)}
+                                        className="hover-lift"
                                         style={{
                                             width: '32px',
                                             height: '32px',
@@ -233,41 +241,43 @@ const Profile = () => {
                                             display: 'flex',
                                             alignItems: 'center',
                                             justifyContent: 'center',
-                                            backgroundColor: selectedDate === 10 ? '#3b82f6' : 'transparent',
-                                            color: selectedDate === 10 ? 'white' : '#475569',
-                                            borderRadius: '50%',
-                                            fontWeight: '600',
+                                            backgroundColor: selectedDate === 10 ? 'var(--primary)' : 'transparent',
+                                            color: selectedDate === 10 ? 'white' : 'var(--text-main)',
+                                            borderRadius: '10px',
+                                            fontWeight: '800',
                                             border: 'none',
-                                            boxShadow: selectedDate === 10 ? '0 4px 6px -1px rgba(59, 130, 246, 0.5)' : 'none'
+                                            boxShadow: selectedDate === 10 ? '0 4px 12px rgba(6, 182, 212, 0.4)' : 'none'
                                         }}
                                     >
                                         10
                                     </button>
-                                    <span style={{ padding: '8px', fontSize: '0.85rem', color: '#475569' }}>11</span>
-                                    <span style={{ padding: '8px', fontSize: '0.85rem', color: '#475569' }}>12</span>
+                                    <span style={{ padding: '8px', fontSize: '0.85rem', color: 'var(--text-main)', fontWeight: '600' }}>11</span>
+                                    <span style={{ padding: '8px', fontSize: '0.85rem', color: 'var(--text-main)', fontWeight: '600' }}>12</span>
                                 </div>
                             </div>
 
                             <div style={{ marginBottom: '24px' }}>
                                 <div style={{ display: 'flex', alignItems: 'center', gap: '4px', marginBottom: '12px' }}>
-                                    <span style={{ fontSize: '0.85rem', fontWeight: '700', color: '#1e293b' }}>Available Times</span>
-                                    <span style={{ fontSize: '0.8rem', color: '#94a3b8' }}>(Oct 10)</span>
+                                    <span style={{ fontSize: '0.9rem', fontWeight: '800', color: 'var(--text-main)' }}>Available Times</span>
+                                    <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>(Oct 10)</span>
                                 </div>
-                                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px' }}>
+                                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10px' }}>
                                     {timeSlots.map((time) => (
                                         <button
                                             key={time}
                                             onClick={() => setSelectedTime(time)}
+                                            className="hover-lift"
                                             style={{
-                                                padding: '8px',
-                                                fontSize: '0.75rem',
-                                                fontWeight: '600',
-                                                borderRadius: '8px',
+                                                padding: '10px 5px',
+                                                fontSize: '0.8rem',
+                                                fontWeight: '700',
+                                                borderRadius: '10px',
                                                 border: '1px solid',
-                                                borderColor: selectedTime === time ? '#3b82f6' : '#e2e8f0',
-                                                backgroundColor: selectedTime === time ? '#eff6ff' : 'white',
-                                                color: selectedTime === time ? '#3b82f6' : '#64748b',
-                                                transition: 'all 0.2s'
+                                                borderColor: selectedTime === time ? 'var(--primary)' : 'var(--glass-border)',
+                                                backgroundColor: selectedTime === time ? 'rgba(6, 182, 212, 0.1)' : 'var(--glass-bg)',
+                                                color: selectedTime === time ? 'var(--primary)' : 'var(--text-muted)',
+                                                transition: 'all 0.2s',
+                                                backdropFilter: 'blur(5px)'
                                             }}
                                         >
                                             {time}
@@ -276,35 +286,36 @@ const Profile = () => {
                                 </div>
                             </div>
 
-                            <div style={{ backgroundColor: '#f8fafc', padding: '12px', borderRadius: '8px', marginBottom: '24px', position: 'relative' }}>
-                                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', color: '#64748b' }}>
-                                    <MapPin size={16} />
-                                    <input type="text" defaultValue="742 Evergreen Terrace, SF" style={{ background: 'none', border: 'none', fontSize: '0.85rem', color: '#1e293b', width: '100%', outline: 'none' }} />
+                            <div className="glass" style={{ padding: '12px 16px', borderRadius: '12px', marginBottom: '24px', border: '1px solid var(--glass-border)' }}>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', color: 'var(--text-muted)' }}>
+                                    <MapPin size={16} color="var(--primary)" />
+                                    <input type="text" defaultValue="742 Evergreen Terrace, SF" style={{ background: 'none', border: 'none', fontSize: '0.9rem', color: 'var(--text-main)', fontWeight: '500', width: '100%', outline: 'none' }} />
                                 </div>
                             </div>
 
-                            <div style={{ display: 'flex', justifyContent: 'space-between', color: '#64748b', fontSize: '0.85rem', marginBottom: '20px' }}>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--text-muted)', fontSize: '0.85rem', marginBottom: '20px', padding: '0 4px' }}>
                                 <div>
-                                    <p>Date</p>
-                                    <p style={{ color: '#1e293b', fontWeight: '600' }}>Oct 10, 2023</p>
+                                    <p style={{ fontWeight: '500' }}>Date</p>
+                                    <p style={{ color: 'var(--text-main)', fontWeight: '700' }}>Oct 10, 2023</p>
                                 </div>
                                 <div style={{ textAlign: 'right' }}>
-                                    <p>Time</p>
-                                    <p style={{ color: '#1e293b', fontWeight: '600' }}>01:00 PM</p>
+                                    <p style={{ fontWeight: '500' }}>Time</p>
+                                    <p style={{ color: 'var(--text-main)', fontWeight: '700' }}>01:00 PM</p>
                                 </div>
                             </div>
 
                             <button
                                 onClick={handleBooking}
-                                style={{ width: '100%', backgroundColor: '#f97316', color: 'white', border: 'none', borderRadius: '12px', padding: '16px', fontWeight: '700', fontSize: '1rem', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', marginBottom: '12px' }}
+                                className="btn-primary hover-lift"
+                                style={{ width: '100%', padding: '18px', borderRadius: '16px', fontWeight: '800', fontSize: '1.1rem', justifyContent: 'center', marginBottom: '16px' }}
                             >
-                                Confirm Booking <Send size={18} />
+                                Confirm Booking <Send size={20} />
                             </button>
-                            <p style={{ textAlign: 'center', color: '#94a3b8', fontSize: '0.75rem', marginBottom: '16px' }}>You won't be charged yet</p>
+                            <p style={{ textAlign: 'center', color: 'var(--text-muted)', fontSize: '0.8rem', fontWeight: '500', marginBottom: '20px' }}>No upfront charges required</p>
 
-                            <div style={{ display: 'flex', justifyContent: 'center', gap: '20px', fontSize: '0.75rem', color: '#94a3b8' }}>
-                                <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}><Shield size={14} /> Secure</div>
-                                <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}><Star size={14} /> Guarantee</div>
+                            <div style={{ display: 'flex', justifyContent: 'center', gap: '20px', fontSize: '0.8rem', color: 'var(--text-muted)', fontWeight: '600' }}>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><Shield size={16} color="var(--secondary)" /> Secure</div>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><Star size={16} color="#fbbf24" /> Top Pro</div>
                             </div>
                         </div>
                     </aside>
@@ -313,24 +324,26 @@ const Profile = () => {
 
             {/* Confirmation Modal */}
             {showConfirmation && (
-                <div style={{ position: 'fixed', inset: 0, backgroundColor: 'rgba(0,0,0,0.5)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px' }}>
+                <div style={{ position: 'fixed', inset: 0, backgroundColor: 'rgba(15, 23, 42, 0.8)', backdropFilter: 'blur(8px)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px' }}>
                     <motion.div
                         initial={{ scale: 0.9, opacity: 0 }}
                         animate={{ scale: 1, opacity: 1 }}
-                        style={{ backgroundColor: 'white', padding: '40px', borderRadius: '24px', maxWidth: '400px', width: '100%', textAlign: 'center' }}
+                        className="glass-card"
+                        style={{ padding: '48px', maxWidth: '450px', width: '100%', textAlign: 'center', border: '1px solid var(--primary)' }}
                     >
-                        <div style={{ width: '64px', height: '64px', backgroundColor: '#f0fdf4', color: '#22c55e', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 24px' }}>
-                            <Check size={32} />
+                        <div style={{ width: '80px', height: '80px', backgroundColor: 'rgba(16, 185, 129, 0.1)', color: 'var(--secondary)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 24px', border: '2px solid var(--secondary)' }}>
+                            <Check size={40} />
                         </div>
-                        <h2 style={{ fontSize: '1.5rem', fontWeight: '800', marginBottom: '12px' }}>Booking Confirmed!</h2>
-                        <p style={{ color: '#64748b', marginBottom: '32px', lineHeight: '1.6' }}>
-                            Your appointment with <strong>John Doe</strong> has been requested for Oct 10, 2023 at 01:00 PM.
+                        <h2 style={{ fontSize: '2rem', fontWeight: '900', color: 'var(--text-main)', marginBottom: '16px', letterSpacing: '-1px' }}>Booking Confirmed!</h2>
+                        <p style={{ color: 'var(--text-muted)', marginBottom: '32px', lineHeight: '1.7', fontSize: '1.1rem' }}>
+                            Your appointment with <strong style={{ color: 'var(--text-main)' }}>{provider.name}</strong> has been requested for Oct 10, 2023 at 01:00 PM.
                         </p>
                         <button
                             onClick={() => setShowConfirmation(false)}
-                            style={{ backgroundColor: '#1e293b', color: 'white', border: 'none', borderRadius: '12px', padding: '14px', width: '100%', fontWeight: '700' }}
+                            className="btn-primary"
+                            style={{ width: '100%', justifyContent: 'center', padding: '16px' }}
                         >
-                            Got it
+                            Back to Profile
                         </button>
                     </motion.div>
                 </div>

@@ -104,12 +104,18 @@ const Dashboard = () => {
     ];
 
     return (
-        <div style={{ display: 'flex', minHeight: '100vh', backgroundColor: '#fcfdfe' }}>
+        <div style={{ display: 'flex', minHeight: '100vh', backgroundColor: 'var(--background)', position: 'relative', overflow: 'hidden' }}>
+            {/* Aurora Background Blobs */}
+            <div className="aurora-blob blob-1"></div>
+            <div className="aurora-blob blob-2"></div>
+            <div className="aurora-blob blob-3"></div>
+
             {/* Sidebar */}
             <aside style={{
                 width: '280px',
-                backgroundColor: 'rgba(255, 255, 255, 0.9)',
-                borderRight: '1px solid #eef2f6',
+                backgroundColor: 'var(--glass-bg)',
+                backdropFilter: 'blur(16px) saturate(180%)',
+                borderRight: '1px solid var(--glass-border)',
                 padding: '100px 1.5rem 2.5rem',
                 position: 'fixed',
                 height: '100vh',
@@ -119,7 +125,7 @@ const Dashboard = () => {
                 display: 'flex',
                 flexDirection: 'column',
                 gap: '2.5rem',
-                boxShadow: 'var(--shadow-premium)'
+                boxShadow: 'var(--glass-card-shadow)'
             }}>
                 {/* Navigation Items */}
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
@@ -132,8 +138,8 @@ const Dashboard = () => {
                                 alignItems: 'center',
                                 gap: '1rem',
                                 padding: '1rem 1.25rem',
-                                borderRadius: '16px',
-                                background: activeTab === item.id ? 'rgba(59, 130, 246, 0.08)' : 'transparent',
+                                borderRadius: '20px',
+                                background: activeTab === item.id ? 'rgba(6, 182, 212, 0.12)' : 'transparent',
                                 color: activeTab === item.id ? 'var(--primary)' : 'var(--text-muted)',
                                 fontWeight: '700',
                                 transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
@@ -166,9 +172,9 @@ const Dashboard = () => {
                                 alignItems: 'center',
                                 justifyContent: 'center',
                                 padding: '0.4rem',
-                                borderRadius: '10px',
-                                background: activeTab === item.id ? 'white' : 'transparent',
-                                boxShadow: activeTab === item.id ? '0 4px 6px -1px rgba(0,0,0,0.05)' : 'none'
+                                borderRadius: '12px',
+                                background: activeTab === item.id ? 'var(--white)' : 'transparent',
+                                boxShadow: activeTab === item.id ? 'var(--shadow-sm)' : 'none'
                             }}>
                                 {React.cloneElement(item.icon, { size: 18, strokeWidth: activeTab === item.id ? 2.5 : 2 })}
                             </span>
@@ -183,40 +189,42 @@ const Dashboard = () => {
                 flex: 1,
                 padding: '100px 3rem 3rem',
                 marginLeft: '280px',
-                minWidth: 0
+                minWidth: 0,
+                position: 'relative',
+                zIndex: 1
             }}>
                 <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '3rem' }}>
                     <div>
-                        <h1 style={{ fontSize: '2.25rem', fontWeight: '850', color: 'var(--text-main)', letterSpacing: '-1px', marginBottom: '0.5rem' }}>Good morning, John!</h1>
+                        <h1 style={{ fontSize: '2.5rem', fontWeight: '850', color: 'var(--text-main)', letterSpacing: '-1.5px', marginBottom: '0.5rem' }}>
+                            Good morning, <span className="text-gradient-primary">John!</span>
+                        </h1>
                         <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem', fontWeight: '500' }}>Here's what's happening with your business today.</p>
                     </div>
                     <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
                         {/* Notification Bell */}
                         <div
                             onClick={() => setIsDrawerOpen(true)}
+                            className="glass hover-lift"
                             style={{
                                 position: 'relative',
                                 cursor: 'pointer',
-                                padding: '0.75rem',
-                                borderRadius: '16px',
-                                background: 'white',
-                                border: '1px solid #eff3f7',
-                                boxShadow: 'var(--shadow-sm)'
+                                padding: '0.9rem',
+                                borderRadius: '18px',
+                                border: '1px solid var(--glass-border)'
                             }}
-                            className="hover-lift"
                         >
                             <Bell size={22} color="var(--text-main)" />
                             {/* Pulsing indicator */}
                             <span style={{
                                 position: 'absolute',
-                                top: '10px',
-                                right: '10px',
+                                top: '12px',
+                                right: '12px',
                                 width: '10px',
                                 height: '10px',
                                 backgroundColor: 'var(--accent)',
                                 borderRadius: '50%',
-                                border: '2px solid white',
-                                boxShadow: '0 0 0 2px rgba(245, 158, 11, 0.2)'
+                                border: '2px solid var(--white)',
+                                boxShadow: '0 0 10px rgba(139, 92, 246, 0.4)'
                             }}></span>
                         </div>
                     </div>

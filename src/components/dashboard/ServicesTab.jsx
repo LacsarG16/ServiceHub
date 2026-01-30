@@ -47,20 +47,20 @@ const ServicesTab = ({ onAddService, onEditService }) => {
         >
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2.5rem' }}>
                 <div>
-                    <h2 style={{ fontSize: '1.85rem', fontWeight: '850', color: 'var(--text-main)', letterSpacing: '-0.5px' }}>My Services</h2>
-                    <p style={{ color: 'var(--text-muted)', fontSize: '1rem', marginTop: '0.25rem' }}>Manage and monitor your service offerings.</p>
+                    <h2 style={{ fontSize: '2rem', fontWeight: '850', color: 'var(--text-main)', letterSpacing: '-1px' }}>My <span className="text-gradient-primary">Services</span></h2>
+                    <p style={{ color: 'var(--text-muted)', fontSize: '1rem', marginTop: '0.25rem', fontWeight: '500' }}>Manage and monitor your service offerings with cinematic precision.</p>
                 </div>
                 <button
                     onClick={onAddService}
                     className="btn-primary hover-lift"
                     style={{
-                        padding: '0.85rem 1.5rem',
-                        borderRadius: '16px',
-                        boxShadow: '0 10px 20px -5px rgba(59, 130, 246, 0.4)',
-                        fontSize: '0.95rem'
+                        padding: '0.9rem 1.75rem',
+                        borderRadius: '18px',
+                        fontSize: '0.95rem',
+                        gap: '0.75rem'
                     }}
                 >
-                    <Plus size={20} /> Create New Service
+                    <Plus size={20} strokeWidth={3} /> Create New Service
                 </button>
             </div>
 
@@ -71,17 +71,14 @@ const ServicesTab = ({ onAddService, onEditService }) => {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.4, delay: index * 0.1 }}
-                        className="hover-lift"
+                        className="glass-card hover-lift"
                         style={{
                             padding: '2.25rem',
-                            borderRadius: 'var(--radius-xl)',
-                            background: 'white',
                             position: 'relative',
-                            border: '1px solid #f1f5f9',
-                            boxShadow: 'var(--shadow-premium)',
                             display: 'flex',
                             flexDirection: 'column',
-                            gap: '1.75rem'
+                            gap: '1.75rem',
+                            overflow: 'hidden'
                         }}
                     >
                         {/* Header Section */}
@@ -113,33 +110,32 @@ const ServicesTab = ({ onAddService, onEditService }) => {
                                     <h3 style={{ fontSize: '1.25rem', marginTop: '0.1rem', color: 'var(--text-main)', fontWeight: '800' }}>{service.name}</h3>
                                 </div>
                             </div>
-                            <button style={{
-                                background: '#f8fafc',
-                                border: 'none',
+                            <button className="glass hover-lift" style={{
+                                border: '1px solid var(--glass-border)',
                                 color: 'var(--text-muted)',
                                 cursor: 'pointer',
-                                padding: '0.5rem',
-                                borderRadius: '10px'
-                            }} className="hover-lift">
+                                padding: '0.6rem',
+                                borderRadius: '12px'
+                            }}>
                                 <MoreVertical size={18} />
                             </button>
                         </div>
 
                         {/* Stats Section */}
-                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '1rem' }}>
-                            <div style={{ textAlign: 'center', padding: '0.75rem', background: '#fcfdfe', borderRadius: '14px', border: '1px solid #f8fafc' }}>
-                                <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '0.4rem', fontWeight: '500' }}>Price</p>
+                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '0.75rem' }}>
+                            <div style={{ textAlign: 'center', padding: '0.85rem 0.5rem', background: 'var(--glass-bg)', backdropFilter: 'blur(4px)', borderRadius: '14px', border: '1px solid var(--glass-border)' }}>
+                                <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)', marginBottom: '0.4rem', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Price</p>
                                 <p style={{ fontWeight: '800', color: 'var(--text-main)', fontSize: '1rem' }}>{service.price}</p>
                             </div>
-                            <div style={{ textAlign: 'center', padding: '0.75rem', background: '#fcfdfe', borderRadius: '14px', border: '1px solid #f8fafc' }}>
-                                <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '0.4rem', fontWeight: '500' }}>Rating</p>
+                            <div style={{ textAlign: 'center', padding: '0.85rem 0.5rem', background: 'var(--glass-bg)', backdropFilter: 'blur(4px)', borderRadius: '14px', border: '1px solid var(--glass-border)' }}>
+                                <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)', marginBottom: '0.4rem', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Rating</p>
                                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.25rem' }}>
                                     <Star size={14} fill="var(--accent)" color="var(--accent)" />
                                     <span style={{ fontWeight: '800', color: 'var(--text-main)', fontSize: '1rem' }}>{service.rating}</span>
                                 </div>
                             </div>
-                            <div style={{ textAlign: 'center', padding: '0.75rem', background: '#fcfdfe', borderRadius: '14px', border: '1px solid #f8fafc' }}>
-                                <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '0.4rem', fontWeight: '500' }}>Bookings</p>
+                            <div style={{ textAlign: 'center', padding: '0.85rem 0.5rem', background: 'var(--glass-bg)', backdropFilter: 'blur(4px)', borderRadius: '14px', border: '1px solid var(--glass-border)' }}>
+                                <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)', marginBottom: '0.4rem', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Bookings</p>
                                 <p style={{ fontWeight: '800', color: 'var(--text-main)', fontSize: '1rem' }}>{service.bookings}</p>
                             </div>
                         </div>
@@ -157,8 +153,8 @@ const ServicesTab = ({ onAddService, onEditService }) => {
                                 borderRadius: 'var(--radius-full)',
                                 fontSize: '0.75rem',
                                 fontWeight: '800',
-                                backgroundColor: service.status === 'Active' ? 'rgba(16, 185, 129, 0.08)' : 'rgba(100, 116, 139, 0.08)',
-                                color: service.status === 'Active' ? '#10b981' : 'var(--text-muted)',
+                                backgroundColor: service.status === 'Active' ? 'rgba(16, 185, 129, 0.12)' : 'rgba(148, 163, 184, 0.12)',
+                                color: service.status === 'Active' ? 'var(--secondary)' : 'var(--text-muted)',
                                 textTransform: 'uppercase',
                                 letterSpacing: '0.5px'
                             }}>
@@ -167,28 +163,27 @@ const ServicesTab = ({ onAddService, onEditService }) => {
                             <div style={{ display: 'flex', gap: '0.75rem' }}>
                                 <button
                                     onClick={() => onEditService(service)}
+                                    className="glass hover-lift"
                                     style={{
-                                        padding: '0.65rem',
+                                        padding: '0.75rem',
                                         borderRadius: '12px',
-                                        background: 'white',
                                         color: 'var(--text-muted)',
-                                        border: '1px solid #f1f5f9',
+                                        border: '1px solid var(--glass-border)',
                                         cursor: 'pointer'
                                     }}
-                                    className="hover-lift"
                                 >
                                     <Edit2 size={16} />
                                 </button>
                                 <button
+                                    className="hover-lift"
                                     style={{
-                                        padding: '0.65rem',
+                                        padding: '0.75rem',
                                         borderRadius: '12px',
-                                        background: 'rgba(239, 68, 68, 0.05)',
+                                        background: 'rgba(239, 68, 68, 0.12)',
                                         color: '#ef4444',
-                                        border: '1px solid rgba(239, 68, 68, 0.1)',
+                                        border: '1px solid rgba(239, 68, 68, 0.2)',
                                         cursor: 'pointer'
                                     }}
-                                    className="hover-lift"
                                 >
                                     <Trash2 size={16} />
                                 </button>

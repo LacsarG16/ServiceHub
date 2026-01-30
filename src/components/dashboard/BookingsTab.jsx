@@ -64,11 +64,11 @@ const BookingsTab = ({ onBookingClick, onAddBooking }) => {
     const renderHeader = () => {
         return (
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                    <h3 style={{ fontSize: '1.25rem', fontWeight: '700' }}>{format(currentMonth, 'MMMM yyyy')}</h3>
-                    <div style={{ display: 'flex', gap: '0.5rem' }}>
-                        <button onClick={prevMonth} style={{ padding: '0.5rem', borderRadius: '50%', background: 'white', border: '1px solid #e2e8f0' }}><ChevronLeft size={18} /></button>
-                        <button onClick={nextMonth} style={{ padding: '0.5rem', borderRadius: '50%', background: 'white', border: '1px solid #e2e8f0' }}><ChevronRight size={18} /></button>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
+                    <h3 style={{ fontSize: '1.5rem', fontWeight: '850', color: 'var(--text-main)', letterSpacing: '-0.5px' }}>{format(currentMonth, 'MMMM yyyy')}</h3>
+                    <div style={{ display: 'flex', gap: '0.75rem' }}>
+                        <button onClick={prevMonth} className="glass hover-lift" style={{ padding: '0.6rem', borderRadius: '50%', border: '1px solid var(--glass-border)', color: 'var(--text-main)' }}><ChevronLeft size={20} /></button>
+                        <button onClick={nextMonth} className="glass hover-lift" style={{ padding: '0.6rem', borderRadius: '50%', border: '1px solid var(--glass-border)', color: 'var(--text-main)' }}><ChevronRight size={20} /></button>
                     </div>
                 </div>
 
@@ -113,7 +113,7 @@ const BookingsTab = ({ onBookingClick, onAddBooking }) => {
         const days = eachDayOfInterval({ start: startDate, end: endDate });
 
         return (
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: '1px', background: '#e2e8f0', borderRadius: 'var(--radius-md)', overflow: 'hidden', border: '1px solid #e2e8f0' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: '1px', background: 'var(--glass-border)', borderRadius: '20px', overflow: 'hidden', border: '1px solid var(--glass-border)', boxShadow: 'var(--glass-card-shadow)' }}>
                 {days.map(day => {
                     const status = getAvailabilityStatus(day);
                     const isSelected = isSameDay(day, selectedDate);
@@ -125,14 +125,17 @@ const BookingsTab = ({ onBookingClick, onAddBooking }) => {
                             key={day.toISOString()}
                             onClick={() => setSelectedDate(day)}
                             style={{
-                                minHeight: '100px',
-                                background: isCurrentMonth ? 'white' : '#f8fafc',
-                                padding: '0.75rem',
+                                minHeight: '110px',
+                                background: isSelected ? 'rgba(6, 182, 212, 0.1)' : isCurrentMonth ? 'var(--glass-bg)' : 'rgba(0,0,0,0.02)',
+                                backdropFilter: 'blur(8px)',
+                                padding: '1rem',
                                 cursor: 'pointer',
-                                transition: 'all 0.2s',
-                                border: isSelected ? '2px solid var(--primary)' : '2px solid transparent',
-                                position: 'relative'
+                                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                                border: isSelected ? '2px solid var(--primary)' : '1px solid transparent',
+                                position: 'relative',
+                                zIndex: isSelected ? 2 : 1
                             }}
+                            className="hover-lift"
                         >
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
                                 <span style={{
@@ -161,15 +164,16 @@ const BookingsTab = ({ onBookingClick, onAddBooking }) => {
                                             onBookingClick(b);
                                         }}
                                         style={{
-                                            fontSize: '0.65rem',
-                                            padding: '2px 6px',
-                                            borderRadius: '4px',
-                                            background: b.status === 'Cancelled' ? 'rgba(239, 68, 68, 0.1)' : 'rgba(59, 130, 246, 0.1)',
+                                            fontSize: '0.7rem',
+                                            padding: '4px 8px',
+                                            borderRadius: '8px',
+                                            background: b.status === 'Cancelled' ? 'rgba(239, 68, 68, 0.15)' : 'rgba(6, 182, 212, 0.15)',
                                             color: b.status === 'Cancelled' ? '#ef4444' : 'var(--primary)',
-                                            fontWeight: '700',
+                                            fontWeight: '800',
                                             whiteSpace: 'nowrap',
                                             overflow: 'hidden',
-                                            textOverflow: 'ellipsis'
+                                            textOverflow: 'ellipsis',
+                                            border: `1px solid ${b.status === 'Cancelled' ? 'rgba(239, 68, 68, 0.2)' : 'rgba(6, 182, 212, 0.2)'}`
                                         }}
                                     >
                                         {b.customer.split(' ')[0]} - {b.time}
@@ -191,19 +195,22 @@ const BookingsTab = ({ onBookingClick, onAddBooking }) => {
         const status = getAvailabilityStatus(selectedDate);
 
         return (
-            <div className="glass" style={{ padding: '2rem', borderRadius: 'var(--radius-lg)', background: 'white' }}>
-                <div style={{ borderBottom: '1px solid #f1f5f9', paddingBottom: '1.5rem', marginBottom: '1.5rem' }}>
-                    <h3 style={{ fontSize: '1.1rem', marginBottom: '0.5rem' }}>Schedule for {format(selectedDate, 'EEEE, MMMM do')}</h3>
+            <div className="glass-card" style={{ padding: '2.5rem' }}>
+                <div style={{ borderBottom: '1px solid var(--glass-border)', paddingBottom: '1.5rem', marginBottom: '1.5rem' }}>
+                    <h3 style={{ fontSize: '1.35rem', fontWeight: '850', color: 'var(--text-main)', letterSpacing: '-0.5px', marginBottom: '0.75rem' }}>Schedule for {format(selectedDate, 'EEEE, MMM do')}</h3>
                     <div style={{ display: 'flex', gap: '1rem' }}>
                         <span style={{
-                            fontSize: '0.8rem',
-                            fontWeight: '700',
-                            color: status === 'available' ? '#10b981' : status === 'fully-booked' ? '#ef4444' : 'var(--primary)',
+                            fontSize: '0.85rem',
+                            fontWeight: '800',
+                            color: status === 'available' ? 'var(--secondary)' : status === 'fully-booked' ? '#ef4444' : 'var(--primary)',
                             display: 'flex',
                             alignItems: 'center',
-                            gap: '0.4rem'
+                            gap: '0.5rem',
+                            padding: '0.4rem 0.85rem',
+                            background: status === 'available' ? 'rgba(16, 185, 129, 0.1)' : status === 'fully-booked' ? 'rgba(239, 68, 68, 0.1)' : 'rgba(6, 182, 212, 0.1)',
+                            borderRadius: '12px'
                         }}>
-                            <div style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: status === 'available' ? '#10b981' : status === 'fully-booked' ? '#ef4444' : 'var(--primary)' }}></div>
+                            <div style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: status === 'available' ? 'var(--secondary)' : status === 'fully-booked' ? '#ef4444' : 'var(--primary)' }}></div>
                             {status === 'available' ? 'Open for Bookings' : status === 'fully-booked' ? 'Fully Booked' : 'Limited Availability'}
                         </span>
                     </div>
@@ -215,28 +222,28 @@ const BookingsTab = ({ onBookingClick, onAddBooking }) => {
                             <div
                                 key={b.id}
                                 onClick={() => onBookingClick(b)}
-                                style={{ padding: '1.25rem', borderRadius: 'var(--radius-md)', background: '#f8fafc', border: '1px solid #f1f5f9', display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer' }}
-                                onMouseEnter={(e) => e.currentTarget.style.background = '#f1f5f9'}
-                                onMouseLeave={(e) => e.currentTarget.style.background = '#f8fafc'}
+                                className="glass hover-lift"
+                                style={{ padding: '1.25rem', borderRadius: '18px', border: '1px solid var(--glass-border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer' }}
                             >
-                                <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-                                    <div style={{ width: '40px', height: '40px', borderRadius: '12px', background: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #e2e8f0' }}>
-                                        <User size={20} color="var(--primary)" />
+                                <div style={{ display: 'flex', gap: '1.25rem', alignItems: 'center' }}>
+                                    <div style={{ width: '48px', height: '48px', borderRadius: '14px', background: 'var(--white)', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid var(--glass-border)' }}>
+                                        <User size={22} color="var(--primary)" />
                                     </div>
                                     <div>
-                                        <p style={{ fontWeight: '700', marginBottom: '0.1rem' }}>{b.customer}</p>
-                                        <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-                                            <Clock size={12} /> {b.time} • {b.service}
+                                        <p style={{ fontWeight: '800', color: 'var(--text-main)', marginBottom: '0.2rem' }}>{b.customer}</p>
+                                        <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: '500' }}>
+                                            <Clock size={14} /> {b.time} • {b.service}
                                         </p>
                                     </div>
                                 </div>
                                 <div style={{ textAlign: 'right' }}>
-                                    <p style={{ fontWeight: '700', fontSize: '0.9rem' }}>{b.amount}</p>
+                                    <p style={{ fontWeight: '900', fontSize: '1.1rem', color: 'var(--text-main)' }}>{b.amount}</p>
                                     <span style={{
-                                        fontSize: '0.7rem',
+                                        fontSize: '0.75rem',
                                         fontWeight: '800',
-                                        color: b.status === 'Completed' ? '#10b981' : b.status === 'Cancelled' ? '#ef4444' : 'var(--primary)',
-                                        textTransform: 'uppercase'
+                                        color: b.status === 'Completed' ? 'var(--secondary)' : b.status === 'Cancelled' ? '#ef4444' : 'var(--primary)',
+                                        textTransform: 'uppercase',
+                                        letterSpacing: '0.5px'
                                     }}>
                                         {b.status}
                                     </span>
@@ -262,8 +269,8 @@ const BookingsTab = ({ onBookingClick, onAddBooking }) => {
 
     return (
         <div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
-                <h2 style={{ fontSize: '1.5rem' }}>Bookings</h2>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '3rem' }}>
+                <h2 style={{ fontSize: '2rem', fontWeight: '850', color: 'var(--text-main)', letterSpacing: '-1px' }}>My <span className="text-gradient-primary">Bookings</span></h2>
                 <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
                     <button
                         onClick={onAddBooking}
@@ -272,16 +279,16 @@ const BookingsTab = ({ onBookingClick, onAddBooking }) => {
                     >
                         + New Booking
                     </button>
-                    <div style={{ display: 'flex', background: 'white', borderRadius: 'var(--radius-md)', padding: '0.25rem', border: '1px solid #e2e8f0' }}>
+                    <div className="glass" style={{ display: 'flex', borderRadius: '16px', padding: '0.35rem', border: '1px solid var(--glass-border)' }}>
                         <button
                             onClick={() => setView('list')}
-                            style={{ padding: '0.5rem 1rem', borderRadius: '6px', background: view === 'list' ? 'var(--primary)' : 'transparent', color: view === 'list' ? 'white' : 'var(--text-muted)', fontWeight: '600', border: 'none', cursor: 'pointer' }}
+                            style={{ padding: '0.6rem 1.25rem', borderRadius: '12px', background: view === 'list' ? 'var(--primary)' : 'transparent', color: view === 'list' ? 'white' : 'var(--text-muted)', fontWeight: '800', border: 'none', cursor: 'pointer', transition: 'all 0.3s' }}
                         >
                             List
                         </button>
                         <button
                             onClick={() => setView('calendar')}
-                            style={{ padding: '0.5rem 1rem', borderRadius: '6px', background: view === 'calendar' ? 'var(--primary)' : 'transparent', color: view === 'calendar' ? 'white' : 'var(--text-muted)', fontWeight: '600', border: 'none', cursor: 'pointer' }}
+                            style={{ padding: '0.6rem 1.25rem', borderRadius: '12px', background: view === 'calendar' ? 'var(--primary)' : 'transparent', color: view === 'calendar' ? 'white' : 'var(--text-muted)', fontWeight: '800', border: 'none', cursor: 'pointer', transition: 'all 0.3s' }}
                         >
                             Calendar
                         </button>
@@ -291,43 +298,37 @@ const BookingsTab = ({ onBookingClick, onAddBooking }) => {
 
             {view === 'list' ? (
                 <>
-                    <div style={{
-                        padding: '1.5rem 2rem',
-                        borderRadius: 'var(--radius-xl)',
-                        background: 'white',
-                        marginBottom: '2.5rem',
-                        border: '1px solid rgba(226, 232, 240, 0.6)',
-                        boxShadow: '0 4px 20px rgba(0,0,0,0.02)'
+                    <div className="glass-card" style={{
+                        padding: '1.75rem 2.25rem',
+                        marginBottom: '2.5rem'
                     }}>
                         <div style={{ display: 'flex', gap: '1.5rem', flexWrap: 'wrap' }}>
                             <div style={{ flex: 1, position: 'relative', minWidth: '300px' }}>
                                 <Search size={20} style={{ position: 'absolute', left: '1.25rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
                                 <input
                                     type="text"
-                                    placeholder="Search by customer name or service..."
+                                    placeholder="Search customers or services..."
                                     style={{
                                         width: '100%',
-                                        padding: '0.85rem 1rem 0.85rem 3.25rem',
-                                        borderRadius: '14px',
-                                        border: '1px solid #eef2f6',
-                                        background: '#fcfdfe',
+                                        padding: '1rem 1rem 1rem 3.5rem',
+                                        borderRadius: '16px',
+                                        border: '1px solid var(--glass-border)',
+                                        background: 'var(--glass-bg)',
+                                        color: 'var(--text-main)',
                                         outline: 'none',
-                                        fontSize: '0.95rem'
+                                        fontSize: '1rem',
+                                        fontWeight: '500'
                                     }}
                                 />
                             </div>
-                            <button className="hover-lift" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '0.85rem 1.5rem', borderRadius: '14px', background: 'white', border: '1px solid #eef2f6', color: 'var(--text-main)', fontWeight: '700', fontSize: '0.9rem' }}>
-                                <Filter size={18} /> Filters
+                            <button className="glass hover-lift" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '1rem 1.75rem', borderRadius: '16px', border: '1px solid var(--glass-border)', color: 'var(--text-main)', fontWeight: '800', fontSize: '0.95rem' }}>
+                                <Filter size={18} strokeWidth={2.5} /> Filters
                             </button>
                         </div>
                     </div>
 
-                    <div style={{
-                        borderRadius: 'var(--radius-xl)',
-                        background: 'white',
-                        overflow: 'hidden',
-                        border: '1px solid rgba(226, 232, 240, 0.6)',
-                        boxShadow: '0 10px 30px -5px rgba(0,0,0,0.03)'
+                    <div className="glass-card" style={{
+                        overflow: 'hidden'
                     }}>
                         <table style={{ width: '100%', borderCollapse: 'separate', borderSpacing: '0' }}>
                             <thead style={{ background: '#fcfdfe' }}>
@@ -345,9 +346,8 @@ const BookingsTab = ({ onBookingClick, onAddBooking }) => {
                                     <tr
                                         key={booking.id}
                                         onClick={() => onBookingClick(booking)}
-                                        style={{ borderBottom: '1px solid #f8fafc', cursor: 'pointer', transition: 'all 0.2s' }}
-                                        onMouseEnter={(e) => e.currentTarget.style.background = '#fcfdfe'}
-                                        onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
+                                        style={{ borderBottom: '1px solid var(--glass-border)', cursor: 'pointer', transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)' }}
+                                        className="hover-lift"
                                     >
                                         <td style={{ padding: '1.25rem 2rem' }}>
                                             <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
@@ -383,8 +383,8 @@ const BookingsTab = ({ onBookingClick, onAddBooking }) => {
                                                 borderRadius: 'var(--radius-full)',
                                                 fontSize: '0.75rem',
                                                 fontWeight: '800',
-                                                backgroundColor: booking.status === 'Upcoming' ? 'rgba(59, 130, 246, 0.08)' : booking.status === 'Completed' ? 'rgba(16, 185, 129, 0.08)' : 'rgba(239, 68, 68, 0.08)',
-                                                color: booking.status === 'Upcoming' ? 'var(--primary)' : booking.status === 'Completed' ? '#10b981' : '#ef4444',
+                                                backgroundColor: booking.status === 'Upcoming' ? 'rgba(6, 182, 212, 0.12)' : booking.status === 'Completed' ? 'rgba(16, 185, 129, 0.12)' : 'rgba(239, 68, 68, 0.12)',
+                                                color: booking.status === 'Upcoming' ? 'var(--primary)' : booking.status === 'Completed' ? 'var(--secondary)' : '#ef4444',
                                                 textTransform: 'uppercase',
                                                 letterSpacing: '0.5px'
                                             }}>
@@ -392,7 +392,7 @@ const BookingsTab = ({ onBookingClick, onAddBooking }) => {
                                             </span>
                                         </td>
                                         <td style={{ padding: '1.25rem 2rem', textAlign: 'right' }}>
-                                            <button style={{ color: 'var(--text-muted)', background: 'none', border: 'none', padding: '0.5rem', borderRadius: '8px' }} className="hover-lift">
+                                            <button className="glass hover-lift" style={{ color: 'var(--text-muted)', border: '1px solid var(--glass-border)', padding: '0.6rem', borderRadius: '12px' }}>
                                                 <MoreHorizontal size={20} />
                                             </button>
                                         </td>
@@ -404,12 +404,8 @@ const BookingsTab = ({ onBookingClick, onAddBooking }) => {
                 </>
             ) : (
                 <div style={{ display: 'grid', gridTemplateColumns: '1.8fr 1fr', gap: '2.5rem' }}>
-                    <div style={{
-                        padding: '2.5rem',
-                        borderRadius: 'var(--radius-xl)',
-                        background: 'white',
-                        border: '1px solid rgba(226, 232, 240, 0.6)',
-                        boxShadow: '0 10px 30px -5px rgba(0,0,0,0.03)'
+                    <div className="glass-card" style={{
+                        padding: '2.5rem'
                     }}>
                         {renderHeader()}
                         {renderDays()}
