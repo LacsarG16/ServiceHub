@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 
@@ -10,12 +10,15 @@ import Dashboard from './pages/Dashboard';
 import ForProviders from './pages/ForProviders';
 import Contact from './pages/Contact';
 import About from './pages/About';
-
-// No placeholder pages needed anymore
+import AuroraBackground from './components/AuroraBackground';
 
 function App() {
+  const location = useLocation();
+  const isDashboard = location.pathname === '/dashboard';
+
   return (
-    <div className="app">
+    <div className="app cinematic-wrapper">
+      <AuroraBackground />
       <Navbar />
       <main style={{ minHeight: '80vh' }}>
         <Routes>
@@ -28,7 +31,7 @@ function App() {
           <Route path="/about" element={<About />} />
         </Routes>
       </main>
-      <Footer />
+      {!isDashboard && <Footer />}
     </div>
   );
 }

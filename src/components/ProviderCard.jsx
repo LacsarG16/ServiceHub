@@ -1,6 +1,6 @@
 import React from 'react';
 import { Star, MapPin, Clock, ArrowRight } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { motion } from 'framer-motion'; // eslint-disable-line no-unused-vars
 import { useNavigate } from 'react-router-dom';
 
 const ProviderCard = ({ provider }) => {
@@ -9,15 +9,11 @@ const ProviderCard = ({ provider }) => {
     return (
         <motion.div
             whileHover={{ y: -10 }}
-            className="glass"
+            className="glass-card"
             style={{
-                borderRadius: 'var(--radius-lg)',
-                overflow: 'hidden',
                 height: '100%',
                 display: 'flex',
-                flexDirection: 'column',
-                boxShadow: 'var(--shadow-md)',
-                border: '1px solid #f1f5f9'
+                flexDirection: 'column'
             }}
         >
             <div style={{ position: 'relative', height: '200px', overflow: 'hidden' }}>
