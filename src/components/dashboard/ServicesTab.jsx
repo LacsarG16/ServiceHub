@@ -71,14 +71,18 @@ const ServicesTab = ({ onAddService, onEditService }) => {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.4, delay: index * 0.1 }}
-                        className="glass-card hover-lift"
+                        className="hover-lift"
                         style={{
                             padding: '2.25rem',
                             position: 'relative',
                             display: 'flex',
                             flexDirection: 'column',
                             gap: '1.75rem',
-                            overflow: 'hidden'
+                            overflow: 'hidden',
+                            borderRadius: 'var(--radius-lg)',
+                            background: 'rgba(255, 255, 255, 0.03)',
+                            border: '1px solid var(--glass-border)',
+                            backdropFilter: 'blur(10px)'
                         }}
                     >
                         {/* Header Section */}
@@ -123,20 +127,20 @@ const ServicesTab = ({ onAddService, onEditService }) => {
 
                         {/* Stats Section */}
                         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '0.75rem' }}>
-                            <div style={{ textAlign: 'center', padding: '0.85rem 0.5rem', background: 'var(--glass-bg)', backdropFilter: 'blur(4px)', borderRadius: '14px', border: '1px solid var(--glass-border)' }}>
-                                <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)', marginBottom: '0.4rem', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Price</p>
-                                <p style={{ fontWeight: '800', color: 'var(--text-main)', fontSize: '1rem' }}>{service.price}</p>
+                            <div style={{ textAlign: 'center', padding: '0.85rem 0.5rem', background: 'rgba(255, 255, 255, 0.05)', borderRadius: '14px', border: '1px solid var(--glass-border)' }}>
+                                <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)', marginBottom: '0.4rem', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Price</p>
+                                <p style={{ fontWeight: '900', color: 'var(--text-main)', fontSize: '1rem' }}>{service.price}</p>
                             </div>
-                            <div style={{ textAlign: 'center', padding: '0.85rem 0.5rem', background: 'var(--glass-bg)', backdropFilter: 'blur(4px)', borderRadius: '14px', border: '1px solid var(--glass-border)' }}>
-                                <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)', marginBottom: '0.4rem', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Rating</p>
+                            <div style={{ textAlign: 'center', padding: '0.85rem 0.5rem', background: 'rgba(255, 255, 255, 0.05)', borderRadius: '14px', border: '1px solid var(--glass-border)' }}>
+                                <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)', marginBottom: '0.4rem', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Rating</p>
                                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.25rem' }}>
                                     <Star size={14} fill="var(--accent)" color="var(--accent)" />
-                                    <span style={{ fontWeight: '800', color: 'var(--text-main)', fontSize: '1rem' }}>{service.rating}</span>
+                                    <span style={{ fontWeight: '900', color: 'var(--text-main)', fontSize: '1rem' }}>{service.rating}</span>
                                 </div>
                             </div>
-                            <div style={{ textAlign: 'center', padding: '0.85rem 0.5rem', background: 'var(--glass-bg)', backdropFilter: 'blur(4px)', borderRadius: '14px', border: '1px solid var(--glass-border)' }}>
-                                <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)', marginBottom: '0.4rem', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Bookings</p>
-                                <p style={{ fontWeight: '800', color: 'var(--text-main)', fontSize: '1rem' }}>{service.bookings}</p>
+                            <div style={{ textAlign: 'center', padding: '0.85rem 0.5rem', background: 'rgba(255, 255, 255, 0.05)', borderRadius: '14px', border: '1px solid var(--glass-border)' }}>
+                                <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)', marginBottom: '0.4rem', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Bookings</p>
+                                <p style={{ fontWeight: '900', color: 'var(--text-main)', fontSize: '1rem' }}>{service.bookings}</p>
                             </div>
                         </div>
 

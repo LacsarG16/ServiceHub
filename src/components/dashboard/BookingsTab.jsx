@@ -126,12 +126,12 @@ const BookingsTab = ({ onBookingClick, onAddBooking }) => {
                             onClick={() => setSelectedDate(day)}
                             style={{
                                 minHeight: '110px',
-                                background: isSelected ? 'rgba(6, 182, 212, 0.1)' : isCurrentMonth ? 'var(--glass-bg)' : 'rgba(0,0,0,0.02)',
+                                background: isSelected ? 'rgba(6, 182, 212, 0.12)' : isCurrentMonth ? 'rgba(255, 255, 255, 0.03)' : 'transparent',
                                 backdropFilter: 'blur(8px)',
                                 padding: '1rem',
                                 cursor: 'pointer',
                                 transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                                border: isSelected ? '2px solid var(--primary)' : '1px solid transparent',
+                                border: isSelected ? '2px solid var(--primary)' : '1px solid var(--glass-border)',
                                 position: 'relative',
                                 zIndex: isSelected ? 2 : 1
                             }}
@@ -140,7 +140,7 @@ const BookingsTab = ({ onBookingClick, onAddBooking }) => {
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
                                 <span style={{
                                     fontSize: '0.9rem',
-                                    fontWeight: isToday(day) ? '800' : '500',
+                                    fontWeight: isToday(day) ? '900' : '600',
                                     color: isToday(day) ? 'var(--primary)' : isCurrentMonth ? 'var(--text-main)' : 'var(--text-muted)'
                                 }}>
                                     {format(day, 'd')}
@@ -222,16 +222,16 @@ const BookingsTab = ({ onBookingClick, onAddBooking }) => {
                             <div
                                 key={b.id}
                                 onClick={() => onBookingClick(b)}
-                                className="glass hover-lift"
-                                style={{ padding: '1.25rem', borderRadius: '18px', border: '1px solid var(--glass-border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer' }}
+                                className="glass-card hover-lift"
+                                style={{ padding: '1.25rem', borderRadius: '18px', background: 'rgba(255, 255, 255, 0.05)', border: '1px solid var(--glass-border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer', boxShadow: 'none' }}
                             >
                                 <div style={{ display: 'flex', gap: '1.25rem', alignItems: 'center' }}>
-                                    <div style={{ width: '48px', height: '48px', borderRadius: '14px', background: 'var(--white)', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid var(--glass-border)' }}>
+                                    <div style={{ width: '48px', height: '48px', borderRadius: '14px', background: 'var(--white)', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid var(--glass-border)', boxShadow: 'var(--shadow-sm)' }}>
                                         <User size={22} color="var(--primary)" />
                                     </div>
                                     <div>
                                         <p style={{ fontWeight: '800', color: 'var(--text-main)', marginBottom: '0.2rem' }}>{b.customer}</p>
-                                        <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: '500' }}>
+                                        <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: '600' }}>
                                             <Clock size={14} /> {b.time} • {b.service}
                                         </p>
                                     </div>
@@ -313,11 +313,11 @@ const BookingsTab = ({ onBookingClick, onAddBooking }) => {
                                         padding: '1rem 1rem 1rem 3.5rem',
                                         borderRadius: '16px',
                                         border: '1px solid var(--glass-border)',
-                                        background: 'var(--glass-bg)',
+                                        background: 'rgba(255, 255, 255, 0.05)',
                                         color: 'var(--text-main)',
                                         outline: 'none',
                                         fontSize: '1rem',
-                                        fontWeight: '500'
+                                        fontWeight: '600'
                                     }}
                                 />
                             </div>
@@ -331,14 +331,14 @@ const BookingsTab = ({ onBookingClick, onAddBooking }) => {
                         overflow: 'hidden'
                     }}>
                         <table style={{ width: '100%', borderCollapse: 'separate', borderSpacing: '0' }}>
-                            <thead style={{ background: '#fcfdfe' }}>
-                                <tr style={{ textAlign: 'left' }}>
-                                    <th style={{ padding: '1.25rem 2rem', color: 'var(--text-muted)', fontWeight: '700', fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Customer</th>
-                                    <th style={{ padding: '1.25rem 2rem', color: 'var(--text-muted)', fontWeight: '700', fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Service</th>
-                                    <th style={{ padding: '1.25rem 2rem', color: 'var(--text-muted)', fontWeight: '700', fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Date & Time</th>
-                                    <th style={{ padding: '1.25rem 2rem', color: 'var(--text-muted)', fontWeight: '700', fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Amount</th>
-                                    <th style={{ padding: '1.25rem 2rem', color: 'var(--text-muted)', fontWeight: '700', fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Status</th>
-                                    <th style={{ padding: '1.25rem 2rem' }}></th>
+                            <thead>
+                                <tr style={{ textAlign: 'left', background: 'rgba(255, 255, 255, 0.03)' }}>
+                                    <th style={{ padding: '1.25rem 2rem', color: 'var(--text-muted)', fontWeight: '800', fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '1px', borderBottom: '1px solid var(--glass-border)' }}>Customer</th>
+                                    <th style={{ padding: '1.25rem 2rem', color: 'var(--text-muted)', fontWeight: '800', fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '1px', borderBottom: '1px solid var(--glass-border)' }}>Service</th>
+                                    <th style={{ padding: '1.25rem 2rem', color: 'var(--text-muted)', fontWeight: '800', fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '1px', borderBottom: '1px solid var(--glass-border)' }}>Date & Time</th>
+                                    <th style={{ padding: '1.25rem 2rem', color: 'var(--text-muted)', fontWeight: '800', fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '1px', borderBottom: '1px solid var(--glass-border)' }}>Amount</th>
+                                    <th style={{ padding: '1.25rem 2rem', color: 'var(--text-muted)', fontWeight: '800', fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '1px', borderBottom: '1px solid var(--glass-border)' }}>Status</th>
+                                    <th style={{ padding: '1.25rem 2rem', borderBottom: '1px solid var(--glass-border)' }}></th>
                                 </tr>
                             </thead>
                             <tbody>

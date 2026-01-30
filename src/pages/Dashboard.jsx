@@ -187,60 +187,80 @@ const Dashboard = () => {
             {/* Main Content */}
             <main style={{
                 flex: 1,
-                padding: '100px 3rem 3rem',
                 marginLeft: '280px',
                 minWidth: 0,
                 position: 'relative',
-                zIndex: 1
+                zIndex: 1,
+                minHeight: '100vh',
+                display: 'flex',
+                flexDirection: 'column'
             }}>
-                <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '3rem' }}>
-                    <div>
-                        <h1 style={{ fontSize: '2.5rem', fontWeight: '850', color: 'var(--text-main)', letterSpacing: '-1.5px', marginBottom: '0.5rem' }}>
-                            Good morning, <span className="text-gradient-primary">John!</span>
-                        </h1>
-                        <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem', fontWeight: '500' }}>Here's what's happening with your business today.</p>
-                    </div>
-                    <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
-                        {/* Notification Bell */}
-                        <div
-                            onClick={() => setIsDrawerOpen(true)}
-                            className="glass hover-lift"
-                            style={{
-                                position: 'relative',
-                                cursor: 'pointer',
-                                padding: '0.9rem',
-                                borderRadius: '18px',
-                                border: '1px solid var(--glass-border)'
-                            }}
-                        >
-                            <Bell size={22} color="var(--text-main)" />
-                            {/* Pulsing indicator */}
-                            <span style={{
-                                position: 'absolute',
-                                top: '12px',
-                                right: '12px',
-                                width: '10px',
-                                height: '10px',
-                                backgroundColor: 'var(--accent)',
-                                borderRadius: '50%',
-                                border: '2px solid var(--white)',
-                                boxShadow: '0 0 10px rgba(139, 92, 246, 0.4)'
-                            }}></span>
+                <div className="glass" style={{
+                    flex: 1,
+                    margin: '3rem',
+                    padding: '3rem',
+                    borderRadius: 'var(--radius-xl)',
+                    border: '1px solid var(--glass-border)',
+                    boxShadow: 'var(--glass-card-shadow)',
+                    minHeight: 'calc(100vh - 6rem)',
+                    display: 'flex',
+                    flexDirection: 'column'
+                }}>
+                    <header style={{
+                        margin: '0 0 3rem',
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center'
+                    }}>
+                        <div>
+                            <h1 style={{ fontSize: '2.5rem', fontWeight: '850', color: 'var(--text-main)', letterSpacing: '-1.5px', marginBottom: '0.5rem' }}>
+                                Good morning, <span className="text-gradient-primary">John!</span>
+                            </h1>
+                            <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem', fontWeight: '500' }}>Here's what's happening with your business today.</p>
                         </div>
-                    </div>
-                </header>
+                        <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
+                            {/* Notification Bell */}
+                            <div
+                                onClick={() => setIsDrawerOpen(true)}
+                                className="glass hover-lift"
+                                style={{
+                                    position: 'relative',
+                                    cursor: 'pointer',
+                                    padding: '0.9rem',
+                                    borderRadius: '18px',
+                                    border: '1px solid var(--glass-border)'
+                                }}
+                            >
+                                <Bell size={22} color="var(--text-main)" />
+                                {/* Pulsing indicator */}
+                                <span style={{
+                                    position: 'absolute',
+                                    top: '12px',
+                                    right: '12px',
+                                    width: '10px',
+                                    height: '10px',
+                                    backgroundColor: 'var(--accent)',
+                                    borderRadius: '50%',
+                                    border: '2px solid var(--white)',
+                                    boxShadow: '0 0 10px rgba(139, 92, 246, 0.4)'
+                                }}></span>
+                            </div>
+                        </div>
+                    </header>
 
-                <AnimatePresence mode="wait">
-                    <motion.div
-                        key={activeTab}
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -10 }}
-                        transition={{ duration: 0.2 }}
-                    >
-                        {renderTabContent()}
-                    </motion.div>
-                </AnimatePresence>
+                    <AnimatePresence mode="wait">
+                        <motion.div
+                            key={activeTab}
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -10 }}
+                            transition={{ duration: 0.2 }}
+                            style={{ flex: 1 }}
+                        >
+                            {renderTabContent()}
+                        </motion.div>
+                    </AnimatePresence>
+                </div>
             </main>
 
             {/* Modal Layer */}

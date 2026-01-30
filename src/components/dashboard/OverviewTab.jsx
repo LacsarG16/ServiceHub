@@ -9,36 +9,41 @@ const OverviewTab = ({ stats, recentBookings, onBookingClick, onUpgrade }) => {
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '2rem', marginBottom: '3rem' }}>
                 {stats.map((stat, i) => (
                     <div key={i} className="glass-card hover-lift" style={{
-                        padding: '2rem',
+                        padding: '2.25rem',
+                        background: 'rgba(255, 255, 255, 0.03)',
+                        border: '1px solid var(--glass-border)',
                         position: 'relative',
-                        overflow: 'hidden'
+                        overflow: 'hidden',
+                        boxShadow: 'none' // Remove default shadow for layered look
                     }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1.5rem' }}>
                             <div style={{
-                                width: '50px',
-                                height: '50px',
-                                borderRadius: '16px',
-                                background: `${stat.icon.props.color}08`,
-                                border: `1px solid ${stat.icon.props.color}15`,
+                                width: '52px',
+                                height: '52px',
+                                borderRadius: '14px',
+                                background: 'var(--white)',
+                                boxShadow: 'var(--shadow-sm)',
                                 display: 'flex',
                                 alignItems: 'center',
-                                justifyContent: 'center'
+                                justifyContent: 'center',
+                                border: '1px solid var(--glass-border)'
                             }}>
-                                {React.cloneElement(stat.icon, { size: 24 })}
+                                {React.cloneElement(stat.icon, { size: 24, strokeWidth: 2.5 })}
                             </div>
                             <span style={{
-                                padding: '0.4rem 0.75rem',
+                                padding: '0.4rem 0.8rem',
                                 borderRadius: 'var(--radius-full)',
-                                fontSize: '0.8rem',
-                                color: '#10b981',
-                                fontWeight: '700',
-                                background: 'rgba(16, 185, 129, 0.08)'
+                                fontSize: '0.75rem',
+                                color: 'var(--secondary)',
+                                fontWeight: '800',
+                                background: 'rgba(16, 185, 129, 0.08)',
+                                border: '1px solid rgba(16, 185, 129, 0.1)'
                             }}>
                                 {stat.change}
                             </span>
                         </div>
-                        <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', fontWeight: '500', marginBottom: '0.5rem' }}>{stat.label}</p>
-                        <h3 style={{ fontSize: '1.85rem', fontWeight: '800', color: 'var(--text-main)', letterSpacing: '-0.5px' }}>{stat.value}</h3>
+                        <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', fontWeight: '600', marginBottom: '0.5rem' }}>{stat.label}</p>
+                        <h3 style={{ fontSize: '2.25rem', fontWeight: '900', color: 'var(--text-main)', letterSpacing: '-1px' }}>{stat.value}</h3>
                     </div>
                 ))}
             </div>
@@ -80,22 +85,23 @@ const OverviewTab = ({ stats, recentBookings, onBookingClick, onUpgrade }) => {
                                         style={{ cursor: 'pointer', transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)' }}
                                         className="hover-lift"
                                     >
-                                        <td style={{ padding: '1.25rem 1rem', fontWeight: '700', color: 'var(--text-main)', background: 'var(--glass-bg)', backdropFilter: 'blur(5px)', borderRadius: '16px 0 0 16px', border: '1px solid var(--glass-border)', borderRight: 'none' }}>{booking.customer}</td>
-                                        <td style={{ padding: '1.25rem 1rem', color: 'var(--text-muted)', background: 'var(--glass-bg)', backdropFilter: 'blur(5px)', borderTop: '1px solid var(--glass-border)', borderBottom: '1px solid var(--glass-border)' }}>{booking.service}</td>
-                                        <td style={{ padding: '1.25rem 1rem', background: 'var(--glass-bg)', backdropFilter: 'blur(5px)', borderTop: '1px solid var(--glass-border)', borderBottom: '1px solid var(--glass-border)' }}>
-                                            <p style={{ fontSize: '0.95rem', fontWeight: '700', color: 'var(--text-main)' }}>{booking.date instanceof Date ? booking.date.toLocaleDateString() : booking.date}</p>
-                                            <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', fontWeight: '500' }}>{booking.time}</p>
+                                        <td style={{ padding: '1.25rem 1rem', fontWeight: '800', color: 'var(--text-main)', background: 'rgba(255, 255, 255, 0.05)', borderRadius: '16px 0 0 16px', border: '1px solid var(--glass-border)', borderRight: 'none' }}>{booking.customer}</td>
+                                        <td style={{ padding: '1.25rem 1rem', color: 'var(--text-muted)', fontWeight: '600', background: 'rgba(255, 255, 255, 0.05)', borderTop: '1px solid var(--glass-border)', borderBottom: '1px solid var(--glass-border)' }}>{booking.service}</td>
+                                        <td style={{ padding: '1.25rem 1rem', background: 'rgba(255, 255, 255, 0.05)', borderTop: '1px solid var(--glass-border)', borderBottom: '1px solid var(--glass-border)' }}>
+                                            <p style={{ fontSize: '0.95rem', fontWeight: '800', color: 'var(--text-main)' }}>{booking.date instanceof Date ? booking.date.toLocaleDateString() : booking.date}</p>
+                                            <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', fontWeight: '600' }}>{booking.time}</p>
                                         </td>
-                                        <td style={{ padding: '1.25rem 1rem', background: 'var(--glass-bg)', backdropFilter: 'blur(5px)', borderRadius: '0 16px 16px 0', border: '1px solid var(--glass-border)', borderLeft: 'none' }}>
+                                        <td style={{ padding: '1.25rem 1rem', background: 'rgba(255, 255, 255, 0.05)', borderRadius: '0 16px 16px 0', border: '1px solid var(--glass-border)', borderLeft: 'none' }}>
                                             <span style={{
-                                                padding: '0.4rem 1rem',
+                                                padding: '0.5rem 1rem',
                                                 borderRadius: 'var(--radius-full)',
-                                                fontSize: '0.75rem',
-                                                fontWeight: '800',
-                                                backgroundColor: booking.status === 'Upcoming' ? 'rgba(6, 182, 212, 0.12)' : booking.status === 'Completed' ? 'rgba(16, 185, 129, 0.12)' : 'rgba(239, 68, 68, 0.12)',
+                                                fontSize: '0.7rem',
+                                                fontWeight: '900',
+                                                backgroundColor: booking.status === 'Upcoming' ? 'rgba(6, 182, 212, 0.08)' : booking.status === 'Completed' ? 'rgba(16, 185, 129, 0.08)' : 'rgba(239, 68, 68, 0.08)',
                                                 color: booking.status === 'Upcoming' ? 'var(--primary)' : booking.status === 'Completed' ? 'var(--secondary)' : '#ef4444',
+                                                border: `1px solid ${booking.status === 'Upcoming' ? 'rgba(6, 182, 212, 0.15)' : booking.status === 'Completed' ? 'rgba(16, 185, 129, 0.15)' : 'rgba(239, 68, 68, 0.15)'}`,
                                                 textTransform: 'uppercase',
-                                                letterSpacing: '0.5px'
+                                                letterSpacing: '1px'
                                             }}>
                                                 {booking.status}
                                             </span>

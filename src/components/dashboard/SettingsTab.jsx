@@ -59,11 +59,29 @@ const SettingsTab = ({ onUpgrade }) => {
                             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem' }}>
                                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                                     <label style={{ fontSize: '0.95rem', fontWeight: '700', color: 'var(--text-muted)' }}>New Password</label>
-                                    <input type="password" style={{ padding: '1rem', borderRadius: '14px', border: '1px solid var(--glass-border)', background: 'var(--glass-bg)', color: 'var(--text-main)', outline: 'none', transition: 'all 0.3s' }} placeholder="••••••••" />
+                                    <input type="password" style={{
+                                        padding: '1rem',
+                                        borderRadius: '14px',
+                                        border: '1px solid var(--glass-border)',
+                                        background: 'rgba(255, 255, 255, 0.05)',
+                                        color: 'var(--text-main)',
+                                        outline: 'none',
+                                        transition: 'all 0.3s',
+                                        fontWeight: '600'
+                                    }} placeholder="••••••••" />
                                 </div>
                                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                                     <label style={{ fontSize: '0.95rem', fontWeight: '700', color: 'var(--text-muted)' }}>Confirm New Password</label>
-                                    <input type="password" style={{ padding: '1rem', borderRadius: '14px', border: '1px solid var(--glass-border)', background: 'var(--glass-bg)', color: 'var(--text-main)', outline: 'none', transition: 'all 0.3s' }} placeholder="••••••••" />
+                                    <input type="password" style={{
+                                        padding: '1rem',
+                                        borderRadius: '14px',
+                                        border: '1px solid var(--glass-border)',
+                                        background: 'rgba(255, 255, 255, 0.05)',
+                                        color: 'var(--text-main)',
+                                        outline: 'none',
+                                        transition: 'all 0.3s',
+                                        fontWeight: '600'
+                                    }} placeholder="••••••••" />
                                 </div>
                             </div>
                             <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
@@ -137,11 +155,29 @@ const SettingsTab = ({ onUpgrade }) => {
                         <form style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem' }}>
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                                 <label style={{ fontSize: '0.95rem', fontWeight: '700', color: 'var(--text-muted)' }}>First Name</label>
-                                <input type="text" defaultValue="John" style={{ padding: '1rem', borderRadius: '14px', border: '1px solid var(--glass-border)', background: 'var(--glass-bg)', color: 'var(--text-main)', outline: 'none', transition: 'all 0.3s', fontWeight: '500' }} />
+                                <input type="text" defaultValue="John" style={{
+                                    padding: '1rem',
+                                    borderRadius: '14px',
+                                    border: '1px solid var(--glass-border)',
+                                    background: 'rgba(255, 255, 255, 0.05)',
+                                    color: 'var(--text-main)',
+                                    outline: 'none',
+                                    transition: 'all 0.3s',
+                                    fontWeight: '600'
+                                }} />
                             </div>
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                                 <label style={{ fontSize: '0.95rem', fontWeight: '700', color: 'var(--text-muted)' }}>Last Name</label>
-                                <input type="text" defaultValue="Doe" style={{ padding: '1rem', borderRadius: '14px', border: '1px solid var(--glass-border)', background: 'var(--glass-bg)', color: 'var(--text-main)', outline: 'none', transition: 'all 0.3s', fontWeight: '500' }} />
+                                <input type="text" defaultValue="Doe" style={{
+                                    padding: '1rem',
+                                    borderRadius: '14px',
+                                    border: '1px solid var(--glass-border)',
+                                    background: 'rgba(255, 255, 255, 0.05)',
+                                    color: 'var(--text-main)',
+                                    outline: 'none',
+                                    transition: 'all 0.3s',
+                                    fontWeight: '600'
+                                }} />
                             </div>
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', gridColumn: 'span 2' }}>
                                 <label style={{ fontSize: '0.95rem', fontWeight: '700', color: 'var(--text-muted)' }}>Email Address</label>
@@ -149,7 +185,18 @@ const SettingsTab = ({ onUpgrade }) => {
                             </div>
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', gridColumn: 'span 2' }}>
                                 <label style={{ fontSize: '0.95rem', fontWeight: '700', color: 'var(--text-muted)' }}>Bio</label>
-                                <textarea rows="5" defaultValue="Professional cleaning service with over 5 years of experience..." style={{ padding: '1rem', borderRadius: '14px', border: '1px solid var(--glass-border)', background: 'var(--glass-bg)', color: 'var(--text-main)', outline: 'none', resize: 'none', transition: 'all 0.3s', fontWeight: '500', lineHeight: '1.6' }}></textarea>
+                                <textarea rows="5" defaultValue="Professional cleaning service with over 5 years of experience..." style={{
+                                    padding: '1rem',
+                                    borderRadius: '14px',
+                                    border: '1px solid var(--glass-border)',
+                                    background: 'rgba(255, 255, 255, 0.05)',
+                                    color: 'var(--text-main)',
+                                    outline: 'none',
+                                    resize: 'none',
+                                    transition: 'all 0.3s',
+                                    fontWeight: '600',
+                                    lineHeight: '1.6'
+                                }}></textarea>
                             </div>
                             <div style={{ gridColumn: 'span 2', display: 'flex', justifyContent: 'flex-end', marginTop: '1.5rem' }}>
                                 <button className="btn-primary" type="button" style={{ padding: '0.85rem 2.5rem' }}>Save Changes</button>

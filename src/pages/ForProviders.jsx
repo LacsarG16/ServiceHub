@@ -116,14 +116,24 @@ const ForProviders = () => {
                 </div>
 
                 {/* FAQ Preview */}
-                <div className="glass-card" style={{ marginTop: '8rem', padding: '5rem 3rem', textAlign: 'center', background: 'var(--glass-card-bg)', border: '1px solid var(--primary)', position: 'relative', overflow: 'hidden' }}>
+                <div className="glass-card" style={{
+                    marginTop: '8rem',
+                    padding: '5rem 3rem',
+                    textAlign: 'center',
+                    background: 'rgba(255, 255, 255, 0.03)',
+                    border: '1px solid var(--primary)',
+                    position: 'relative',
+                    overflow: 'hidden',
+                    borderRadius: 'var(--radius-xl)',
+                    backdropFilter: 'blur(20px)'
+                }}>
                     <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '4px', background: 'linear-gradient(to right, var(--primary), var(--accent))' }}></div>
-                    <h2 style={{ fontSize: '2.5rem', fontWeight: '800', marginBottom: '1.5rem', color: 'var(--text-main)', letterSpacing: '-1px' }}>Still have questions?</h2>
-                    <p style={{ color: 'var(--text-muted)', fontSize: '1.2rem', marginBottom: '3rem', maxWidth: '650px', margin: '0 auto 3rem', lineHeight: '1.7' }}>
+                    <h2 style={{ fontSize: '2.5rem', fontWeight: '900', marginBottom: '1.5rem', color: 'var(--text-main)', letterSpacing: '-1.5px' }}>Still have questions?</h2>
+                    <p style={{ color: 'var(--text-muted)', fontSize: '1.25rem', marginBottom: '3rem', maxWidth: '650px', margin: '0 auto 3rem', lineHeight: '1.7', fontWeight: '500' }}>
                         Our success team is dedicated to helping you optimize your performance. We're here to help you every step of the way.
                     </p>
-                    <button className="btn-primary" style={{ padding: '1rem 3rem' }}>
-                        Schedule a Strategy Session <ArrowRight size={20} />
+                    <button className="btn-primary hover-lift" style={{ padding: '1rem 3.5rem', borderRadius: '18px', fontSize: '1.05rem' }}>
+                        Schedule a Strategy Session <ArrowRight size={22} />
                     </button>
                 </div>
             </div>
