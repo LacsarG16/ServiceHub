@@ -1,5 +1,6 @@
 import React from 'react';
 import { Plus, MoreVertical, Star, Edit2, Trash2, Sparkles, Scissors, Layers } from 'lucide-react';
+import Marker from '../ui/Marker';
 import { motion } from 'framer-motion';
 
 const ServicesTab = ({ onAddService, onEditService }) => {
@@ -45,7 +46,8 @@ const ServicesTab = ({ onAddService, onEditService }) => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
         >
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2.5rem' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2.5rem', position: 'relative' }}>
+                <Marker id="SV-HDR" />
                 <div>
                     <h2 style={{ fontSize: '2rem', fontWeight: '850', color: 'var(--text-main)', letterSpacing: '-1px' }}>My <span className="text-gradient-primary">Services</span></h2>
                     <p style={{ color: 'var(--text-muted)', fontSize: '1rem', marginTop: '0.25rem', fontWeight: '500' }}>Manage and monitor your service offerings with cinematic precision.</p>
@@ -57,9 +59,11 @@ const ServicesTab = ({ onAddService, onEditService }) => {
                         padding: '0.9rem 1.75rem',
                         borderRadius: '18px',
                         fontSize: '0.95rem',
-                        gap: '0.75rem'
+                        gap: '0.75rem',
+                        position: 'relative'
                     }}
                 >
+                    <Marker id="SV-ADD" />
                     <Plus size={20} strokeWidth={3} /> Create New Service
                 </button>
             </div>
@@ -71,7 +75,7 @@ const ServicesTab = ({ onAddService, onEditService }) => {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.4, delay: index * 0.1 }}
-                        className="hover-lift"
+                        className="glass-card hover-lift"
                         style={{
                             padding: '2.25rem',
                             position: 'relative',
@@ -79,12 +83,13 @@ const ServicesTab = ({ onAddService, onEditService }) => {
                             flexDirection: 'column',
                             gap: '1.75rem',
                             overflow: 'hidden',
-                            borderRadius: 'var(--radius-lg)',
-                            background: 'rgba(255, 255, 255, 0.03)',
-                            border: '1px solid var(--glass-border)',
-                            backdropFilter: 'blur(10px)'
+                            background: 'rgba(255, 255, 255, 0.08)', // Brighter for better contrast
+                            border: '1px solid rgba(255, 255, 255, 0.2)', // More distinct border
+                            boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)', // Localized shadow for "pop"
+                            backdropFilter: 'blur(20px)'
                         }}
                     >
+                        <Marker id={`SV-CARD-${service.id}`} />
                         {/* Header Section */}
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                             <div style={{ display: 'flex', gap: '1.25rem', alignItems: 'center' }}>

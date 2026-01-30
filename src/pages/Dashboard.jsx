@@ -31,6 +31,7 @@ import BookingDetailsModal from '../components/modals/BookingDetailsModal';
 import UpgradeModal from '../components/modals/UpgradeModal';
 import BookingFormModal from '../components/modals/BookingFormModal';
 import NotificationDrawer from '../components/drawers/NotificationDrawer';
+import Marker from '../components/ui/Marker';
 
 const Dashboard = () => {
     const [activeTab, setActiveTab] = useState('overview');
@@ -104,11 +105,17 @@ const Dashboard = () => {
     ];
 
     return (
-        <div style={{ display: 'flex', minHeight: '100vh', backgroundColor: 'var(--background)', position: 'relative', overflow: 'hidden' }}>
+        <div style={{
+            display: 'flex',
+            minHeight: '100vh',
+            background: 'transparent', // Reveal page background
+            position: 'relative',
+            overflow: 'hidden'
+        }}>
             {/* Aurora Background Blobs */}
-            <div className="aurora-blob blob-1"></div>
-            <div className="aurora-blob blob-2"></div>
-            <div className="aurora-blob blob-3"></div>
+            <div className="aurora-blob blob-1" style={{ opacity: 0.5, filter: 'blur(100px)' }}></div>
+            <div className="aurora-blob blob-2" style={{ opacity: 0.5, filter: 'blur(100px)' }}></div>
+            <div className="aurora-blob blob-3" style={{ opacity: 0.3, filter: 'blur(100px)' }}></div>
 
             {/* Sidebar */}
             <aside style={{
@@ -127,18 +134,22 @@ const Dashboard = () => {
                 gap: '2.5rem',
                 boxShadow: 'var(--glass-card-shadow)'
             }}>
+                <Marker id="DB-SB" />
                 {/* Navigation Items */}
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', alignItems: 'center' }}>
                     {sidebarItems.map((item) => (
                         <button
                             key={item.id}
                             onClick={() => setActiveTab(item.id)}
                             style={{
                                 display: 'flex',
+                                flexDirection: 'column', // Center icon above text
                                 alignItems: 'center',
-                                gap: '1rem',
-                                padding: '1rem 1.25rem',
-                                borderRadius: '20px',
+                                justifyContent: 'center',
+                                gap: '0.5rem',
+                                padding: '1.25rem',
+                                width: '100%',
+                                borderRadius: '24px',
                                 background: activeTab === item.id ? 'rgba(6, 182, 212, 0.12)' : 'transparent',
                                 color: activeTab === item.id ? 'var(--primary)' : 'var(--text-muted)',
                                 fontWeight: '700',
@@ -151,6 +162,7 @@ const Dashboard = () => {
                             }}
                             className="hover-lift"
                         >
+                            <Marker id={`DB-SBL-${item.id}`} />
                             {/* Active Indicator */}
                             {activeTab === item.id && (
                                 <motion.div
@@ -200,19 +212,24 @@ const Dashboard = () => {
                     margin: '3rem',
                     padding: '3rem',
                     borderRadius: 'var(--radius-xl)',
-                    border: '1px solid var(--glass-border)',
-                    boxShadow: 'var(--glass-card-shadow)',
+                    border: '1px solid rgba(255, 255, 255, 0.15)', // More distinct border
+                    boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
                     minHeight: 'calc(100vh - 6rem)',
                     display: 'flex',
-                    flexDirection: 'column'
+                    flexDirection: 'column',
+                    background: 'rgba(255, 255, 255, 0.02)', // Cinematic transparency
+                    backdropFilter: 'blur(40px) saturate(180%)',
+                    position: 'relative'
                 }}>
+                    <Marker id="DB-MAIN" />
                     <header style={{
                         margin: '0 0 3rem',
                         display: 'flex',
                         justifyContent: 'space-between',
                         alignItems: 'center'
                     }}>
-                        <div>
+                        <div style={{ position: 'relative' }}>
+                            <Marker id="DB-HDR-G" />
                             <h1 style={{ fontSize: '2.5rem', fontWeight: '850', color: 'var(--text-main)', letterSpacing: '-1.5px', marginBottom: '0.5rem' }}>
                                 Good morning, <span className="text-gradient-primary">John!</span>
                             </h1>
@@ -231,6 +248,7 @@ const Dashboard = () => {
                                     border: '1px solid var(--glass-border)'
                                 }}
                             >
+                                <Marker id="DB-HDR-N" />
                                 <Bell size={22} color="var(--text-main)" />
                                 {/* Pulsing indicator */}
                                 <span style={{

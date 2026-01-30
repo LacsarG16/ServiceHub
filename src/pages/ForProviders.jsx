@@ -1,6 +1,7 @@
 import React from 'react';
 import { Check, Star, Zap, TrendingUp, Users, Shield, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
+import Marker from '../components/ui/Marker';
 
 const ForProviders = () => {
     const plans = [
@@ -37,7 +38,8 @@ const ForProviders = () => {
 
             <div className="container" style={{ position: 'relative', zIndex: 1 }}>
                 {/* Hero Section */}
-                <div style={{ textAlign: 'center', marginBottom: '6rem' }}>
+                <div style={{ textAlign: 'center', marginBottom: '6rem', position: 'relative' }}>
+                    <Marker id="FP-HERO" />
                     <h1 style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)', fontWeight: '800', marginBottom: '1.5rem', letterSpacing: '-2px', lineHeight: '1.1' }}>
                         Grow Your Business with <span className="text-gradient-primary">ServiceHub</span>
                     </h1>
@@ -53,7 +55,8 @@ const ForProviders = () => {
                         { icon: <TrendingUp size={32} />, title: "Better Analytics", desc: "Track how many people view your profile and book your services with deep data insights." },
                         { icon: <Shield size={32} />, title: "Trusted Platform", desc: "Our premium verification badge builds instant trust and authority with elite clients." }
                     ].map((benefit, i) => (
-                        <div key={i} className="glass-card" style={{ textAlign: 'center', padding: '3rem 2rem' }}>
+                        <div key={i} className="glass-card" style={{ textAlign: 'center', padding: '3rem 2rem', position: 'relative' }}>
+                            <Marker id={`FP-BENEFIT-${i + 1}`} />
                             <div style={{ color: 'var(--primary)', marginBottom: '1.5rem', display: 'flex', justifyContent: 'center' }}>{benefit.icon}</div>
                             <h3 style={{ marginBottom: '1rem', fontSize: '1.5rem', fontWeight: '700', color: 'var(--text-main)' }}>{benefit.title}</h3>
                             <p style={{ color: 'var(--text-muted)', lineHeight: '1.6' }}>{benefit.desc}</p>
@@ -82,6 +85,7 @@ const ForProviders = () => {
                                 overflow: 'hidden'
                             }}
                         >
+                            <Marker id={`FP-PLAN-${i + 1}`} />
                             {plan.popular && (
                                 <span className="accent-badge" style={{ position: 'absolute', top: '24px', right: '-35px', transform: 'rotate(45deg)', width: '150px', display: 'flex', justifyContent: 'center', boxShadow: 'none' }}>
                                     POPULAR
@@ -127,6 +131,7 @@ const ForProviders = () => {
                     borderRadius: 'var(--radius-xl)',
                     backdropFilter: 'blur(20px)'
                 }}>
+                    <Marker id="FP-FAQ" />
                     <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '4px', background: 'linear-gradient(to right, var(--primary), var(--accent))' }}></div>
                     <h2 style={{ fontSize: '2.5rem', fontWeight: '900', marginBottom: '1.5rem', color: 'var(--text-main)', letterSpacing: '-1.5px' }}>Still have questions?</h2>
                     <p style={{ color: 'var(--text-muted)', fontSize: '1.25rem', marginBottom: '3rem', maxWidth: '650px', margin: '0 auto 3rem', lineHeight: '1.7', fontWeight: '500' }}>

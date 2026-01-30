@@ -13,6 +13,7 @@ import {
     XCircle,
     Info
 } from 'lucide-react';
+import Marker from '../ui/Marker';
 import {
     format,
     startOfMonth,
@@ -195,7 +196,8 @@ const BookingsTab = ({ onBookingClick, onAddBooking }) => {
         const status = getAvailabilityStatus(selectedDate);
 
         return (
-            <div className="glass-card" style={{ padding: '2.5rem' }}>
+            <div className="glass-card" style={{ padding: '2.5rem', position: 'relative' }}>
+                <Marker id="BK-DTL" />
                 <div style={{ borderBottom: '1px solid var(--glass-border)', paddingBottom: '1.5rem', marginBottom: '1.5rem' }}>
                     <h3 style={{ fontSize: '1.35rem', fontWeight: '850', color: 'var(--text-main)', letterSpacing: '-0.5px', marginBottom: '0.75rem' }}>Schedule for {format(selectedDate, 'EEEE, MMM do')}</h3>
                     <div style={{ display: 'flex', gap: '1rem' }}>
@@ -269,17 +271,20 @@ const BookingsTab = ({ onBookingClick, onAddBooking }) => {
 
     return (
         <div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '3rem' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '3rem', position: 'relative' }}>
+                <Marker id="BK-HDR" />
                 <h2 style={{ fontSize: '2rem', fontWeight: '850', color: 'var(--text-main)', letterSpacing: '-1px' }}>My <span className="text-gradient-primary">Bookings</span></h2>
                 <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
                     <button
                         onClick={onAddBooking}
                         className="btn-primary"
-                        style={{ padding: '0.6rem 1.2rem', fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}
+                        style={{ padding: '0.6rem 1.2rem', fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: '0.5rem', position: 'relative' }}
                     >
+                        <Marker id="BK-ADD" />
                         + New Booking
                     </button>
-                    <div className="glass" style={{ display: 'flex', borderRadius: '16px', padding: '0.35rem', border: '1px solid var(--glass-border)' }}>
+                    <div className="glass" style={{ display: 'flex', borderRadius: '16px', padding: '0.35rem', border: '1px solid var(--glass-border)', position: 'relative' }}>
+                        <Marker id="BK-TGL" />
                         <button
                             onClick={() => setView('list')}
                             style={{ padding: '0.6rem 1.25rem', borderRadius: '12px', background: view === 'list' ? 'var(--primary)' : 'transparent', color: view === 'list' ? 'white' : 'var(--text-muted)', fontWeight: '800', border: 'none', cursor: 'pointer', transition: 'all 0.3s' }}
@@ -328,8 +333,10 @@ const BookingsTab = ({ onBookingClick, onAddBooking }) => {
                     </div>
 
                     <div className="glass-card" style={{
-                        overflow: 'hidden'
+                        overflow: 'hidden',
+                        position: 'relative'
                     }}>
+                        <Marker id="BK-MAIN" />
                         <table style={{ width: '100%', borderCollapse: 'separate', borderSpacing: '0' }}>
                             <thead>
                                 <tr style={{ textAlign: 'left', background: 'rgba(255, 255, 255, 0.03)' }}>

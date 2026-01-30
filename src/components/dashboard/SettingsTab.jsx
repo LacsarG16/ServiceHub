@@ -1,5 +1,6 @@
 import React from 'react';
 import { User, Bell, Shield, CreditCard, ChevronRight } from 'lucide-react';
+import Marker from '../ui/Marker';
 
 const SettingsTab = ({ onUpgrade }) => {
     const [activeSection, setActiveSection] = React.useState('profile');
@@ -209,10 +210,14 @@ const SettingsTab = ({ onUpgrade }) => {
 
     return (
         <div>
-            <h2 style={{ fontSize: '2rem', fontWeight: '850', color: 'var(--text-main)', letterSpacing: '-1px', marginBottom: '3rem' }}>Dashboard <span className="text-gradient-primary">Settings</span></h2>
+            <div style={{ position: 'relative', marginBottom: '3rem' }}>
+                <Marker id="ST-HDR" />
+                <h2 style={{ fontSize: '2rem', fontWeight: '850', color: 'var(--text-main)', letterSpacing: '-1px' }}>Dashboard <span className="text-gradient-primary">Settings</span></h2>
+            </div>
 
             <div style={{ display: 'grid', gridTemplateColumns: '280px 1fr', gap: '4rem' }}>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', position: 'relative' }}>
+                    <Marker id="ST-NAV" />
                     {sections.map((item) => (
                         <button
                             key={item.id}
@@ -246,7 +251,8 @@ const SettingsTab = ({ onUpgrade }) => {
                     ))}
                 </div>
 
-                <div>
+                <div style={{ position: 'relative' }}>
+                    <Marker id="ST-SEC" />
                     {renderSectionContent()}
                 </div>
             </div>

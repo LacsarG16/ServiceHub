@@ -1,5 +1,6 @@
 import React from 'react';
 import { BarChart3, TrendingUp, Users, DollarSign, ArrowUpRight, ArrowDownRight } from 'lucide-react';
+import Marker from '../ui/Marker';
 
 const AnalyticsTab = () => {
     const stats = [
@@ -15,15 +16,16 @@ const AnalyticsTab = () => {
 
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1.5rem', marginBottom: '2.5rem' }}>
                 {stats.map((stat, i) => (
-                    <div key={i} className="hover-lift" style={{
+                    <div key={i} className="glass-card hover-lift" style={{
                         padding: '2.25rem',
                         position: 'relative',
                         overflow: 'hidden',
-                        borderRadius: 'var(--radius-lg)',
-                        background: 'rgba(255, 255, 255, 0.03)',
-                        border: '1px solid var(--glass-border)',
-                        backdropFilter: 'blur(10px)'
+                        background: 'rgba(255, 255, 255, 0.08)', // Brighter for better contrast
+                        border: '1px solid rgba(255, 255, 255, 0.2)', // More distinct border
+                        boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)', // Localized shadow
+                        backdropFilter: 'blur(20px)'
                     }}>
+                        <Marker id={`AN-KPI-${i + 1}`} />
                         <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', marginBottom: '0.75rem', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px' }}>{stat.label}</p>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
                             <h3 style={{ fontSize: '2.25rem', fontWeight: '900', color: 'var(--text-main)', letterSpacing: '-1px' }}>{stat.value}</h3>
@@ -37,7 +39,8 @@ const AnalyticsTab = () => {
             </div>
 
             <div style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr', gap: '2.5rem', marginBottom: '2.5rem' }}>
-                <div className="glass-card" style={{ padding: '2.5rem', minHeight: '400px' }}>
+                <div className="glass-card" style={{ padding: '2.5rem', minHeight: '400px', position: 'relative' }}>
+                    <Marker id="AN-REV" />
                     <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '2.5rem' }}>
                         <h3 style={{ fontSize: '1.35rem', fontWeight: '850', color: 'var(--text-main)', letterSpacing: '-0.5px' }}>Revenue Growth</h3>
                         <select className="glass" style={{ padding: '0.5rem 1rem', borderRadius: '12px', border: '1px solid var(--glass-border)', background: 'var(--glass-bg)', color: 'var(--text-main)', fontSize: '0.85rem', fontWeight: '600', outline: 'none' }}>
@@ -67,7 +70,8 @@ const AnalyticsTab = () => {
                     </div>
                 </div>
 
-                <div className="glass-card" style={{ padding: '2.5rem', minHeight: '400px' }}>
+                <div className="glass-card" style={{ padding: '2.5rem', minHeight: '400px', position: 'relative' }}>
+                    <Marker id="AN-CHN" />
                     <h3 style={{ fontSize: '1.35rem', fontWeight: '850', color: 'var(--text-main)', letterSpacing: '-0.5px', marginBottom: '2.5rem' }}>Aquisition Channels</h3>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
                         {[

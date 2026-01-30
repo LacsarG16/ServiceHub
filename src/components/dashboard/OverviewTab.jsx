@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Calendar, Users, DollarSign, CheckCircle2 } from 'lucide-react';
+import Marker from '../ui/Marker';
 
 const OverviewTab = ({ stats, recentBookings, onBookingClick, onUpgrade }) => {
     return (
@@ -10,12 +11,13 @@ const OverviewTab = ({ stats, recentBookings, onBookingClick, onUpgrade }) => {
                 {stats.map((stat, i) => (
                     <div key={i} className="glass-card hover-lift" style={{
                         padding: '2.25rem',
-                        background: 'rgba(255, 255, 255, 0.03)',
-                        border: '1px solid var(--glass-border)',
+                        background: 'rgba(255, 255, 255, 0.08)', // Brighter for better contrast
+                        border: '1px solid rgba(255, 255, 255, 0.2)', // More distinct border
                         position: 'relative',
                         overflow: 'hidden',
-                        boxShadow: 'none' // Remove default shadow for layered look
+                        boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)' // Localized shadow for "pop"
                     }}>
+                        <Marker id={`OV-STAT-${i + 1}`} />
                         <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1.5rem' }}>
                             <div style={{
                                 width: '52px',
@@ -52,8 +54,10 @@ const OverviewTab = ({ stats, recentBookings, onBookingClick, onUpgrade }) => {
             <div style={{ display: 'grid', gridTemplateColumns: '2.5fr 1fr', gap: '2.5rem' }}>
                 {/* Recent Bookings */}
                 <div className="glass-card" style={{
-                    padding: '2.5rem'
+                    padding: '2.5rem',
+                    position: 'relative'
                 }}>
+                    <Marker id="OV-BOOK-T" />
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
                         <h3 style={{ fontSize: '1.5rem', fontWeight: '850', color: 'var(--text-main)', letterSpacing: '-0.5px' }}>Recent Bookings</h3>
                         <button className="glass hover-lift" style={{
@@ -116,8 +120,10 @@ const OverviewTab = ({ stats, recentBookings, onBookingClick, onUpgrade }) => {
                 {/* Quick Actions / Activity */}
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '2.5rem' }}>
                     <div className="glass-card" style={{
-                        padding: '2.5rem'
+                        padding: '2.5rem',
+                        position: 'relative'
                     }}>
+                        <Marker id="OV-PERF" />
                         <h3 style={{ fontSize: '1.35rem', fontWeight: '850', color: 'var(--text-main)', marginBottom: '2rem' }}>Market Performance</h3>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '1.75rem' }}>
                             <div>
@@ -162,6 +168,7 @@ const OverviewTab = ({ stats, recentBookings, onBookingClick, onUpgrade }) => {
                         overflow: 'hidden',
                         border: '1px solid rgba(255,255,255,0.1)'
                     }}>
+                        <Marker id="OV-UPG" />
                         <div style={{ position: 'relative', zIndex: 1 }}>
                             <h3 style={{ fontSize: '1.5rem', fontWeight: '900', marginBottom: '0.75rem', letterSpacing: '-0.5px' }}>Upgrade to <span className="accent-badge" style={{ verticalAlign: 'middle', marginLeft: '8px' }}>PRO</span></h3>
                             <p style={{ opacity: 0.9, fontSize: '1rem', marginBottom: '2.5rem', lineHeight: '1.6', fontWeight: '500' }}>
