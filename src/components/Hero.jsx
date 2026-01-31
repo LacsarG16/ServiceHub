@@ -8,7 +8,7 @@ const ServiceCard = ({ icon: Icon, title, desc, delay }) => (
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay, duration: 0.6 }}
-        className="glass-card"
+        className="glass-card hover-lift"
         style={{
             padding: '2rem',
             display: 'flex',
@@ -27,7 +27,8 @@ const ServiceCard = ({ icon: Icon, title, desc, delay }) => (
             alignItems: 'center',
             justifyContent: 'center',
             marginBottom: '1.5rem',
-            color: 'var(--primary)'
+            color: 'var(--primary)',
+            border: '1px solid rgba(6, 182, 212, 0.2)'
         }}>
             <Icon size={30} />
         </div>
@@ -42,7 +43,7 @@ const ServiceCard = ({ icon: Icon, title, desc, delay }) => (
 const Hero = () => {
     return (
         <section style={{
-            padding: '160px 0 100px',
+            padding: '120px 0 60px',
             position: 'relative',
             overflow: 'visible' // Allow floaters to not be clipped
         }}>
@@ -58,7 +59,7 @@ const Hero = () => {
                         gap: '0.5rem',
                         padding: '0.5rem 1.25rem',
                         borderRadius: '999px',
-                        background: 'rgba(255,255,255,0.6)',
+                        background: 'var(--glass-bg)',
                         border: '1px solid var(--glass-border)',
                         backdropFilter: 'blur(10px)',
                         fontSize: '0.85rem',

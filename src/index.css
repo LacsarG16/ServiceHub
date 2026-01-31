@@ -35,6 +35,41 @@
   --radius-full: 9999px;
 }
 
+/* --- Color Presets --- */
+[data-preset='sunset'] {
+  --primary: #f43f5e;
+  /* Rose 500 */
+  --primary-hover: #e11d48;
+  --secondary: #f59e0b;
+  /* Amber 500 */
+  --accent: #8b5cf6;
+  /* Violet 500 */
+  --shadow-premium: 0 20px 40px -10px rgba(244, 63, 94, 0.25);
+}
+
+[data-preset='ocean'] {
+  --primary: #0ea5e9;
+  /* Sky 500 */
+  --primary-hover: #0284c7;
+  --secondary: #6366f1;
+  /* Indigo 500 */
+  --accent: #2dd4bf;
+  /* Teal 400 */
+  --shadow-premium: 0 20px 40px -10px rgba(14, 165, 233, 0.25);
+}
+
+[data-preset='forest'] {
+  --primary: #10b981;
+  /* Emerald 500 */
+  --primary-hover: #059669;
+  --secondary: #84cc16;
+  /* Lime 500 */
+  --accent: #06b6d4;
+  /* Cyan 500 */
+  --shadow-premium: 0 20px 40px -10px rgba(16, 185, 129, 0.25);
+}
+
+/* Base Light/Dark overrides */
 [data-theme='dark'] {
   --background: #0f172a;
   /* Slate 900 */
@@ -114,7 +149,8 @@ button {
   position: absolute;
   border-radius: 50%;
   filter: blur(80px);
-  opacity: 0.45;
+  opacity: 0.3;
+  /* Reduced from 0.45 */
   animation: float 20s infinite alternate;
   z-index: -1;
   pointer-events: none;

@@ -13,7 +13,8 @@ const ProviderCard = ({ provider }) => {
             style={{
                 height: '100%',
                 display: 'flex',
-                flexDirection: 'column'
+                flexDirection: 'column',
+                overflow: 'hidden' // FIX: Clips children (image) to card border radius
             }}
         >
             <div style={{ position: 'relative', height: '200px', overflow: 'hidden' }}>
@@ -58,7 +59,16 @@ const ProviderCard = ({ provider }) => {
                         Book Now
                     </button>
                     <button
-                        style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: 'var(--radius-md)', padding: '0.6rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                        style={{
+                            background: 'var(--glass-bg)',
+                            border: '1px solid var(--glass-border)',
+                            borderRadius: 'var(--radius-md)',
+                            padding: '0.6rem',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            cursor: 'pointer'
+                        }}
                     >
                         <ArrowRight size={16} color="var(--text-muted)" />
                     </button>

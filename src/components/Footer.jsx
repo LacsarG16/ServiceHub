@@ -5,14 +5,16 @@ import { Mail, Phone, MapPin, Facebook, Twitter, Instagram, Linkedin, Briefcase 
 const Footer = () => {
     return (
         <footer style={{
-            background: 'linear-gradient(to top, rgba(255,255,255,0.5), transparent)',
+            background: 'var(--glass-bg)',
             color: 'var(--text-main)',
-            paddingTop: '4rem',
-            paddingBottom: '2rem',
-            borderTop: '1px solid var(--glass-border)'
+            paddingTop: '2rem',
+            paddingBottom: '1.5rem',
+            borderTop: '1px solid var(--glass-border)',
+            marginTop: 'auto',
+            backdropFilter: 'blur(10px)'
         }}>
             <div className="container">
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '3rem', marginBottom: '3rem' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '2rem', marginBottom: '2rem' }}>
                     {/* Brand Col */}
                     <div>
                         <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1.5rem' }}>
@@ -72,8 +74,8 @@ const Footer = () => {
                     </div>
                 </div>
 
-                <div style={{ borderTop: '1px solid #334155', paddingTop: '2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
-                    <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>
+                <div style={{ borderTop: '1px solid var(--glass-border)', paddingTop: '1.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
+                    <p style={{ color: 'var(--text-muted)', fontSize: '0.8rem' }}>
                         © {new Date().getFullYear()} ServiceHub Inc. All rights reserved.
                     </p>
                     <div style={{ display: 'flex', gap: '2rem' }}>
