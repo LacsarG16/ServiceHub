@@ -46,10 +46,34 @@ const FeaturedProviders = () => {
                         <p style={{ color: 'var(--text-muted)' }}>Meticulously vetted professionals with outstanding track records.</p>
                     </div>
                     <div style={{ display: 'flex', gap: '0.75rem' }}>
-                        <button style={{ width: '45px', height: '45px', borderRadius: '50%', border: '1px solid #e2e8f0', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'white' }}>
+                        <button style={{
+                            width: '45px',
+                            height: '45px',
+                            borderRadius: '50%',
+                            border: '1px solid var(--glass-border)',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            background: 'var(--glass-bg)',
+                            color: 'var(--text-main)',
+                            transition: 'all 0.2s',
+                            cursor: 'pointer'
+                        }} className="hover:bg-white/50">
                             <ArrowLeft size={18} />
                         </button>
-                        <button style={{ width: '45px', height: '45px', borderRadius: '50%', border: '1px solid #e2e8f0', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'white' }}>
+                        <button style={{
+                            width: '45px',
+                            height: '45px',
+                            borderRadius: '50%',
+                            border: '1px solid var(--glass-border)',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            background: 'var(--glass-bg)',
+                            color: 'var(--text-main)',
+                            transition: 'all 0.2s',
+                            cursor: 'pointer'
+                        }} className="hover:bg-white/50">
                             <ArrowRight size={18} />
                         </button>
                     </div>
