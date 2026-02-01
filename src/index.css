@@ -312,3 +312,92 @@ button {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+
+/* --- Premium Animations --- */
+@keyframes pulse {
+  0%, 100% {
+    box-shadow: 0 8px 24px rgba(6, 182, 212, 0.4), 0 0 0 0 rgba(6, 182, 212, 0.4);
+  }
+  50% {
+    box-shadow: 0 8px 24px rgba(6, 182, 212, 0.4), 0 0 0 20px rgba(6, 182, 212, 0);
+  }
+}
+
+@keyframes float-up {
+  0% {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Parallax Utilities */
+.parallax-slow {
+  transform: translateY(calc(var(--scroll-position, 0) * -0.2px));
+  transition: transform 0.1s ease-out;
+}
+
+.parallax-medium {
+  transform: translateY(calc(var(--scroll-position, 0) * -0.5px));
+  transition: transform 0.1s ease-out;
+}
+
+.parallax-fast {
+  transform: translateY(calc(var(--scroll-position, 0) * -0.8px));
+  transition: transform 0.1s ease-out;
+}
+
+/* Enhanced Hover Effects */
+.hover-glow {
+  transition: all 0.3s ease;
+}
+
+.hover-glow:hover {
+  box-shadow: 0 0 30px rgba(6, 182, 212, 0.6);
+  transform: translateY(-2px);
+}
+
+.hover-scale {
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.hover-scale:hover {
+  transform: scale(1.05);
+}
+
+/* Smooth Transitions */
+* {
+  transition-property: background-color, border-color, color, fill, stroke;
+  transition-duration: 0.3s;
+  transition-timing-function: ease;
+}
+
+/* Disable transitions on theme change for instant update */
+[data-theme] * {
+  transition-duration: 0.3s !important;
+}
+
+/* Focus Styles for Accessibility */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}

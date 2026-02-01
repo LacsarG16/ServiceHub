@@ -1,6 +1,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import ProviderCard from './ProviderCard';
+import TiltCard from './TiltCard';
+import { StaggerContainer, StaggerItem } from './AnimatedSection';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 
 const FeaturedProviders = () => {
@@ -58,7 +60,7 @@ const FeaturedProviders = () => {
                             color: 'var(--text-main)',
                             transition: 'all 0.2s',
                             cursor: 'pointer'
-                        }} className="hover:bg-white/50">
+                        }} className="hover-lift">
                             <ArrowLeft size={18} />
                         </button>
                         <button style={{
@@ -73,28 +75,25 @@ const FeaturedProviders = () => {
                             color: 'var(--text-main)',
                             transition: 'all 0.2s',
                             cursor: 'pointer'
-                        }} className="hover:bg-white/50">
+                        }} className="hover-lift">
                             <ArrowRight size={18} />
                         </button>
                     </div>
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', gap: '2rem' }}>
-                    {providers.map((p, i) => (
-                        <motion.div
-                            key={p.id}
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: i * 0.1 }}
-                        >
-                            <ProviderCard provider={p} />
-                        </motion.div>
+                <StaggerContainer staggerDelay={0.15} style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', gap: '2rem' }}>
+                    {providers.map((p) => (
+                        <StaggerItem key={p.id}>
+                            <TiltCard tiltAmount={10}>
+                                <ProviderCard provider={p} />
+                            </TiltCard>
+                        </StaggerItem>
                     ))}
-                </div>
+                </StaggerContainer>
             </div>
         </section>
     );
 };
 
 export default FeaturedProviders;
+
