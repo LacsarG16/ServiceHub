@@ -109,7 +109,8 @@ const Dashboard = () => {
             <aside style={{
                 width: '280px',
                 backdropFilter: 'blur(30px)',
-                backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                backdropFilter: 'blur(30px)',
+                backgroundColor: 'var(--glass-bg)',
                 borderRight: '1px solid var(--glass-border)',
                 padding: '100px 1.5rem 2.5rem',
                 position: 'fixed',
@@ -133,7 +134,9 @@ const Dashboard = () => {
                                 gap: '1rem',
                                 padding: '1rem 1.25rem',
                                 borderRadius: '16px',
-                                background: activeTab === item.id ? 'rgba(59, 130, 246, 0.08)' : 'transparent',
+                                padding: '1rem 1.25rem',
+                                borderRadius: '16px',
+                                background: activeTab === item.id ? 'var(--primary-light)' : 'transparent',
                                 color: activeTab === item.id ? 'var(--primary)' : 'var(--text-muted)',
                                 fontWeight: '700',
                                 transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
@@ -167,7 +170,9 @@ const Dashboard = () => {
                                 justifyContent: 'center',
                                 padding: '0.4rem',
                                 borderRadius: '10px',
-                                background: activeTab === item.id ? 'white' : 'transparent',
+                                padding: '0.4rem',
+                                borderRadius: '10px',
+                                background: activeTab === item.id ? 'var(--white)' : 'transparent',
                                 boxShadow: activeTab === item.id ? '0 4px 6px -1px rgba(0,0,0,0.05)' : 'none'
                             }}>
                                 {React.cloneElement(item.icon, { size: 18, strokeWidth: activeTab === item.id ? 2.5 : 2 })}
@@ -206,8 +211,11 @@ const Dashboard = () => {
                                 cursor: 'pointer',
                                 padding: '0.75rem',
                                 borderRadius: '16px',
-                                background: 'white',
-                                border: '1px solid #eff3f7',
+                                cursor: 'pointer',
+                                padding: '0.75rem',
+                                borderRadius: '16px',
+                                background: 'var(--white)',
+                                border: '1px solid var(--glass-border)',
                                 boxShadow: 'var(--shadow-sm)'
                             }}
                             className="hover-lift"
@@ -220,9 +228,11 @@ const Dashboard = () => {
                                 right: '10px',
                                 width: '10px',
                                 height: '10px',
+                                width: '10px',
+                                height: '10px',
                                 backgroundColor: 'var(--accent)',
                                 borderRadius: '50%',
-                                border: '2px solid white',
+                                border: '2px solid var(--white)',
                                 boxShadow: '0 0 0 2px rgba(245, 158, 11, 0.2)'
                             }}></span>
                         </div>

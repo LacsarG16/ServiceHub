@@ -67,8 +67,8 @@ const BookingsTab = ({ onBookingClick, onAddBooking }) => {
                 <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
                     <h3 style={{ fontSize: '1.25rem', fontWeight: '700' }}>{format(currentMonth, 'MMMM yyyy')}</h3>
                     <div style={{ display: 'flex', gap: '0.5rem' }}>
-                        <button onClick={prevMonth} style={{ padding: '0.5rem', borderRadius: '50%', background: 'white', border: '1px solid #e2e8f0' }}><ChevronLeft size={18} /></button>
-                        <button onClick={nextMonth} style={{ padding: '0.5rem', borderRadius: '50%', background: 'white', border: '1px solid #e2e8f0' }}><ChevronRight size={18} /></button>
+                        <button onClick={prevMonth} style={{ padding: '0.5rem', borderRadius: '50%', background: 'var(--white)', border: '1px solid var(--glass-border)' }}><ChevronLeft size={18} /></button>
+                        <button onClick={nextMonth} style={{ padding: '0.5rem', borderRadius: '50%', background: 'var(--white)', border: '1px solid var(--glass-border)' }}><ChevronRight size={18} /></button>
                     </div>
                 </div>
 
@@ -113,7 +113,7 @@ const BookingsTab = ({ onBookingClick, onAddBooking }) => {
         const days = eachDayOfInterval({ start: startDate, end: endDate });
 
         return (
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: '1px', background: '#e2e8f0', borderRadius: 'var(--radius-md)', overflow: 'hidden', border: '1px solid #e2e8f0' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: '1px', background: 'var(--glass-border)', borderRadius: 'var(--radius-md)', overflow: 'hidden', border: '1px solid var(--glass-border)' }}>
                 {days.map(day => {
                     const status = getAvailabilityStatus(day);
                     const isSelected = isSameDay(day, selectedDate);
@@ -126,7 +126,7 @@ const BookingsTab = ({ onBookingClick, onAddBooking }) => {
                             onClick={() => setSelectedDate(day)}
                             style={{
                                 minHeight: '100px',
-                                background: isCurrentMonth ? 'white' : '#f8fafc',
+                                background: isCurrentMonth ? 'var(--white)' : 'var(--background)',
                                 padding: '0.75rem',
                                 cursor: 'pointer',
                                 transition: 'all 0.2s',
@@ -191,7 +191,7 @@ const BookingsTab = ({ onBookingClick, onAddBooking }) => {
         const status = getAvailabilityStatus(selectedDate);
 
         return (
-            <div className="glass" style={{ padding: '2rem', borderRadius: 'var(--radius-lg)', background: 'white' }}>
+            <div className="glass" style={{ padding: '2rem', borderRadius: 'var(--radius-lg)', background: 'var(--white)', position: 'relative' }}>
                 <div style={{ borderBottom: '1px solid #f1f5f9', paddingBottom: '1.5rem', marginBottom: '1.5rem' }}>
                     <h3 style={{ fontSize: '1.1rem', marginBottom: '0.5rem' }}>Schedule for {format(selectedDate, 'EEEE, MMMM do')}</h3>
                     <div style={{ display: 'flex', gap: '1rem' }}>
@@ -215,12 +215,12 @@ const BookingsTab = ({ onBookingClick, onAddBooking }) => {
                             <div
                                 key={b.id}
                                 onClick={() => onBookingClick(b)}
-                                style={{ padding: '1.25rem', borderRadius: 'var(--radius-md)', background: '#f8fafc', border: '1px solid #f1f5f9', display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer' }}
-                                onMouseEnter={(e) => e.currentTarget.style.background = '#f1f5f9'}
-                                onMouseLeave={(e) => e.currentTarget.style.background = '#f8fafc'}
+                                style={{ padding: '1.25rem', borderRadius: 'var(--radius-md)', background: 'var(--background)', border: '1px solid var(--glass-border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer' }}
+                                onMouseEnter={(e) => e.currentTarget.style.background = 'var(--glass-bg)'}
+                                onMouseLeave={(e) => e.currentTarget.style.background = 'var(--background)'}
                             >
                                 <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-                                    <div style={{ width: '40px', height: '40px', borderRadius: '12px', background: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #e2e8f0' }}>
+                                    <div style={{ width: '40px', height: '40px', borderRadius: '12px', background: 'var(--white)', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid var(--glass-border)' }}>
                                         <User size={20} color="var(--primary)" />
                                     </div>
                                     <div>
@@ -294,9 +294,9 @@ const BookingsTab = ({ onBookingClick, onAddBooking }) => {
                     <div style={{
                         padding: '1.5rem 2rem',
                         borderRadius: 'var(--radius-xl)',
-                        background: 'white',
+                        background: 'var(--white)',
                         marginBottom: '2.5rem',
-                        border: '1px solid rgba(226, 232, 240, 0.6)',
+                        border: '1px solid var(--glass-border)',
                         boxShadow: '0 4px 20px rgba(0,0,0,0.02)'
                     }}>
                         <div style={{ display: 'flex', gap: '1.5rem', flexWrap: 'wrap' }}>
@@ -309,14 +309,15 @@ const BookingsTab = ({ onBookingClick, onAddBooking }) => {
                                         width: '100%',
                                         padding: '0.85rem 1rem 0.85rem 3.25rem',
                                         borderRadius: '14px',
-                                        border: '1px solid #eef2f6',
-                                        background: '#fcfdfe',
+                                        borderRadius: '14px',
+                                        border: '1px solid var(--glass-border)',
+                                        background: 'var(--background)',
                                         outline: 'none',
                                         fontSize: '0.95rem'
                                     }}
                                 />
                             </div>
-                            <button className="hover-lift" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '0.85rem 1.5rem', borderRadius: '14px', background: 'white', border: '1px solid #eef2f6', color: 'var(--text-main)', fontWeight: '700', fontSize: '0.9rem' }}>
+                            <button className="hover-lift" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '0.85rem 1.5rem', borderRadius: '14px', background: 'var(--white)', border: '1px solid var(--glass-border)', color: 'var(--text-main)', fontWeight: '700', fontSize: '0.9rem' }}>
                                 <Filter size={18} /> Filters
                             </button>
                         </div>
@@ -324,13 +325,13 @@ const BookingsTab = ({ onBookingClick, onAddBooking }) => {
 
                     <div style={{
                         borderRadius: 'var(--radius-xl)',
-                        background: 'white',
+                        background: 'var(--white)',
                         overflow: 'hidden',
-                        border: '1px solid rgba(226, 232, 240, 0.6)',
+                        border: '1px solid var(--glass-border)',
                         boxShadow: '0 10px 30px -5px rgba(0,0,0,0.03)'
                     }}>
                         <table style={{ width: '100%', borderCollapse: 'separate', borderSpacing: '0' }}>
-                            <thead style={{ background: '#fcfdfe' }}>
+                            <thead style={{ background: 'var(--background)' }}>
                                 <tr style={{ textAlign: 'left' }}>
                                     <th style={{ padding: '1.25rem 2rem', color: 'var(--text-muted)', fontWeight: '700', fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Customer</th>
                                     <th style={{ padding: '1.25rem 2rem', color: 'var(--text-muted)', fontWeight: '700', fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Service</th>
@@ -345,8 +346,8 @@ const BookingsTab = ({ onBookingClick, onAddBooking }) => {
                                     <tr
                                         key={booking.id}
                                         onClick={() => onBookingClick(booking)}
-                                        style={{ borderBottom: '1px solid #f8fafc', cursor: 'pointer', transition: 'all 0.2s' }}
-                                        onMouseEnter={(e) => e.currentTarget.style.background = '#fcfdfe'}
+                                        style={{ borderBottom: '1px solid var(--glass-border)', cursor: 'pointer', transition: 'all 0.2s' }}
+                                        onMouseEnter={(e) => e.currentTarget.style.background = 'var(--background)'}
                                         onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
                                     >
                                         <td style={{ padding: '1.25rem 2rem' }}>
@@ -407,8 +408,8 @@ const BookingsTab = ({ onBookingClick, onAddBooking }) => {
                     <div style={{
                         padding: '2.5rem',
                         borderRadius: 'var(--radius-xl)',
-                        background: 'white',
-                        border: '1px solid rgba(226, 232, 240, 0.6)',
+                        background: 'var(--white)',
+                        border: '1px solid var(--glass-border)',
                         boxShadow: '0 10px 30px -5px rgba(0,0,0,0.03)'
                     }}>
                         {renderHeader()}

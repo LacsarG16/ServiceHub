@@ -75,9 +75,9 @@ const ServicesTab = ({ onAddService, onEditService }) => {
                         style={{
                             padding: '2.25rem',
                             borderRadius: 'var(--radius-xl)',
-                            background: 'white',
+                            background: 'var(--white)',
                             position: 'relative',
-                            border: '1px solid #f1f5f9',
+                            border: '1px solid var(--glass-border)',
                             boxShadow: 'var(--shadow-premium)',
                             display: 'flex',
                             flexDirection: 'column',
@@ -127,7 +127,7 @@ const ServicesTab = ({ onAddService, onEditService }) => {
 
                         {/* Stats Section */}
                         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '1rem' }}>
-                            <div style={{ textAlign: 'center', padding: '0.75rem', background: '#fcfdfe', borderRadius: '14px', border: '1px solid #f8fafc' }}>
+                            <div style={{ textAlign: 'center', padding: '0.75rem', background: 'var(--background)', borderRadius: '14px', border: '1px solid var(--glass-border)' }}>
                                 <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '0.4rem', fontWeight: '500' }}>Price</p>
                                 <p style={{ fontWeight: '800', color: 'var(--text-main)', fontSize: '1rem' }}>{service.price}</p>
                             </div>
@@ -150,7 +150,7 @@ const ServicesTab = ({ onAddService, onEditService }) => {
                             justifyContent: 'space-between',
                             alignItems: 'center',
                             paddingTop: '1.5rem',
-                            borderTop: '1.5px solid #f8fafc'
+                            borderTop: '1.5px solid var(--glass-border)'
                         }}>
                             <span style={{
                                 padding: '0.45rem 1rem',
@@ -170,9 +170,10 @@ const ServicesTab = ({ onAddService, onEditService }) => {
                                     style={{
                                         padding: '0.65rem',
                                         borderRadius: '12px',
-                                        background: 'white',
+                                        borderRadius: '12px',
+                                        background: 'var(--white)',
                                         color: 'var(--text-muted)',
-                                        border: '1px solid #f1f5f9',
+                                        border: '1px solid var(--glass-border)',
                                         cursor: 'pointer'
                                     }}
                                     className="hover-lift"
