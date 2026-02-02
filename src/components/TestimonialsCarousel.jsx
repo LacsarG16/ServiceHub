@@ -94,10 +94,14 @@ const TestimonialsCarousel = ({ autoPlay = true, interval = 5000 }) => {
                                 x: { type: 'spring', stiffness: 300, damping: 30 },
                                 opacity: { duration: 0.2 }
                             }}
-                            className="glass-card"
                             style={{
                                 padding: '3rem',
-                                textAlign: 'center'
+                                textAlign: 'center',
+                                borderRadius: 'var(--radius-xl)',
+                                backdropFilter: 'blur(30px)',
+                                background: 'var(--glass-bg)',
+                                border: '1px solid var(--glass-border)',
+                                boxShadow: '0 15px 35px rgba(6, 182, 212, 0.15), 0 0 20px rgba(6, 182, 212, 0.05)'
                             }}
                         >
                             <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>
@@ -153,8 +157,8 @@ const TestimonialsCarousel = ({ autoPlay = true, interval = 5000 }) => {
                             top: '50%',
                             transform: 'translateY(-50%)',
                             background: 'var(--glass-bg)',
-                            backdropFilter: 'blur(10px)',
-                            border: '1px solid var(--glass-card-border)',
+                            backdropFilter: 'blur(30px)',
+                            border: '1px solid var(--glass-border)',
                             borderRadius: '50%',
                             width: '48px',
                             height: '48px',
@@ -162,8 +166,12 @@ const TestimonialsCarousel = ({ autoPlay = true, interval = 5000 }) => {
                             alignItems: 'center',
                             justifyContent: 'center',
                             cursor: 'pointer',
-                            transition: 'all 0.3s ease'
+                            transition: 'all 0.3s ease',
+                            fontSize: '1.25rem',
+                            color: 'var(--text-main)',
+                            boxShadow: '0 4px 15px rgba(0,0,0,0.1)'
                         }}
+                        whileHover={{ y: -5, boxShadow: '0 8px 25px rgba(6, 182, 212, 0.2)' }}
                         className="hover-lift"
                     >
                         ←
@@ -177,8 +185,8 @@ const TestimonialsCarousel = ({ autoPlay = true, interval = 5000 }) => {
                             top: '50%',
                             transform: 'translateY(-50%)',
                             background: 'var(--glass-bg)',
-                            backdropFilter: 'blur(10px)',
-                            border: '1px solid var(--glass-card-border)',
+                            backdropFilter: 'blur(30px)',
+                            border: '1px solid var(--glass-border)',
                             borderRadius: '50%',
                             width: '48px',
                             height: '48px',
@@ -186,8 +194,12 @@ const TestimonialsCarousel = ({ autoPlay = true, interval = 5000 }) => {
                             alignItems: 'center',
                             justifyContent: 'center',
                             cursor: 'pointer',
-                            transition: 'all 0.3s ease'
+                            transition: 'all 0.3s ease',
+                            fontSize: '1.25rem',
+                            color: 'var(--text-main)',
+                            boxShadow: '0 4px 15px rgba(0,0,0,0.1)'
                         }}
+                        whileHover={{ y: -5, boxShadow: '0 8px 25px rgba(6, 182, 212, 0.2)' }}
                         className="hover-lift"
                     >
                         →

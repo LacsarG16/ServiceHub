@@ -1,89 +1,169 @@
 import React from 'react';
-import { Search, Calendar, CheckCircle, ArrowRight } from 'lucide-react';
+import { Search, Calendar, CheckCircle, Zap } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const Features = () => {
     const steps = [
         {
-            icon: <Search size={32} />,
+            icon: <Search size={48} />,
             title: "Discover",
-            desc: "Browse through thousands of verified local service providers.",
+            desc: "Find verified local service providers in your area with our smart search.",
             color: "#3B82F6"
         },
         {
-            icon: <Calendar size={32} />,
+            icon: <Calendar size={48} />,
             title: "Book",
-            desc: "Choose a time slot that fits your schedule and book instantly.",
+            desc: "Choose a time slot and book your service instantly with ease.",
             color: "#14B8A6"
         },
         {
-            icon: <CheckCircle size={32} />,
+            icon: <CheckCircle size={48} />,
             title: "Get it Done",
-            desc: "Connect with your provider and enjoy high-quality service.",
+            desc: "Enjoy high-quality service and secure payments every time.",
             color: "#F59E0B"
+        },
+        {
+            icon: <Zap size={48} />,
+            title: "Review",
+            desc: "Share your experience and help others find great services.",
+            color: "#8B5CF6"
         }
     ];
 
     return (
-        <section style={{ padding: '40px 0' }}>
+        <section style={{ padding: '50px 0', position: 'relative', overflow: 'hidden' }}>
             <div className="container">
-                <div className="glass-card" style={{ padding: '3rem', borderRadius: 'var(--radius-xl)' }}>
-                    <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
-                        <h2 style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>How ServiceHub <span style={{ color: 'var(--primary)' }}>Works</span></h2>
-                        <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem', maxWidth: '600px', margin: '0 auto' }}>
-                            The simplest way to find, compare and book local professionals in your area.
-                        </p>
-                    </div>
+                {/* Section Header */}
+                <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
+                    <h2 style={{ fontSize: '2.5rem', marginBottom: '1rem', fontWeight: '800' }}>
+                        How it <span className="text-gradient-primary">Works</span>
+                    </h2>
+                    <p style={{ fontSize: '1.1rem', color: 'var(--text-muted)', maxWidth: '600px', margin: '0 auto' }}>
+                        Get started in four simple steps and experience premium service delivery
+                    </p>
+                </div>
 
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2.5rem' }}>
-                        {steps.map((step, index) => (
+                {/* Horizontal Cards with Connectors */}
+                <div style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+                    gap: '2rem',
+                    position: 'relative',
+                    alignItems: 'stretch'
+                }}>
+                    {steps.map((step, index) => (
+                        <div key={index} style={{ position: 'relative' }}>
+                            {/* Connector Line (not on last card) */}
+                            {index < steps.length - 1 && (
+                                <div style={{
+                                    position: 'absolute',
+                                    top: '50%',
+                                    right: '-2rem',
+                                    width: '2rem',
+                                    height: '2px',
+                                    background: `linear-gradient(90deg, ${step.color}40, ${steps[index + 1].color}40)`,
+                                    transform: 'translateY(-50%)',
+                                    zIndex: 0,
+                                    display: 'none'
+                                }}
+                                    className="connector-line"
+                                />
+                            )}
+
+                            {/* Card */}
                             <motion.div
-                                key={index}
-                                initial={{ opacity: 0, y: 20 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ delay: index * 0.2 }}
-                                style={{ textAlign: 'center', position: 'relative', padding: '1rem' }}
+                                whileHover={{
+                                    y: -10,
+                                    boxShadow: `0 20px 40px ${step.color}25, 0 0 20px ${step.color}15`
+                                }}
+                                transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+                                className="glass-card"
+                                style={{
+                                    padding: '2.5rem 2rem',
+                                    borderRadius: 'var(--radius-xl)',
+                                    textAlign: 'center',
+                                    height: '100%',
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    alignItems: 'center',
+                                    position: 'relative',
+                                    backdropFilter: 'blur(30px)',
+                                    background: 'var(--glass-bg)',
+                                    border: '1px solid var(--glass-border)',
+                                    boxShadow: `0 10px 30px ${step.color}10`,
+                                    transition: 'border-color 0.3s ease, background 0.3s ease'
+                                }}
                             >
+                                {/* Icon with Glow */}
                                 <div style={{
                                     width: '80px',
                                     height: '80px',
                                     borderRadius: '50%',
-                                    background: 'var(--glass-bg)',
-                                    border: '1px solid var(--glass-border)',
-                                    color: step.color,
+                                    background: `linear-gradient(135deg, ${step.color}25, ${step.color}10)`,
                                     display: 'flex',
                                     alignItems: 'center',
                                     justifyContent: 'center',
-                                    margin: '0 auto 1.5rem',
-                                    boxShadow: 'var(--shadow-md)',
-                                    position: 'relative',
-                                    zIndex: 1
+                                    marginBottom: '1.5rem',
+                                    color: step.color,
+                                    boxShadow: `0 0 35px ${step.color}40, inset 0 0 20px ${step.color}20`,
+                                    border: `1px solid ${step.color}40`
                                 }}>
                                     {step.icon}
-                                    <span style={{
-                                        position: 'absolute',
-                                        top: -5,
-                                        right: -5,
-                                        background: 'var(--primary)',
-                                        color: 'white',
-                                        width: '24px',
-                                        height: '24px',
-                                        borderRadius: '50%',
-                                        fontSize: '0.8rem',
-                                        fontWeight: 'bold',
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        justifyContent: 'center'
-                                    }}>{index + 1}</span>
                                 </div>
-                                <h3 style={{ marginBottom: '0.75rem', fontSize: '1.25rem' }}>{step.title}</h3>
-                                <p style={{ color: 'var(--text-muted)', lineHeight: '1.6' }}>{step.desc}</p>
+
+                                {/* Step Number */}
+                                <div style={{
+                                    position: 'absolute',
+                                    top: '1rem',
+                                    right: '1rem',
+                                    width: '32px',
+                                    height: '32px',
+                                    borderRadius: '50%',
+                                    background: `${step.color}15`,
+                                    border: `1px solid ${step.color}30`,
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    fontSize: '0.875rem',
+                                    fontWeight: '700',
+                                    color: step.color
+                                }}>
+                                    {index + 1}
+                                </div>
+
+                                {/* Title */}
+                                <h3 style={{
+                                    fontSize: '1.5rem',
+                                    marginBottom: '1rem',
+                                    fontWeight: '700',
+                                    color: 'var(--text-main)'
+                                }}>
+                                    {step.title}
+                                </h3>
+
+                                {/* Description */}
+                                <p style={{
+                                    fontSize: '0.95rem',
+                                    color: 'var(--text-muted)',
+                                    lineHeight: '1.6',
+                                    margin: 0
+                                }}>
+                                    {step.desc}
+                                </p>
                             </motion.div>
-                        ))}
-                    </div>
+                        </div>
+                    ))}
                 </div>
             </div>
+
+            {/* Responsive CSS for connector lines */}
+            <style>{`
+                @media (min-width: 1024px) {
+                    .connector-line {
+                        display: block !important;
+                    }
+                }
+            `}</style>
         </section>
     );
 };

@@ -32,7 +32,11 @@
   --radius-md: 0.75rem;
   --radius-lg: 1.5rem;
   --radius-xl: 2rem;
+  --radius-2xl: 2.5rem;
   --radius-full: 9999px;
+
+  --primary-light: rgba(6, 182, 212, 0.1);
+  --glass-border: rgba(255, 255, 255, 0.5);
 }
 
 /* --- Color Presets --- */
@@ -235,9 +239,12 @@ button {
   transform: translateY(-8px) scale(1.02);
   box-shadow: var(--shadow-premium), 0 10px 40px rgba(0, 0, 0, 0.2);
   border-color: var(--primary);
-  /* Optional: explicit hover background change handled by variable? 
-     For now, let's just minimal change or keep existing gradient logic if possible.
-     Actually, let's simplify and rely on the shadow/lift for hover effect in CSS var system */
+}
+
+.stationary-card:hover {
+  transform: none !important;
+  box-shadow: var(--glass-card-shadow) !important;
+  border-color: var(--glass-card-border) !important;
 }
 
 /* --- Utilities --- */
@@ -315,9 +322,12 @@ button {
 
 /* --- Premium Animations --- */
 @keyframes pulse {
-  0%, 100% {
+
+  0%,
+  100% {
     box-shadow: 0 8px 24px rgba(6, 182, 212, 0.4), 0 0 0 0 rgba(6, 182, 212, 0.4);
   }
+
   50% {
     box-shadow: 0 8px 24px rgba(6, 182, 212, 0.4), 0 0 0 20px rgba(6, 182, 212, 0);
   }
@@ -328,6 +338,7 @@ button {
     transform: translateY(20px);
     opacity: 0;
   }
+
   100% {
     transform: translateY(0);
     opacity: 1;
@@ -338,9 +349,11 @@ button {
   0% {
     background-position: 0% 50%;
   }
+
   50% {
     background-position: 100% 50%;
   }
+
   100% {
     background-position: 0% 50%;
   }
@@ -363,6 +376,14 @@ button {
 }
 
 /* Enhanced Hover Effects */
+.interactive-card {
+  transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.interactive-card:hover {
+  border-color: var(--primary-light);
+}
+
 .hover-glow {
   transition: all 0.3s ease;
 }

@@ -104,12 +104,13 @@ const Dashboard = () => {
     ];
 
     return (
-        <div style={{ display: 'flex', minHeight: '100vh', backgroundColor: '#fcfdfe' }}>
+        <div style={{ display: 'flex', minHeight: '100vh' }}>
             {/* Sidebar */}
             <aside style={{
                 width: '280px',
-                backgroundColor: 'rgba(255, 255, 255, 0.9)',
-                borderRight: '1px solid #eef2f6',
+                backdropFilter: 'blur(30px)',
+                backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                borderRight: '1px solid var(--glass-border)',
                 padding: '100px 1.5rem 2.5rem',
                 position: 'fixed',
                 height: '100vh',
@@ -118,8 +119,7 @@ const Dashboard = () => {
                 zIndex: 10,
                 display: 'flex',
                 flexDirection: 'column',
-                gap: '2.5rem',
-                boxShadow: 'var(--shadow-premium)'
+                gap: '2.5rem'
             }}>
                 {/* Navigation Items */}
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
@@ -187,8 +187,15 @@ const Dashboard = () => {
             }}>
                 <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '3rem' }}>
                     <div>
-                        <h1 style={{ fontSize: '2.25rem', fontWeight: '850', color: 'var(--text-main)', letterSpacing: '-1px', marginBottom: '0.5rem' }}>Good morning, John!</h1>
-                        <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem', fontWeight: '500' }}>Here's what's happening with your business today.</p>
+                        <h1 style={{
+                            fontSize: '2.5rem',
+                            fontWeight: '900',
+                            color: 'var(--text-main)',
+                            fontFamily: "'Montserrat', sans-serif",
+                            letterSpacing: '-1px',
+                            marginBottom: '0.5rem'
+                        }}>Good morning, <span className="text-gradient-primary">John!</span></h1>
+                        <p style={{ color: 'var(--text-muted)', fontSize: '1.2rem', fontWeight: '500' }}>Here's what's happening today.</p>
                     </div>
                     <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
                         {/* Notification Bell */}

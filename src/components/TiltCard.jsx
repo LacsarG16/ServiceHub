@@ -43,6 +43,11 @@ const TiltCard = ({ children, className = '', tiltAmount = 15, ...props }) => {
             onMouseMove={handleMouseMove}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={handleMouseLeave}
+            animate={{
+                scale: isHovered ? 1.02 : 1,
+                boxShadow: isHovered ? '0 20px 40px rgba(0,0,0,0.12)' : '0 4px 15px rgba(0,0,0,0.03)',
+                borderColor: isHovered ? 'var(--primary-light)' : 'var(--glass-border)'
+            }}
             style={{
                 rotateX,
                 rotateY,
@@ -53,7 +58,7 @@ const TiltCard = ({ children, className = '', tiltAmount = 15, ...props }) => {
             className={className}
             {...props}
         >
-            <div style={{ transform: 'translateZ(50px)' }}>
+            <div style={{ transform: 'translateZ(50px)', height: '100%' }}>
                 {children}
             </div>
         </motion.div>

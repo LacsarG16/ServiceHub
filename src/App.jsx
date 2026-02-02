@@ -3,7 +3,7 @@ import { Routes, Route, useLocation } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
-import Breadcrumbs from './components/Breadcrumbs';
+
 
 import Home from './pages/Home';
 import Directory from './pages/Directory';
@@ -15,11 +15,11 @@ import About from './pages/About';
 import AuroraBackground from './components/AuroraBackground';
 
 // Premium Components
-import ScrollProgress from './components/ScrollProgress';
+
 import ToastProvider from './components/ToastProvider';
 import FloatingActionButton from './components/FloatingActionButton';
 import ParticleBackground from './components/ParticleBackground';
-import CursorTrail from './components/CursorTrail';
+
 
 function App() {
   const location = useLocation();
@@ -35,10 +35,10 @@ function App() {
   return (
     <div className="app cinematic-wrapper">
       {/* Visual Effects */}
-      <ScrollProgress />
+
       <AuroraBackground />
       <ParticleBackground particleCount={40} />
-      <CursorTrail size={15} trailLength={8} />
+
 
       {/* Toast Notifications */}
       <ToastProvider />
@@ -46,10 +46,7 @@ function App() {
       {/* Navigation */}
       <Navbar />
 
-      {/* Breadcrumbs */}
-      <div style={{ paddingTop: '80px' }}>
-        <Breadcrumbs />
-      </div>
+
 
       {/* Main Content */}
       <main style={{ minHeight: '80vh' }}>

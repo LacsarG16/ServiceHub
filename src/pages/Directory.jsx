@@ -82,25 +82,27 @@ const Directory = () => {
     });
 
     return (
-        <div style={{ padding: '120px 0 80px' }}>
+        <div style={{ padding: '40px 0 80px' }}>
             <div className="container">
                 {/* Header Section */}
                 <div style={{ marginBottom: '3rem' }}>
-                    <h1 style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>Find Local <span style={{ color: 'var(--primary)' }}>Experts</span></h1>
-                    <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem' }}>Browse our directory of high-quality service providers.</p>
+                    <h1 style={{ fontSize: '2.5rem', marginBottom: '1rem', fontWeight: '800' }}>Find Local <span className="text-gradient-primary">Experts</span></h1>
+                    <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem', fontWeight: '500' }}>Browse our directory of high-quality service providers.</p>
                 </div>
 
                 {/* Search & Filter Bar */}
-                <div style={{ position: 'relative', maxWidth: '1000px', margin: '0 auto 4rem' }}>
-                    <div id="directory-search-bar" className="glass" style={{
+                <div style={{ position: 'relative', maxWidth: '1200px', margin: '0 auto 4rem' }}>
+                    <div id="directory-search-bar" style={{
                         padding: '0.5rem',
                         borderRadius: '999px',
                         display: 'flex',
                         alignItems: 'center',
                         gap: '0.5rem',
                         transition: 'all 0.3s ease',
+                        backdropFilter: 'blur(30px)',
+                        background: 'var(--glass-bg)',
                         border: isFocused ? '1px solid var(--primary)' : '1px solid var(--glass-border)',
-                        boxShadow: isFocused ? '0 0 30px rgba(6, 182, 212, 0.2)' : 'var(--shadow-lg)',
+                        boxShadow: isFocused ? '0 10px 40px rgba(6, 182, 212, 0.25), 0 0 20px rgba(6, 182, 212, 0.15)' : 'var(--shadow-lg)',
                         transform: isFocused ? 'scale(1.01)' : 'scale(1)'
                     }}>
                         {/* Search Input */}
@@ -246,7 +248,7 @@ const Directory = () => {
                 @media (max-width: 992px) {
                     #directory-search-bar {
                         flex-direction: column !important;
-                        border-radius: 2rem !important;
+                        border-radius: var(--radius-xl) !important;
                         padding: 1.5rem !important;
                         gap: 1rem !important;
                     }
