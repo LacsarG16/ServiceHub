@@ -13,6 +13,9 @@ import ForProviders from './pages/ForProviders';
 import Contact from './pages/Contact';
 import About from './pages/About';
 import AuroraBackground from './components/AuroraBackground';
+import { AuthProvider } from './context/AuthContext';
+import Login from './pages/Login';
+import CustomerDashboard from './pages/CustomerDashboard';
 
 // Premium Components
 
@@ -33,38 +36,42 @@ function App() {
   };
 
   return (
-    <div className="app cinematic-wrapper">
-      {/* Visual Effects */}
+    <AuthProvider>
+      <div className="app cinematic-wrapper">
+        {/* Visual Effects */}
 
-      <AuroraBackground />
-      <ParticleBackground particleCount={40} />
-
-
-      {/* Toast Notifications */}
-      <ToastProvider />
-
-      {/* Navigation */}
-      {!isDashboard && <Navbar />}
+        <AuroraBackground />
+        <ParticleBackground particleCount={40} />
 
 
+        {/* Toast Notifications */}
+        <ToastProvider />
 
-      {/* Main Content */}
-      <main style={{ minHeight: '80vh' }}>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/directory" element={<Directory />} />
-          <Route path="/profile/:id" element={<Profile />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/for-providers" element={<ForProviders />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/about" element={<About />} />
-        </Routes>
-      </main>
+        {/* Navigation */}
+        {!isDashboard && <Navbar />}
 
-      {/* Footer & FAB */}
-      {!isDashboard && <Footer />}
-      <FloatingActionButton onClick={handleFABClick} showAfterScroll={200} />
-    </div>
+
+
+        {/* Main Content */}
+        <main style={{ minHeight: '80vh' }}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/directory" element={<Directory />} />
+            <Route path="/profile/:id" element={<Profile />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/customer-dashboard" element={<CustomerDashboard />} />
+            <Route path="/for-providers" element={<ForProviders />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/about" element={<About />} />
+          </Routes>
+        </main>
+
+        {/* Footer & FAB */}
+        {!isDashboard && <Footer />}
+        <FloatingActionButton onClick={handleFABClick} showAfterScroll={200} />
+      </div>
+    </AuthProvider>
   );
 }
 

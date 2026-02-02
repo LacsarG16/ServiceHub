@@ -170,7 +170,6 @@ const ServicesTab = ({ onAddService, onEditService }) => {
                                     style={{
                                         padding: '0.65rem',
                                         borderRadius: '12px',
-                                        borderRadius: '12px',
                                         background: 'var(--white)',
                                         color: 'var(--text-muted)',
                                         border: '1px solid var(--glass-border)',

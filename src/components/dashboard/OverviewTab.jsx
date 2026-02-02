@@ -34,8 +34,6 @@ const OverviewTab = ({ stats, recentBookings, onBookingClick, onUpgrade }) => {
                                 fontSize: '0.8rem',
                                 color: '#10b981',
                                 fontWeight: '700',
-                                color: '#10b981',
-                                fontWeight: '700',
                                 background: 'rgba(16, 185, 129, 0.1)'
                             }}>
                                 {stat.change}
@@ -60,9 +58,6 @@ const OverviewTab = ({ stats, recentBookings, onBookingClick, onUpgrade }) => {
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
                         <h3 style={{ fontSize: '1.35rem', fontWeight: '800' }}>Recent Bookings</h3>
                         <button style={{
-                            color: 'var(--primary)',
-                            fontWeight: '700',
-                            fontSize: '0.9rem',
                             color: 'var(--primary)',
                             fontWeight: '700',
                             fontSize: '0.9rem',

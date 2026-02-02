@@ -3,11 +3,13 @@ import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, User, Briefcase, Sun, Moon } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion'; // eslint-disable-line no-unused-vars
 import { useTheme } from '../context/ThemeContext';
+import { useAuth } from '../context/AuthContext';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const { theme, preset, toggleTheme, setPreset } = useTheme();
+  const { userType, logout, isAuthenticated } = useAuth();
   const location = useLocation();
 
   useEffect(() => {
@@ -71,6 +73,9 @@ const Navbar = () => {
           <div style={{ display: 'flex', gap: '2.5rem', alignItems: 'center' }}>
             {navLinks.map((link) => {
               const isActive = location.pathname === link.path;
+              // Don't show "For Providers" if logged in as customer
+              if (userType === 'customer' && link.path === '/for-providers') return null;
+
               return (
                 <Link
                   key={link.name}
@@ -101,18 +106,52 @@ const Navbar = () => {
               );
             })}
 
-            <Link
-              to="/dashboard"
-              className="btn-primary hover-lift"
-              style={{
-                padding: '0.6rem 1.5rem',
-                fontSize: '0.9rem',
-                borderRadius: 'var(--radius-full)',
-                boxShadow: '0 4px 15px rgba(59, 130, 246, 0.2)'
-              }}
-            >
-              <User size={18} /> <span>Provider Portal</span>
-            </Link>
+            {/* Dynamic Auth Section */}
+            {!isAuthenticated ? (
+              <Link
+                to="/login"
+                className="btn-primary hover-lift"
+                style={{
+                  padding: '0.6rem 1.5rem',
+                  fontSize: '0.9rem',
+                  borderRadius: 'var(--radius-full)',
+                  boxShadow: '0 4px 15px rgba(59, 130, 246, 0.2)'
+                }}
+              >
+                <User size={18} /> <span>Login</span>
+              </Link>
+            ) : (
+              <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+                {userType === 'provider' ? (
+                  <Link
+                    to="/dashboard"
+                    className="btn-primary hover-lift"
+                    style={{
+                      padding: '0.6rem 1.5rem',
+                      fontSize: '0.9rem',
+                      borderRadius: 'var(--radius-full)',
+                      boxShadow: '0 4px 15px rgba(59, 130, 246, 0.2)'
+                    }}
+                  >
+                    <Briefcase size={18} /> <span>Provider Portal</span>
+                  </Link>
+                ) : (
+                  <Link
+                    to="/customer-dashboard"
+                    className="btn-primary hover-lift"
+                    style={{
+                      padding: '0.6rem 1.5rem',
+                      fontSize: '0.9rem',
+                      borderRadius: 'var(--radius-full)',
+                      boxShadow: '0 4px 15px rgba(59, 130, 246, 0.2)'
+                    }}
+                  >
+                    <User size={18} /> <span>My Dashboard</span>
+                  </Link>
+                )}
+              </div>
+            )}
+
 
             <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
               {/* Theme Preset Selector */}
@@ -235,14 +274,38 @@ const Navbar = () => {
               transition={{ delay: 0.3 }}
               style={{ marginTop: '2rem' }}
             >
-              <Link
-                to="/dashboard"
-                onClick={() => setIsOpen(false)}
-                className="btn-primary"
-                style={{ justifyContent: 'center', width: '100%', padding: '1.25rem', borderRadius: 'var(--radius-lg)', fontSize: '1.1rem' }}
-              >
-                <User size={20} /> Provider Portal
-              </Link>
+              {!isAuthenticated ? (
+                <Link
+                  to="/login"
+                  onClick={() => setIsOpen(false)}
+                  className="btn-primary"
+                  style={{ justifyContent: 'center', width: '100%', padding: '1.25rem', borderRadius: 'var(--radius-lg)', fontSize: '1.1rem' }}
+                >
+                  <User size={20} /> Login
+                </Link>
+              ) : (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                  {userType === 'provider' ? (
+                    <Link
+                      to="/dashboard"
+                      onClick={() => setIsOpen(false)}
+                      className="btn-primary"
+                      style={{ justifyContent: 'center', width: '100%', padding: '1.25rem', borderRadius: 'var(--radius-lg)', fontSize: '1.1rem' }}
+                    >
+                      <Briefcase size={20} /> Provider Portal
+                    </Link>
+                  ) : (
+                    <Link
+                      to="/customer-dashboard"
+                      onClick={() => setIsOpen(false)}
+                      className="btn-primary"
+                      style={{ justifyContent: 'center', width: '100%', padding: '1.25rem', borderRadius: 'var(--radius-lg)', fontSize: '1.1rem' }}
+                    >
+                      <User size={20} /> My Dashboard
+                    </Link>
+                  )}
+                </div>
+              )}
             </motion.div>
 
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem', marginTop: '1rem' }}>

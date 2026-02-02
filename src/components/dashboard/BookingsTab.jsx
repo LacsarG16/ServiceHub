@@ -309,7 +309,6 @@ const BookingsTab = ({ onBookingClick, onAddBooking }) => {
                                         width: '100%',
                                         padding: '0.85rem 1rem 0.85rem 3.25rem',
                                         borderRadius: '14px',
-                                        borderRadius: '14px',
                                         border: '1px solid var(--glass-border)',
                                         background: 'var(--background)',
                                         outline: 'none',

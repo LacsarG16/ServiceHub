@@ -16,6 +16,8 @@ import {
     Home
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useAuth } from '../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 // Tab Components
 import OverviewTab from '../components/dashboard/OverviewTab';
@@ -36,8 +38,15 @@ import BookingFormModal from '../components/modals/BookingFormModal';
 import NotificationDrawer from '../components/drawers/NotificationDrawer';
 
 const Dashboard = () => {
+    const { logout } = useAuth();
+    const navigate = useNavigate();
     const [activeTab, setActiveTab] = useState('overview');
     const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(true);
+
+    const handleLogout = () => {
+        logout();
+        navigate('/');
+    };
 
     // Modal & Drawer State
     const [activeModal, setActiveModal] = useState(null); // 'service', 'booking', 'upgrade'
@@ -148,8 +157,6 @@ const Dashboard = () => {
                                 padding: '1rem 1.25rem',
                                 justifyContent: isSidebarCollapsed ? 'center' : 'flex-start',
                                 borderRadius: '16px',
-                                padding: '1rem 1.25rem',
-                                borderRadius: '16px',
                                 background: activeTab === item.id ? 'var(--primary-light)' : 'transparent',
                                 color: activeTab === item.id ? 'var(--primary)' : 'var(--text-muted)',
                                 fontWeight: '700',
@@ -182,8 +189,6 @@ const Dashboard = () => {
                                 display: 'flex',
                                 alignItems: 'center',
                                 justifyContent: 'center',
-                                padding: '0.4rem',
-                                borderRadius: '10px',
                                 padding: '0.4rem',
                                 borderRadius: '10px',
                                 background: activeTab === item.id ? 'var(--white)' : 'transparent',
@@ -230,6 +235,7 @@ const Dashboard = () => {
                         {!isSidebarCollapsed && <span style={{ fontWeight: '600', fontSize: '0.9rem' }}>Back to Home</span>}
                     </button>
                     <button
+                        onClick={handleLogout}
                         style={{
                             display: 'flex',
                             alignItems: 'center',
@@ -309,9 +315,6 @@ const Dashboard = () => {
                                     cursor: 'pointer',
                                     padding: '0.75rem',
                                     borderRadius: '16px',
-                                    cursor: 'pointer',
-                                    padding: '0.75rem',
-                                    borderRadius: '16px',
                                     background: 'var(--white)',
                                     border: '1px solid var(--glass-border)',
                                     boxShadow: 'var(--shadow-sm)'
@@ -324,8 +327,6 @@ const Dashboard = () => {
                                     position: 'absolute',
                                     top: '10px',
                                     right: '10px',
-                                    width: '10px',
-                                    height: '10px',
                                     width: '10px',
                                     height: '10px',
                                     backgroundColor: 'var(--accent)',
