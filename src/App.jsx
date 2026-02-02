@@ -44,7 +44,7 @@ function App() {
       <ToastProvider />
 
       {/* Navigation */}
-      <Navbar />
+      {!isDashboard && <Navbar />}
 
 
 
