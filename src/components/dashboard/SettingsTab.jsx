@@ -15,7 +15,7 @@ const SettingsTab = ({ onUpgrade }) => {
         switch (activeSection) {
             case 'notifications':
                 return (
-                    <div className="glass" style={{ padding: '2.5rem', borderRadius: 'var(--radius-lg)', background: 'white' }}>
+                    <div className="glass" style={{ padding: '2.5rem', borderRadius: 'var(--radius-lg)', background: 'var(--white)' }}>
                         <h3 style={{ fontSize: '1.25rem', marginBottom: '1.5rem' }}>Notifications</h3>
                         <p style={{ color: 'var(--text-muted)', marginBottom: '2rem' }}>Choose how you want to be notified about your business activity.</p>
 
@@ -47,7 +47,7 @@ const SettingsTab = ({ onUpgrade }) => {
                 );
             case 'security':
                 return (
-                    <div className="glass" style={{ padding: '2.5rem', borderRadius: 'var(--radius-lg)', background: 'white' }}>
+                    <div className="glass" style={{ padding: '2.5rem', borderRadius: 'var(--radius-lg)', background: 'var(--white)' }}>
                         <h3 style={{ fontSize: '1.25rem', marginBottom: '2rem' }}>Security Settings</h3>
 
                         <form style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', marginBottom: '3rem' }}>
@@ -86,10 +86,10 @@ const SettingsTab = ({ onUpgrade }) => {
                 );
             case 'billing':
                 return (
-                    <div className="glass" style={{ padding: '2.5rem', borderRadius: 'var(--radius-lg)', background: 'white' }}>
+                    <div className="glass" style={{ padding: '2.5rem', borderRadius: 'var(--radius-lg)', background: 'var(--white)' }}>
                         <h3 style={{ fontSize: '1.25rem', marginBottom: '1.5rem' }}>Billing & Plans</h3>
 
-                        <div style={{ padding: '1.5rem', borderRadius: 'var(--radius-md)', background: '#f8fafc', border: '1px solid #e2e8f0', marginBottom: '2rem' }}>
+                        <div style={{ padding: '1.5rem', borderRadius: 'var(--radius-md)', background: 'var(--background)', border: '1px solid var(--glass-border)', marginBottom: '2rem' }}>
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                 <div>
                                     <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '0.25rem' }}>Current Plan</p>
@@ -120,7 +120,7 @@ const SettingsTab = ({ onUpgrade }) => {
             case 'profile':
             default:
                 return (
-                    <div className="glass" style={{ padding: '2.5rem', borderRadius: 'var(--radius-lg)', background: 'white' }}>
+                    <div className="glass" style={{ padding: '2.5rem', borderRadius: 'var(--radius-lg)', background: 'var(--white)' }}>
                         <h3 style={{ fontSize: '1.25rem', marginBottom: '2rem' }}>Profile Information</h3>
 
                         <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', marginBottom: '2.5rem' }}>

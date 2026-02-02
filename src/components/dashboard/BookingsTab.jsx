@@ -272,7 +272,7 @@ const BookingsTab = ({ onBookingClick, onAddBooking }) => {
                     >
                         + New Booking
                     </button>
-                    <div style={{ display: 'flex', background: 'white', borderRadius: 'var(--radius-md)', padding: '0.25rem', border: '1px solid #e2e8f0' }}>
+                    <div style={{ display: 'flex', background: 'var(--white)', borderRadius: 'var(--radius-md)', padding: '0.25rem', border: '1px solid var(--glass-border)' }}>
                         <button
                             onClick={() => setView('list')}
                             style={{ padding: '0.5rem 1rem', borderRadius: '6px', background: view === 'list' ? 'var(--primary)' : 'transparent', color: view === 'list' ? 'white' : 'var(--text-muted)', fontWeight: '600', border: 'none', cursor: 'pointer' }}

@@ -29,7 +29,7 @@ const AnalyticsTab = () => {
             </div>
 
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem', marginBottom: '2rem' }}>
-                <div className="glass" style={{ padding: '2rem', borderRadius: 'var(--radius-lg)', background: 'white', minHeight: '350px' }}>
+                <div className="glass" style={{ padding: '2rem', borderRadius: 'var(--radius-lg)', background: 'var(--white)', minHeight: '350px' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '2rem' }}>
                         <h3 style={{ fontSize: '1.15rem' }}>Revenue Growth</h3>
                         <select style={{ padding: '0.4rem', borderRadius: '6px', border: '1px solid var(--glass-border)', fontSize: '0.8rem', background: 'var(--white)', color: 'var(--text-main)' }}>
@@ -50,7 +50,7 @@ const AnalyticsTab = () => {
                     </div>
                 </div>
 
-                <div className="glass" style={{ padding: '2rem', borderRadius: 'var(--radius-lg)', background: 'white', minHeight: '350px' }}>
+                <div className="glass" style={{ padding: '2rem', borderRadius: 'var(--radius-lg)', background: 'var(--white)', minHeight: '350px' }}>
                     <h3 style={{ fontSize: '1.15rem', marginBottom: '2rem' }}>Customer Acquisition</h3>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                         {[
