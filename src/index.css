@@ -32,9 +32,48 @@
   --radius-md: 0.75rem;
   --radius-lg: 1.5rem;
   --radius-xl: 2rem;
+  --radius-2xl: 2.5rem;
   --radius-full: 9999px;
+
+  --primary-light: rgba(6, 182, 212, 0.1);
+  --glass-border: rgba(255, 255, 255, 0.5);
 }
 
+/* --- Color Presets --- */
+[data-preset='sunset'] {
+  --primary: #f43f5e;
+  /* Rose 500 */
+  --primary-hover: #e11d48;
+  --secondary: #f59e0b;
+  /* Amber 500 */
+  --accent: #8b5cf6;
+  /* Violet 500 */
+  --shadow-premium: 0 20px 40px -10px rgba(244, 63, 94, 0.25);
+}
+
+[data-preset='ocean'] {
+  --primary: #0ea5e9;
+  /* Sky 500 */
+  --primary-hover: #0284c7;
+  --secondary: #6366f1;
+  /* Indigo 500 */
+  --accent: #2dd4bf;
+  /* Teal 400 */
+  --shadow-premium: 0 20px 40px -10px rgba(14, 165, 233, 0.25);
+}
+
+[data-preset='forest'] {
+  --primary: #10b981;
+  /* Emerald 500 */
+  --primary-hover: #059669;
+  --secondary: #84cc16;
+  /* Lime 500 */
+  --accent: #06b6d4;
+  /* Cyan 500 */
+  --shadow-premium: 0 20px 40px -10px rgba(16, 185, 129, 0.25);
+}
+
+/* Base Light/Dark overrides */
 [data-theme='dark'] {
   --background: #0f172a;
   /* Slate 900 */
@@ -114,7 +153,8 @@ button {
   position: absolute;
   border-radius: 50%;
   filter: blur(80px);
-  opacity: 0.45;
+  opacity: 0.3;
+  /* Reduced from 0.45 */
   animation: float 20s infinite alternate;
   z-index: -1;
   pointer-events: none;
@@ -199,9 +239,12 @@ button {
   transform: translateY(-8px) scale(1.02);
   box-shadow: var(--shadow-premium), 0 10px 40px rgba(0, 0, 0, 0.2);
   border-color: var(--primary);
-  /* Optional: explicit hover background change handled by variable? 
-     For now, let's just minimal change or keep existing gradient logic if possible.
-     Actually, let's simplify and rely on the shadow/lift for hover effect in CSS var system */
+}
+
+.stationary-card:hover {
+  transform: none !important;
+  box-shadow: var(--glass-card-shadow) !important;
+  border-color: var(--glass-card-border) !important;
 }
 
 /* --- Utilities --- */
@@ -275,4 +318,107 @@ button {
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+/* --- Premium Animations --- */
+@keyframes pulse {
+
+  0%,
+  100% {
+    box-shadow: 0 8px 24px rgba(6, 182, 212, 0.4), 0 0 0 0 rgba(6, 182, 212, 0.4);
+  }
+
+  50% {
+    box-shadow: 0 8px 24px rgba(6, 182, 212, 0.4), 0 0 0 20px rgba(6, 182, 212, 0);
+  }
+}
+
+@keyframes float-up {
+  0% {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Parallax Utilities */
+.parallax-slow {
+  transform: translateY(calc(var(--scroll-position, 0) * -0.2px));
+  transition: transform 0.1s ease-out;
+}
+
+.parallax-medium {
+  transform: translateY(calc(var(--scroll-position, 0) * -0.5px));
+  transition: transform 0.1s ease-out;
+}
+
+.parallax-fast {
+  transform: translateY(calc(var(--scroll-position, 0) * -0.8px));
+  transition: transform 0.1s ease-out;
+}
+
+/* Enhanced Hover Effects */
+.interactive-card {
+  transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.interactive-card:hover {
+  border-color: var(--primary-light);
+}
+
+.hover-glow {
+  transition: all 0.3s ease;
+}
+
+.hover-glow:hover {
+  box-shadow: 0 0 30px rgba(6, 182, 212, 0.6);
+  transform: translateY(-2px);
+}
+
+.hover-scale {
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.hover-scale:hover {
+  transform: scale(1.05);
+}
+
+/* Smooth Transitions */
+* {
+  transition-property: background-color, border-color, color, fill, stroke;
+  transition-duration: 0.3s;
+  transition-timing-function: ease;
+}
+
+/* Disable transitions on theme change for instant update */
+[data-theme] * {
+  transition-duration: 0.3s !important;
+}
+
+/* Focus Styles for Accessibility */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
 }

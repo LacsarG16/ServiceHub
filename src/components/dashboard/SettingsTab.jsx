@@ -15,7 +15,7 @@ const SettingsTab = ({ onUpgrade }) => {
         switch (activeSection) {
             case 'notifications':
                 return (
-                    <div className="glass" style={{ padding: '2.5rem', borderRadius: 'var(--radius-lg)', background: 'white' }}>
+                    <div className="glass" style={{ padding: '2.5rem', borderRadius: 'var(--radius-lg)', background: 'var(--white)' }}>
                         <h3 style={{ fontSize: '1.25rem', marginBottom: '1.5rem' }}>Notifications</h3>
                         <p style={{ color: 'var(--text-muted)', marginBottom: '2rem' }}>Choose how you want to be notified about your business activity.</p>
 
@@ -26,7 +26,7 @@ const SettingsTab = ({ onUpgrade }) => {
                                 { title: 'Payment Recieved', desc: 'Get notified when a payment is processed' },
                                 { title: 'Marketing Emails', desc: 'Receive updates about new features and tips' }
                             ].map((item, idx) => (
-                                <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingBottom: '1.5rem', borderBottom: idx !== 3 ? '1px solid #f1f5f9' : 'none' }}>
+                                <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingBottom: '1.5rem', borderBottom: idx !== 3 ? '1px solid var(--glass-border)' : 'none' }}>
                                     <div>
                                         <h4 style={{ fontWeight: '600', marginBottom: '0.25rem' }}>{item.title}</h4>
                                         <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>{item.desc}</p>
@@ -34,7 +34,7 @@ const SettingsTab = ({ onUpgrade }) => {
                                     <label style={{ position: 'relative', display: 'inline-block', width: '44px', height: '24px' }}>
                                         <input type="checkbox" defaultChecked={idx < 3} style={{ opacity: 0, width: 0, height: 0 }} />
                                         <span style={{ position: 'absolute', cursor: 'pointer', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: idx < 3 ? 'var(--primary)' : '#cbd5e1', transition: '.4s', borderRadius: '34px' }}>
-                                            <span style={{ position: 'absolute', content: '""', height: '18px', width: '18px', left: idx < 3 ? '22px' : '4px', bottom: '3px', backgroundColor: 'white', transition: '.4s', borderRadius: '50%' }}></span>
+                                            <span style={{ position: 'absolute', content: '""', height: '18px', width: '18px', left: idx < 3 ? '22px' : '4px', bottom: '3px', backgroundColor: 'var(--white)', transition: '.4s', borderRadius: '50%' }}></span>
                                         </span>
                                     </label>
                                 </div>
@@ -47,23 +47,23 @@ const SettingsTab = ({ onUpgrade }) => {
                 );
             case 'security':
                 return (
-                    <div className="glass" style={{ padding: '2.5rem', borderRadius: 'var(--radius-lg)', background: 'white' }}>
+                    <div className="glass" style={{ padding: '2.5rem', borderRadius: 'var(--radius-lg)', background: 'var(--white)' }}>
                         <h3 style={{ fontSize: '1.25rem', marginBottom: '2rem' }}>Security Settings</h3>
 
                         <form style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', marginBottom: '3rem' }}>
                             <h4 style={{ fontWeight: '700', fontSize: '1rem', color: 'var(--text-main)' }}>Change Password</h4>
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                                 <label style={{ fontSize: '0.9rem', fontWeight: '600', color: 'var(--text-muted)' }}>Current Password</label>
-                                <input type="password" style={{ padding: '0.75rem', borderRadius: 'var(--radius-md)', border: '1px solid #e2e8f0', outline: 'none' }} />
+                                <input type="password" style={{ padding: '0.75rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--glass-border)', outline: 'none', background: 'var(--background)', color: 'var(--text-main)' }} />
                             </div>
                             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
                                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                                     <label style={{ fontSize: '0.9rem', fontWeight: '600', color: 'var(--text-muted)' }}>New Password</label>
-                                    <input type="password" style={{ padding: '0.75rem', borderRadius: 'var(--radius-md)', border: '1px solid #e2e8f0', outline: 'none' }} />
+                                    <input type="password" style={{ padding: '0.75rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--glass-border)', outline: 'none', background: 'var(--background)', color: 'var(--text-main)' }} />
                                 </div>
                                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                                     <label style={{ fontSize: '0.9rem', fontWeight: '600', color: 'var(--text-muted)' }}>Confirm New Password</label>
-                                    <input type="password" style={{ padding: '0.75rem', borderRadius: 'var(--radius-md)', border: '1px solid #e2e8f0', outline: 'none' }} />
+                                    <input type="password" style={{ padding: '0.75rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--glass-border)', outline: 'none', background: 'var(--background)', color: 'var(--text-main)' }} />
                                 </div>
                             </div>
                             <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
@@ -86,10 +86,10 @@ const SettingsTab = ({ onUpgrade }) => {
                 );
             case 'billing':
                 return (
-                    <div className="glass" style={{ padding: '2.5rem', borderRadius: 'var(--radius-lg)', background: 'white' }}>
+                    <div className="glass" style={{ padding: '2.5rem', borderRadius: 'var(--radius-lg)', background: 'var(--white)' }}>
                         <h3 style={{ fontSize: '1.25rem', marginBottom: '1.5rem' }}>Billing & Plans</h3>
 
-                        <div style={{ padding: '1.5rem', borderRadius: 'var(--radius-md)', background: '#f8fafc', border: '1px solid #e2e8f0', marginBottom: '2rem' }}>
+                        <div style={{ padding: '1.5rem', borderRadius: 'var(--radius-md)', background: 'var(--background)', border: '1px solid var(--glass-border)', marginBottom: '2rem' }}>
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                 <div>
                                     <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '0.25rem' }}>Current Plan</p>
@@ -97,7 +97,7 @@ const SettingsTab = ({ onUpgrade }) => {
                                 </div>
                                 <button onClick={onUpgrade} className="btn-primary" style={{ padding: '0.75rem 1.5rem' }}>Upgrade Plan</button>
                             </div>
-                            <div style={{ marginTop: '1.5rem', paddingTop: '1.5rem', borderTop: '1px solid #e2e8f0', display: 'flex', gap: '2rem' }}>
+                            <div style={{ marginTop: '1.5rem', paddingTop: '1.5rem', borderTop: '1px solid var(--glass-border)', display: 'flex', gap: '2rem' }}>
                                 <div>
                                     <p style={{ color: 'var(--text-muted)', fontSize: '0.8rem' }}>Next Billing Date</p>
                                     <p style={{ fontWeight: '600' }}>N/A (Free)</p>
@@ -111,7 +111,7 @@ const SettingsTab = ({ onUpgrade }) => {
 
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                             <h4 style={{ fontWeight: '700' }}>Recent Invoices</h4>
-                            <div style={{ textAlign: 'center', padding: '2rem', border: '2px dashed #e2e8f0', borderRadius: 'var(--radius-md)', color: 'var(--text-muted)' }}>
+                            <div style={{ textAlign: 'center', padding: '2rem', border: '2px dashed var(--glass-border)', borderRadius: 'var(--radius-md)', color: 'var(--text-muted)' }}>
                                 No invoices yet.
                             </div>
                         </div>
@@ -120,7 +120,7 @@ const SettingsTab = ({ onUpgrade }) => {
             case 'profile':
             default:
                 return (
-                    <div className="glass" style={{ padding: '2.5rem', borderRadius: 'var(--radius-lg)', background: 'white' }}>
+                    <div className="glass" style={{ padding: '2.5rem', borderRadius: 'var(--radius-lg)', background: 'var(--white)' }}>
                         <h3 style={{ fontSize: '1.25rem', marginBottom: '2rem' }}>Profile Information</h3>
 
                         <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', marginBottom: '2.5rem' }}>
@@ -136,19 +136,19 @@ const SettingsTab = ({ onUpgrade }) => {
                         <form style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                                 <label style={{ fontSize: '0.9rem', fontWeight: '600', color: 'var(--text-muted)' }}>First Name</label>
-                                <input type="text" defaultValue="John" style={{ padding: '0.75rem', borderRadius: 'var(--radius-md)', border: '1px solid #e2e8f0', outline: 'none' }} />
+                                <input type="text" defaultValue="John" style={{ padding: '0.75rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--glass-border)', outline: 'none', background: 'var(--background)', color: 'var(--text-main)' }} />
                             </div>
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                                 <label style={{ fontSize: '0.9rem', fontWeight: '600', color: 'var(--text-muted)' }}>Last Name</label>
-                                <input type="text" defaultValue="Doe" style={{ padding: '0.75rem', borderRadius: 'var(--radius-md)', border: '1px solid #e2e8f0', outline: 'none' }} />
+                                <input type="text" defaultValue="Doe" style={{ padding: '0.75rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--glass-border)', outline: 'none', background: 'var(--background)', color: 'var(--text-main)' }} />
                             </div>
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', gridColumn: 'span 2' }}>
                                 <label style={{ fontSize: '0.9rem', fontWeight: '600', color: 'var(--text-muted)' }}>Email Address</label>
-                                <input type="email" defaultValue="john.doe@example.com" style={{ padding: '0.75rem', borderRadius: 'var(--radius-md)', border: '1px solid #e2e8f0', outline: 'none' }} />
+                                <input type="email" defaultValue="john.doe@example.com" style={{ padding: '0.75rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--glass-border)', outline: 'none', background: 'var(--background)', color: 'var(--text-main)' }} />
                             </div>
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', gridColumn: 'span 2' }}>
                                 <label style={{ fontSize: '0.9rem', fontWeight: '600', color: 'var(--text-muted)' }}>Bio</label>
-                                <textarea rows="4" defaultValue="Professional cleaning service with over 5 years of experience..." style={{ padding: '0.75rem', borderRadius: 'var(--radius-md)', border: '1px solid #e2e8f0', outline: 'none', resize: 'none' }}></textarea>
+                                <textarea rows="4" defaultValue="Professional cleaning service with over 5 years of experience..." style={{ padding: '0.75rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--glass-border)', outline: 'none', resize: 'none', background: 'var(--background)', color: 'var(--text-main)' }}></textarea>
                             </div>
                             <div style={{ gridColumn: 'span 2', display: 'flex', justifyContent: 'flex-end', marginTop: '1rem' }}>
                                 <button className="btn-primary" type="button" style={{ padding: '0.75rem 2rem' }}>Save Changes</button>
@@ -175,7 +175,7 @@ const SettingsTab = ({ onUpgrade }) => {
                                 gap: '0.75rem',
                                 padding: '1rem',
                                 borderRadius: 'var(--radius-md)',
-                                background: activeSection === item.id ? '#f1f5f9' : 'transparent',
+                                background: activeSection === item.id ? 'var(--background)' : 'transparent',
                                 color: activeSection === item.id ? 'var(--text-main)' : 'var(--text-muted)',
                                 fontWeight: '600',
                                 textAlign: 'left',

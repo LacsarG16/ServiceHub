@@ -11,8 +11,8 @@ const OverviewTab = ({ stats, recentBookings, onBookingClick, onUpgrade }) => {
                     <div key={i} className="hover-lift" style={{
                         padding: '2rem',
                         borderRadius: 'var(--radius-xl)',
-                        background: 'white',
-                        border: '1px solid rgba(226, 232, 240, 0.6)',
+                        background: 'var(--white)',
+                        border: '1px solid var(--glass-border)',
                         boxShadow: '0 10px 30px -5px rgba(0,0,0,0.03)'
                     }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1.5rem' }}>
@@ -34,7 +34,9 @@ const OverviewTab = ({ stats, recentBookings, onBookingClick, onUpgrade }) => {
                                 fontSize: '0.8rem',
                                 color: '#10b981',
                                 fontWeight: '700',
-                                background: 'rgba(16, 185, 129, 0.08)'
+                                color: '#10b981',
+                                fontWeight: '700',
+                                background: 'rgba(16, 185, 129, 0.1)'
                             }}>
                                 {stat.change}
                             </span>
@@ -51,8 +53,8 @@ const OverviewTab = ({ stats, recentBookings, onBookingClick, onUpgrade }) => {
                 <div style={{
                     padding: '2.5rem',
                     borderRadius: 'var(--radius-xl)',
-                    background: 'white',
-                    border: '1px solid rgba(226, 232, 240, 0.6)',
+                    background: 'var(--white)',
+                    border: '1px solid var(--glass-border)',
                     boxShadow: '0 10px 30px -5px rgba(0,0,0,0.03)'
                 }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
@@ -61,7 +63,10 @@ const OverviewTab = ({ stats, recentBookings, onBookingClick, onUpgrade }) => {
                             color: 'var(--primary)',
                             fontWeight: '700',
                             fontSize: '0.9rem',
-                            background: 'rgba(59, 130, 246, 0.05)',
+                            color: 'var(--primary)',
+                            fontWeight: '700',
+                            fontSize: '0.9rem',
+                            background: 'var(--primary-light)',
                             border: 'none',
                             padding: '0.5rem 1rem',
                             borderRadius: '8px'
@@ -94,13 +99,13 @@ const OverviewTab = ({ stats, recentBookings, onBookingClick, onUpgrade }) => {
                                             e.currentTarget.style.boxShadow = 'none';
                                         }}
                                     >
-                                        <td style={{ padding: '1rem', fontWeight: '600', background: '#fcfdfe', borderRadius: '12px 0 0 12px', border: '1px solid #f1f5f9', borderRight: 'none' }}>{booking.customer}</td>
-                                        <td style={{ padding: '1rem', background: '#fcfdfe', borderTop: '1px solid #f1f5f9', borderBottom: '1px solid #f1f5f9' }}>{booking.service}</td>
-                                        <td style={{ padding: '1rem', background: '#fcfdfe', borderTop: '1px solid #f1f5f9', borderBottom: '1px solid #f1f5f9' }}>
+                                        <td style={{ padding: '1rem', fontWeight: '600', background: 'var(--background)', borderRadius: '12px 0 0 12px', border: '1px solid var(--glass-border)', borderRight: 'none', color: 'var(--text-main)' }}>{booking.customer}</td>
+                                        <td style={{ padding: '1rem', background: 'var(--background)', borderTop: '1px solid var(--glass-border)', borderBottom: '1px solid var(--glass-border)', color: 'var(--text-main)' }}>{booking.service}</td>
+                                        <td style={{ padding: '1rem', background: 'var(--background)', borderTop: '1px solid var(--glass-border)', borderBottom: '1px solid var(--glass-border)' }}>
                                             <p style={{ fontSize: '0.9rem', fontWeight: '600' }}>{booking.date instanceof Date ? booking.date.toLocaleDateString() : booking.date}</p>
                                             <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>{booking.time}</p>
                                         </td>
-                                        <td style={{ padding: '1rem', background: '#fcfdfe', borderRadius: '0 12px 12px 0', border: '1px solid #f1f5f9', borderLeft: 'none' }}>
+                                        <td style={{ padding: '1rem', background: 'var(--background)', borderRadius: '0 12px 12px 0', border: '1px solid var(--glass-border)', borderLeft: 'none' }}>
                                             <span style={{
                                                 padding: '0.35rem 0.85rem',
                                                 borderRadius: 'var(--radius-full)',
@@ -125,8 +130,8 @@ const OverviewTab = ({ stats, recentBookings, onBookingClick, onUpgrade }) => {
                     <div style={{
                         padding: '2.5rem',
                         borderRadius: 'var(--radius-xl)',
-                        background: 'white',
-                        border: '1px solid rgba(226, 232, 240, 0.6)',
+                        background: 'var(--white)',
+                        border: '1px solid var(--glass-border)',
                         boxShadow: '0 10px 30px -5px rgba(0,0,0,0.03)'
                     }}>
                         <h3 style={{ fontSize: '1.25rem', fontWeight: '800', marginBottom: '2rem' }}>Market Performance</h3>
@@ -136,7 +141,7 @@ const OverviewTab = ({ stats, recentBookings, onBookingClick, onUpgrade }) => {
                                     <span style={{ fontSize: '0.95rem', fontWeight: '600', color: 'var(--text-muted)' }}>Profile Views</span>
                                     <span style={{ fontWeight: '800', color: 'var(--text-main)' }}>1,240</span>
                                 </div>
-                                <div style={{ width: '100%', height: '10px', background: '#f1f5f9', borderRadius: '10px', overflow: 'hidden' }}>
+                                <div style={{ width: '100%', height: '10px', background: 'var(--background)', borderRadius: '10px', overflow: 'hidden' }}>
                                     <motion.div
                                         initial={{ width: 0 }}
                                         animate={{ width: '70%' }}
@@ -151,7 +156,7 @@ const OverviewTab = ({ stats, recentBookings, onBookingClick, onUpgrade }) => {
                                     <span style={{ fontSize: '0.95rem', fontWeight: '600', color: 'var(--text-muted)' }}>Booking Rate</span>
                                     <span style={{ fontWeight: '800', color: 'var(--text-main)' }}>14.2%</span>
                                 </div>
-                                <div style={{ width: '100%', height: '10px', background: '#f1f5f9', borderRadius: '10px', overflow: 'hidden' }}>
+                                <div style={{ width: '100%', height: '10px', background: 'var(--background)', borderRadius: '10px', overflow: 'hidden' }}>
                                     <motion.div
                                         initial={{ width: 0 }}
                                         animate={{ width: '45%' }}
@@ -183,7 +188,7 @@ const OverviewTab = ({ stats, recentBookings, onBookingClick, onUpgrade }) => {
                                     width: '100%',
                                     padding: '1rem',
                                     borderRadius: '12px',
-                                    background: 'white',
+                                    background: 'var(--white)',
                                     color: 'var(--primary)',
                                     fontWeight: '800',
                                     fontSize: '1rem',

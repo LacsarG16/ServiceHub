@@ -58,15 +58,9 @@ const Profile = () => {
     };
 
     return (
-        <div className="profile-page" style={{ backgroundColor: '#f4f7f9', padding: '40px 0' }}>
+        <div className="profile-page" style={{ padding: '40px 0 80px' }}>
             <div className="container">
-                {/* Breadcrumbs */}
-                <div className="breadcrumbs" style={{ fontSize: '0.85rem', color: '#64748b', marginBottom: '20px', display: 'flex', gap: '8px', alignItems: 'center' }}>
-                    <Link to="/">Home</Link> <span>›</span>
-                    <Link to="/directory">Home Services</Link> <span>›</span>
-                    <span>Electricians</span> <span>›</span>
-                    <span style={{ color: '#1e293b', fontWeight: '500' }}>{provider.name}</span>
-                </div>
+
 
                 <div className="profile-layout" style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 2fr) 350px', gap: '24px' }}>
 
@@ -74,7 +68,15 @@ const Profile = () => {
                     <div className="main-content" style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
 
                         {/* Header Section */}
-                        <div className="card" style={{ backgroundColor: 'white', borderRadius: '16px', padding: '24px', position: 'relative', border: '1px solid #e2e8f0' }}>
+                        <div className="glass-card" style={{
+                            borderRadius: 'var(--radius-2xl)',
+                            padding: '2.5rem',
+                            position: 'relative',
+                            backdropFilter: 'blur(30px)',
+                            background: 'var(--glass-bg)',
+                            border: '1px solid var(--glass-border)',
+                            boxShadow: 'var(--shadow-lg)'
+                        }}>
                             <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
                                 <div style={{ position: 'relative' }}>
                                     <img src={provider.image} alt={provider.name} style={{ width: '100px', height: '100px', borderRadius: '50%', objectFit: 'cover' }} />
@@ -83,8 +85,19 @@ const Profile = () => {
                                 <div style={{ flex: 1 }}>
                                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                                         <div>
-                                            <h1 style={{ fontSize: '1.5rem', fontWeight: '700', color: '#1e293b', marginBottom: '4px' }}>{provider.name}</h1>
-                                            <p style={{ color: '#64748b', fontSize: '0.9rem', marginBottom: '8px' }}>{provider.title}</p>
+                                            <h1 style={{
+                                                fontSize: '2rem',
+                                                fontWeight: '800',
+                                                fontFamily: "'Montserrat', sans-serif",
+                                                color: 'var(--text-main)',
+                                                marginBottom: '6px'
+                                            }}>{provider.name}</h1>
+                                            <p style={{
+                                                color: 'var(--text-muted)',
+                                                fontSize: '1rem',
+                                                marginBottom: '10px',
+                                                fontWeight: '600'
+                                            }}>{provider.title}</p>
                                         </div>
                                         <div style={{ display: 'flex', gap: '12px' }}>
                                             <button style={{ backgroundColor: '#f1f5f9', border: 'none', borderRadius: '8px', padding: '8px', color: '#64748b' }}><Heart size={20} /></button>
@@ -113,8 +126,21 @@ const Profile = () => {
                         </div>
 
                         {/* About Me Section */}
-                        <div className="card" style={{ backgroundColor: 'white', borderRadius: '16px', padding: '24px', border: '1px solid #e2e8f0' }}>
-                            <h2 style={{ fontSize: '1.1rem', fontWeight: '700', color: '#1e293b', marginBottom: '16px' }}>About Me</h2>
+                        <div className="glass-card" style={{
+                            borderRadius: 'var(--radius-2xl)',
+                            padding: '2.5rem',
+                            backdropFilter: 'blur(30px)',
+                            background: 'var(--glass-bg)',
+                            border: '1px solid var(--glass-border)',
+                            boxShadow: 'var(--shadow-md)'
+                        }}>
+                            <h2 style={{
+                                fontSize: '1.25rem',
+                                fontWeight: '800',
+                                fontFamily: "'Montserrat', sans-serif",
+                                color: 'var(--text-main)',
+                                marginBottom: '1.5rem'
+                            }}>About Me</h2>
                             <p style={{ color: '#64748b', fontSize: '0.95rem', lineHeight: '1.6', marginBottom: '20px' }}>{provider.description}</p>
                             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
                                 {provider.expertise.map((skill, idx) => (
@@ -126,10 +152,22 @@ const Profile = () => {
                         </div>
 
                         {/* Recent Projects Section */}
-                        <div className="card" style={{ backgroundColor: 'white', borderRadius: '16px', padding: '24px', border: '1px solid #e2e8f0' }}>
-                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-                                <h2 style={{ fontSize: '1.1rem', fontWeight: '700', color: '#1e293b' }}>Recent Projects</h2>
-                                <button style={{ color: '#3b82f6', fontSize: '0.85rem', fontWeight: '600', background: 'none', border: 'none' }}>View All</button>
+                        <div className="glass-card" style={{
+                            borderRadius: 'var(--radius-2xl)',
+                            padding: '2.5rem',
+                            backdropFilter: 'blur(30px)',
+                            background: 'var(--glass-bg)',
+                            border: '1px solid var(--glass-border)',
+                            boxShadow: 'var(--shadow-md)'
+                        }}>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+                                <h2 style={{
+                                    fontSize: '1.25rem',
+                                    fontWeight: '800',
+                                    fontFamily: "'Montserrat', sans-serif",
+                                    color: 'var(--text-main)'
+                                }}>Recent Projects</h2>
+                                <button style={{ color: 'var(--primary)', fontSize: '0.9rem', fontWeight: '700', background: 'none', border: 'none', cursor: 'pointer' }}>View All</button>
                             </div>
                             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '12px' }}>
                                 {provider.projects.map((proj, idx) => (
@@ -139,8 +177,21 @@ const Profile = () => {
                         </div>
 
                         {/* Client Reviews Section */}
-                        <div className="card" style={{ backgroundColor: 'white', borderRadius: '16px', padding: '24px', border: '1px solid #e2e8f0' }}>
-                            <h2 style={{ fontSize: '1.1rem', fontWeight: '700', color: '#1e293b', marginBottom: '20px' }}>Client Reviews</h2>
+                        <div className="glass-card" style={{
+                            borderRadius: 'var(--radius-2xl)',
+                            padding: '2.5rem',
+                            backdropFilter: 'blur(30px)',
+                            background: 'var(--glass-bg)',
+                            border: '1px solid var(--glass-border)',
+                            boxShadow: 'var(--shadow-md)'
+                        }}>
+                            <h2 style={{
+                                fontSize: '1.25rem',
+                                fontWeight: '800',
+                                fontFamily: "'Montserrat', sans-serif",
+                                color: 'var(--text-main)',
+                                marginBottom: '2rem'
+                            }}>Client Reviews</h2>
                             <div style={{ display: 'flex', gap: '40px', marginBottom: '32px', flexWrap: 'wrap' }}>
                                 <div style={{ textAlign: 'center', minWidth: '100px' }}>
                                     <div style={{ fontSize: '3rem', fontWeight: '800', color: '#1e293b', lineHeight: '1' }}>{provider.reviewData.average}</div>
@@ -186,13 +237,34 @@ const Profile = () => {
 
                     {/* Sidebar Booking Section */}
                     <aside className="sidebar">
-                        <div className="card sticky-sidebar" style={{ backgroundColor: 'white', borderRadius: '16px', padding: '24px', border: '1px solid #e2e8f0', position: 'sticky', top: '24px' }}>
-                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '24px' }}>
+                        <div className="glass-card sticky-sidebar" style={{
+                            padding: '2.5rem',
+                            borderRadius: 'var(--radius-2xl)',
+                            backdropFilter: 'blur(30px)',
+                            background: 'var(--glass-bg)',
+                            border: '1px solid var(--glass-border)',
+                            position: 'sticky',
+                            top: '24px',
+                            boxShadow: 'var(--shadow-xl)'
+                        }}>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '2rem' }}>
                                 <div>
-                                    <p style={{ color: '#64748b', fontSize: '0.8rem' }}>Starting at</p>
-                                    <div style={{ fontSize: '1.75rem', fontWeight: '800', color: '#1e293b' }}>${provider.price} <span style={{ fontSize: '0.9rem', fontWeight: '400', color: '#64748b' }}>/ hour</span></div>
+                                    <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem', fontWeight: '600' }}>Starting at</p>
+                                    <div style={{ fontSize: '2rem', fontWeight: '900', color: 'var(--text-main)', fontFamily: "'Montserrat', sans-serif" }}>${provider.price} <span style={{ fontSize: '1rem', fontWeight: '500', color: 'var(--text-muted)' }}>/ hr</span></div>
                                 </div>
-                                <button style={{ display: 'flex', alignItems: 'center', gap: '8px', backgroundColor: '#f0fdfa', color: '#14b8a6', border: '1px solid #ccfbf1', padding: '8px 16px', borderRadius: '8px', fontWeight: '600', fontSize: '0.9rem' }}>
+                                <button style={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '8px',
+                                    backgroundColor: 'rgba(6, 182, 212, 0.1)',
+                                    color: 'var(--primary)',
+                                    border: '1px solid rgba(6, 182, 212, 0.2)',
+                                    padding: '10px 18px',
+                                    borderRadius: '10px',
+                                    fontWeight: '700',
+                                    fontSize: '0.9rem',
+                                    cursor: 'pointer'
+                                }}>
                                     <MessageSquare size={18} /> Message
                                 </button>
                             </div>
@@ -227,24 +299,25 @@ const Profile = () => {
                                     <button
                                         onClick={() => setSelectedDate(10)}
                                         style={{
-                                            width: '32px',
-                                            height: '32px',
+                                            width: '36px',
+                                            height: '36px',
                                             margin: 'auto',
                                             display: 'flex',
                                             alignItems: 'center',
                                             justifyContent: 'center',
-                                            backgroundColor: selectedDate === 10 ? '#3b82f6' : 'transparent',
-                                            color: selectedDate === 10 ? 'white' : '#475569',
+                                            backgroundColor: selectedDate === 10 ? 'var(--primary)' : 'transparent',
+                                            color: selectedDate === 10 ? 'white' : 'var(--text-main)',
                                             borderRadius: '50%',
-                                            fontWeight: '600',
+                                            fontWeight: '800',
                                             border: 'none',
-                                            boxShadow: selectedDate === 10 ? '0 4px 6px -1px rgba(59, 130, 246, 0.5)' : 'none'
+                                            boxShadow: selectedDate === 10 ? '0 4px 15px rgba(6, 182, 212, 0.4)' : 'none',
+                                            cursor: 'pointer'
                                         }}
                                     >
                                         10
                                     </button>
-                                    <span style={{ padding: '8px', fontSize: '0.85rem', color: '#475569' }}>11</span>
-                                    <span style={{ padding: '8px', fontSize: '0.85rem', color: '#475569' }}>12</span>
+                                    <span style={{ padding: '8px', fontSize: '0.85rem', color: 'var(--text-muted)' }}>11</span>
+                                    <span style={{ padding: '8px', fontSize: '0.85rem', color: 'var(--text-muted)' }}>12</span>
                                 </div>
                             </div>
 
@@ -296,9 +369,22 @@ const Profile = () => {
 
                             <button
                                 onClick={handleBooking}
-                                style={{ width: '100%', backgroundColor: '#f97316', color: 'white', border: 'none', borderRadius: '12px', padding: '16px', fontWeight: '700', fontSize: '1rem', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', marginBottom: '12px' }}
+                                className="btn-primary"
+                                style={{
+                                    width: '100%',
+                                    padding: '1.25rem',
+                                    borderRadius: '14px',
+                                    fontWeight: '900',
+                                    fontSize: '1.1rem',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    gap: '10px',
+                                    marginBottom: '1rem',
+                                    boxShadow: '0 10px 20px rgba(6, 182, 212, 0.3)'
+                                }}
                             >
-                                Confirm Booking <Send size={18} />
+                                Confirm Booking <Send size={20} />
                             </button>
                             <p style={{ textAlign: 'center', color: '#94a3b8', fontSize: '0.75rem', marginBottom: '16px' }}>You won't be charged yet</p>
 

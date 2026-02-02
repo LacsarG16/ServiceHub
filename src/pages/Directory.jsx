@@ -70,6 +70,7 @@ const Directory = () => {
     const [searchTerm, setSearchTerm] = useState("");
     const [selectedSector, setSelectedSector] = useState("All");
     const [sortBy, setSortBy] = useState("Rating");
+    const [isFocused, setIsFocused] = useState(false);
 
     const sectors = ["All", "Home Services", "Tech Support", "Wellness", "Education", "Creative"];
 
@@ -81,51 +82,126 @@ const Directory = () => {
     });
 
     return (
-        <div style={{ padding: '120px 0 80px' }}>
+        <div style={{ padding: '40px 0 80px' }}>
             <div className="container">
                 {/* Header Section */}
                 <div style={{ marginBottom: '3rem' }}>
-                    <h1 style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>Find Local <span style={{ color: 'var(--primary)' }}>Experts</span></h1>
-                    <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem' }}>Browse our directory of high-quality service providers.</p>
+                    <h1 style={{ fontSize: '2.5rem', marginBottom: '1rem', fontWeight: '800' }}>Find Local <span className="text-gradient-primary">Experts</span></h1>
+                    <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem', fontWeight: '500' }}>Browse our directory of high-quality service providers.</p>
                 </div>
 
                 {/* Search & Filter Bar */}
-                <div className="glass" style={{ padding: '1.5rem', borderRadius: 'var(--radius-lg)', marginBottom: '3rem', display: 'flex', flexWrap: 'wrap', gap: '1rem', alignItems: 'center' }}>
-                    <div style={{ flex: 2, minWidth: '250px', position: 'relative' }}>
-                        <Search size={20} style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
-                        <input
-                            type="text"
-                            placeholder="Search by provider or service..."
-                            value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
-                            style={{ width: '100%', padding: '0.85rem 1rem 0.85rem 3rem', border: '1px solid #e2e8f0', borderRadius: 'var(--radius-md)', fontSize: '1rem' }}
-                        />
-                    </div>
+                <div style={{ position: 'relative', maxWidth: '1200px', margin: '0 auto 4rem' }}>
+                    <div id="directory-search-bar" style={{
+                        padding: '0.5rem',
+                        borderRadius: '999px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '0.5rem',
+                        transition: 'all 0.3s ease',
+                        backdropFilter: 'blur(30px)',
+                        background: 'var(--glass-bg)',
+                        border: isFocused ? '1px solid var(--primary)' : '1px solid var(--glass-border)',
+                        boxShadow: isFocused ? '0 10px 40px rgba(6, 182, 212, 0.25), 0 0 20px rgba(6, 182, 212, 0.15)' : 'var(--shadow-lg)',
+                        transform: isFocused ? 'scale(1.01)' : 'scale(1)'
+                    }}>
+                        {/* Search Input */}
+                        <div style={{ flex: 2, position: 'relative', display: 'flex', alignItems: 'center' }}>
+                            <Search size={20} style={{ position: 'absolute', left: '1.5rem', color: 'var(--text-muted)', pointerEvents: 'none' }} />
+                            <input
+                                type="text"
+                                placeholder="What are you looking for?"
+                                value={searchTerm}
+                                onChange={(e) => setSearchTerm(e.target.value)}
+                                onFocus={() => setIsFocused(true)}
+                                onBlur={() => setIsFocused(false)}
+                                style={{
+                                    width: '100%',
+                                    background: 'transparent',
+                                    border: 'none',
+                                    padding: '1rem 1rem 1rem 3.5rem',
+                                    color: 'var(--text-main)',
+                                    fontSize: '1rem',
+                                    outline: 'none'
+                                }}
+                            />
+                        </div>
 
-                    <div style={{ display: 'flex', gap: '1rem', flex: 1, minWidth: '300px' }}>
-                        <div style={{ flex: 1, position: 'relative' }}>
+                        {/* Divider */}
+                        <div style={{ width: '1px', height: '30px', background: 'var(--glass-border)', margin: '0 0.5rem' }}></div>
+
+                        {/* Sector Select */}
+                        <div style={{ flex: 1, position: 'relative', display: 'flex', alignItems: 'center' }}>
+                            <Filter size={18} style={{ position: 'absolute', left: '1rem', color: 'var(--text-muted)', pointerEvents: 'none' }} />
                             <select
                                 value={selectedSector}
                                 onChange={(e) => setSelectedSector(e.target.value)}
-                                style={{ width: '100%', padding: '0.85rem 1rem', border: '1px solid #e2e8f0', borderRadius: 'var(--radius-md)', fontSize: '1rem', appearance: 'none', backgroundColor: 'white' }}
+                                onFocus={() => setIsFocused(true)}
+                                onBlur={() => setIsFocused(false)}
+                                style={{
+                                    width: '100%',
+                                    background: 'transparent',
+                                    border: 'none',
+                                    padding: '1rem 2.5rem 1rem 2.8rem',
+                                    color: 'var(--text-main)',
+                                    fontSize: '0.95rem',
+                                    outline: 'none',
+                                    appearance: 'none',
+                                    cursor: 'pointer'
+                                }}
                             >
-                                {sectors.map(s => <option key={s} value={s}>{s}</option>)}
+                                {sectors.map(s => <option key={s} value={s} style={{ background: 'var(--background)' }}>{s}</option>)}
                             </select>
-                            <ChevronDown size={18} style={{ position: 'absolute', right: '1rem', top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none', color: 'var(--text-muted)' }} />
+                            <ChevronDown size={14} style={{ position: 'absolute', right: '1rem', color: 'var(--text-muted)', pointerEvents: 'none' }} />
                         </div>
 
-                        <div style={{ flex: 1, position: 'relative' }}>
+                        {/* Divider */}
+                        <div style={{ width: '1px', height: '30px', background: 'var(--glass-border)', margin: '0 0.5rem' }}></div>
+
+                        {/* Sort Select */}
+                        <div style={{ flex: 1, position: 'relative', display: 'flex', alignItems: 'center' }}>
+                            <SlidersHorizontal size={18} style={{ position: 'absolute', left: '1rem', color: 'var(--text-muted)', pointerEvents: 'none' }} />
                             <select
                                 value={sortBy}
                                 onChange={(e) => setSortBy(e.target.value)}
-                                style={{ width: '100%', padding: '0.85rem 1rem', border: '1px solid #e2e8f0', borderRadius: 'var(--radius-md)', fontSize: '1rem', appearance: 'none', backgroundColor: 'white' }}
+                                onFocus={() => setIsFocused(true)}
+                                onBlur={() => setIsFocused(false)}
+                                style={{
+                                    width: '100%',
+                                    background: 'transparent',
+                                    border: 'none',
+                                    padding: '1rem 2.5rem 1rem 2.8rem',
+                                    color: 'var(--text-main)',
+                                    fontSize: '0.95rem',
+                                    outline: 'none',
+                                    appearance: 'none',
+                                    cursor: 'pointer'
+                                }}
                             >
-                                <option value="Rating">Top Rated</option>
-                                <option value="PriceLow">Price: Low to High</option>
-                                <option value="PriceHigh">Price: High to Low</option>
+                                <option value="Rating" style={{ background: 'var(--background)' }}>Top Rated</option>
+                                <option value="PriceLow" style={{ background: 'var(--background)' }}>Price: Low to High</option>
+                                <option value="PriceHigh" style={{ background: 'var(--background)' }}>Price: High to Low</option>
                             </select>
-                            <ChevronDown size={18} style={{ position: 'absolute', right: '1rem', top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none', color: 'var(--text-muted)' }} />
+                            <ChevronDown size={14} style={{ position: 'absolute', right: '1rem', color: 'var(--text-muted)', pointerEvents: 'none' }} />
                         </div>
+
+                        {/* Search Action Button */}
+                        <button style={{
+                            background: 'linear-gradient(135deg, var(--primary), var(--primary-hover))',
+                            color: 'white',
+                            width: '48px',
+                            height: '48px',
+                            borderRadius: '50%',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            flexShrink: 0,
+                            boxShadow: '0 4px 12px rgba(6, 182, 212, 0.3)',
+                            border: 'none',
+                            cursor: 'pointer'
+                        }}>
+                            <Search size={20} />
+                        </button>
                     </div>
                 </div>
 
@@ -168,6 +244,33 @@ const Directory = () => {
                     </div>
                 )}
             </div>
+            <style>{`
+                @media (max-width: 992px) {
+                    #directory-search-bar {
+                        flex-direction: column !important;
+                        border-radius: var(--radius-xl) !important;
+                        padding: 1.5rem !important;
+                        gap: 1rem !important;
+                    }
+                    .glass > div {
+                        width: 100% !important;
+                        border-right: none !important;
+                        border-bottom: 1px solid var(--glass-border);
+                        padding-bottom: 0.5rem;
+                    }
+                    .glass > div:last-child {
+                        border-bottom: none;
+                    }
+                    .glass > div > div {
+                        display: none; /* Hide dividers */
+                    }
+                    .glass > button {
+                        width: 100% !important;
+                        border-radius: 1rem !important;
+                        margin-top: 0.5rem;
+                    }
+                }
+            `}</style>
         </div>
     );
 };

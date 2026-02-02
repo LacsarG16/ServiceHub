@@ -7,7 +7,7 @@ import { useTheme } from '../context/ThemeContext';
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const { theme, toggleTheme } = useTheme();
+  const { theme, preset, toggleTheme, setPreset } = useTheme();
   const location = useLocation();
 
   useEffect(() => {
@@ -114,23 +114,51 @@ const Navbar = () => {
               <User size={18} /> <span>Provider Portal</span>
             </Link>
 
-            <button
-              onClick={toggleTheme}
-              style={{
-                background: 'rgba(125, 125, 125, 0.1)',
-                border: '1px solid var(--glass-border)',
-                borderRadius: '50%',
-                width: '40px',
-                height: '40px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                color: 'var(--text-main)',
-                backdropFilter: 'blur(10px)'
-              }}
-            >
-              {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
-            </button>
+            <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
+              {/* Theme Preset Selector */}
+              <div style={{ display: 'flex', gap: '0.4rem', padding: '0.3rem', background: 'rgba(125, 125, 125, 0.05)', borderRadius: '99px', border: '1px solid var(--glass-border)' }}>
+                {[
+                  { id: 'aurora', color: '#06b6d4' },
+                  { id: 'sunset', color: '#f43f5e' },
+                  { id: 'ocean', color: '#0ea5e9' },
+                  { id: 'forest', color: '#10b981' }
+                ].map(p => (
+                  <button
+                    key={p.id}
+                    onClick={() => setPreset(p.id)}
+                    style={{
+                      width: '24px',
+                      height: '24px',
+                      borderRadius: '50%',
+                      background: p.color,
+                      border: preset === p.id ? '2px solid white' : 'none',
+                      boxShadow: preset === p.id ? '0 0 10px ' + p.color : 'none',
+                      transition: 'all 0.2s',
+                      cursor: 'pointer'
+                    }}
+                    title={p.id.charAt(0).toUpperCase() + p.id.slice(1)}
+                  />
+                ))}
+              </div>
+
+              <button
+                onClick={toggleTheme}
+                style={{
+                  background: 'rgba(125, 125, 125, 0.1)',
+                  border: '1px solid var(--glass-border)',
+                  borderRadius: '50%',
+                  width: '40px',
+                  height: '40px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: 'var(--text-main)',
+                  backdropFilter: 'blur(10px)'
+                }}
+              >
+                {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
+              </button>
+            </div>
           </div>
         </div>
 
@@ -217,7 +245,30 @@ const Navbar = () => {
               </Link>
             </motion.div>
 
-            <div style={{ display: 'flex', justifyContent: 'center', marginTop: '1rem' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem', marginTop: '1rem' }}>
+              <div style={{ display: 'flex', gap: '1rem', padding: '0.5rem', background: 'rgba(125, 125, 125, 0.05)', borderRadius: '99px', border: '1px solid var(--glass-border)' }}>
+                {[
+                  { id: 'aurora', color: '#06b6d4' },
+                  { id: 'sunset', color: '#f43f5e' },
+                  { id: 'ocean', color: '#0ea5e9' },
+                  { id: 'forest', color: '#10b981' }
+                ].map(p => (
+                  <button
+                    key={p.id}
+                    onClick={() => setPreset(p.id)}
+                    style={{
+                      width: '32px',
+                      height: '32px',
+                      borderRadius: '50%',
+                      background: p.color,
+                      border: preset === p.id ? '2px solid white' : 'none',
+                      boxShadow: preset === p.id ? '0 0 10px ' + p.color : 'none',
+                      transition: 'all 0.2s',
+                    }}
+                  />
+                ))}
+              </div>
+
               <button
                 onClick={toggleTheme}
                 style={{

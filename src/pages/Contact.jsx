@@ -6,21 +6,24 @@ const FAQItem = ({ question, answer }) => {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
-        <div style={{ borderBottom: '1px solid #e2e8f0', marginBottom: '1rem' }}>
+        <div style={{ borderBottom: '1px solid var(--glass-border)', marginBottom: '0.5rem' }}>
             <button
                 onClick={() => setIsOpen(!isOpen)}
                 style={{
                     width: '100%',
-                    padding: '1.5rem 0',
+                    padding: '1.25rem 0',
                     display: 'flex',
                     justifyContent: 'space-between',
                     alignItems: 'center',
                     background: 'none',
-                    textAlign: 'left'
+                    textAlign: 'left',
+                    cursor: 'pointer',
+                    color: isOpen ? 'var(--primary)' : 'var(--text-main)',
+                    transition: 'color 0.3s ease'
                 }}
             >
-                <span style={{ fontWeight: '600', fontSize: '1.1rem' }}>{question}</span>
-                {isOpen ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                <span style={{ fontWeight: '700', fontSize: '1.1rem', fontFamily: "'Montserrat', sans-serif" }}>{question}</span>
+                {isOpen ? <ChevronUp size={20} color="var(--primary)" /> : <ChevronDown size={20} />}
             </button>
             <AnimatePresence>
                 {isOpen && (
@@ -28,9 +31,16 @@ const FAQItem = ({ question, answer }) => {
                         initial={{ height: 0, opacity: 0 }}
                         animate={{ height: 'auto', opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.3, ease: 'easeInOut' }}
                         style={{ overflow: 'hidden' }}
                     >
-                        <p style={{ color: 'var(--text-muted)', paddingBottom: '1.5rem', lineHeight: '1.6' }}>{answer}</p>
+                        <p style={{
+                            color: 'var(--text-muted)',
+                            paddingBottom: '1.25rem',
+                            lineHeight: '1.7',
+                            fontSize: '0.95rem',
+                            fontWeight: '500'
+                        }}>{answer}</p>
                     </motion.div>
                 )}
             </AnimatePresence>
@@ -56,12 +66,23 @@ const Contact = () => {
     };
 
     return (
-        <div style={{ padding: '120px 0 80px' }}>
+        <div style={{ padding: '40px 0 80px' }}>
             <div className="container">
                 {/* Header Section */}
                 <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
-                    <h1 style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>Get in <span style={{ color: 'var(--primary)' }}>Touch</span></h1>
-                    <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem', maxWidth: '600px', margin: '0 auto' }}>
+                    <h1 style={{
+                        fontSize: '3rem',
+                        marginBottom: '1rem',
+                        fontWeight: '800',
+                        fontFamily: "'Montserrat', sans-serif"
+                    }}>Get in <span className="text-gradient-primary">Touch</span></h1>
+                    <p style={{
+                        color: 'var(--text-muted)',
+                        fontSize: '1.2rem',
+                        maxWidth: '600px',
+                        margin: '0 auto',
+                        fontWeight: '500'
+                    }}>
                         Have questions about ServiceHub? Our team is here to help you find the right provider or grow your business.
                     </p>
                 </div>
@@ -69,58 +90,176 @@ const Contact = () => {
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '3rem' }} className="contact-grid">
                     {/* Contact Info & Form */}
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
-                        <div className="glass" style={{ padding: '2.5rem', borderRadius: 'var(--radius-lg)' }}>
-                            <h3 style={{ marginBottom: '2rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                        <div style={{
+                            padding: '3rem',
+                            borderRadius: 'var(--radius-2xl)',
+                            backdropFilter: 'blur(30px)',
+                            background: 'var(--glass-bg)',
+                            border: '1px solid var(--glass-border)',
+                            boxShadow: 'var(--shadow-xl)'
+                        }}>
+                            <h3 style={{
+                                marginBottom: '2.5rem',
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '0.75rem',
+                                fontFamily: "'Montserrat', sans-serif",
+                                fontWeight: '800'
+                            }}>
                                 <MessageSquare size={24} color="var(--primary)" /> Send us a Message
                             </h3>
 
                             {submitted ? (
-                                <div style={{ backgroundColor: 'rgba(20, 184, 166, 0.1)', color: 'var(--secondary)', padding: '1.5rem', borderRadius: 'var(--radius-md)', textAlign: 'center', fontWeight: '600' }}>
+                                <motion.div
+                                    initial={{ opacity: 0, scale: 0.9 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    style={{
+                                        background: 'rgba(20, 184, 166, 0.1)',
+                                        color: 'var(--secondary)',
+                                        padding: '2rem',
+                                        borderRadius: 'var(--radius-lg)',
+                                        textAlign: 'center',
+                                        fontWeight: '700',
+                                        border: '1px solid rgba(20, 184, 166, 0.2)'
+                                    }}
+                                >
                                     Thank you! Your message has been sent successfully. We'll get back to you soon.
-                                </div>
+                                </motion.div>
                             ) : (
-                                <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-                                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.25rem' }}>
-                                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                                            <label style={{ fontSize: '0.9rem', fontWeight: '600' }}>Full Name</label>
-                                            <input required type="text" placeholder="John Doe" style={{ padding: '0.85rem', border: '1px solid #e2e8f0', borderRadius: 'var(--radius-md)' }} />
+                                <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
+                                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
+                                            <label style={{ fontSize: '0.9rem', fontWeight: '700', color: 'var(--text-main)', marginLeft: '4px' }}>Full Name</label>
+                                            <input
+                                                required
+                                                type="text"
+                                                placeholder="John Doe"
+                                                style={{
+                                                    padding: '1rem',
+                                                    background: 'rgba(255, 255, 255, 0.5)',
+                                                    border: '1px solid var(--glass-border)',
+                                                    borderRadius: 'var(--radius-lg)',
+                                                    outline: 'none',
+                                                    transition: 'all 0.3s ease'
+                                                }}
+                                                className="form-input-standard"
+                                            />
                                         </div>
-                                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                                            <label style={{ fontSize: '0.9rem', fontWeight: '600' }}>Email Address</label>
-                                            <input required type="email" placeholder="john@example.com" style={{ padding: '0.85rem', border: '1px solid #e2e8f0', borderRadius: 'var(--radius-md)' }} />
+                                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
+                                            <label style={{ fontSize: '0.9rem', fontWeight: '700', color: 'var(--text-main)', marginLeft: '4px' }}>Email Address</label>
+                                            <input
+                                                required
+                                                type="email"
+                                                placeholder="john@example.com"
+                                                style={{
+                                                    padding: '1rem',
+                                                    background: 'rgba(255, 255, 255, 0.5)',
+                                                    border: '1px solid var(--glass-border)',
+                                                    borderRadius: 'var(--radius-lg)',
+                                                    outline: 'none',
+                                                    transition: 'all 0.3s ease'
+                                                }}
+                                                className="form-input-standard"
+                                            />
                                         </div>
                                     </div>
-                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                                        <label style={{ fontSize: '0.9rem', fontWeight: '600' }}>Subject</label>
-                                        <input required type="text" placeholder="How can we help?" style={{ padding: '0.85rem', border: '1px solid #e2e8f0', borderRadius: 'var(--radius-md)' }} />
+                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
+                                        <label style={{ fontSize: '0.9rem', fontWeight: '700', color: 'var(--text-main)', marginLeft: '4px' }}>Subject</label>
+                                        <input
+                                            required
+                                            type="text"
+                                            placeholder="How can we help?"
+                                            style={{
+                                                padding: '1rem',
+                                                background: 'rgba(255, 255, 255, 0.5)',
+                                                border: '1px solid var(--glass-border)',
+                                                borderRadius: 'var(--radius-lg)',
+                                                outline: 'none',
+                                                transition: 'all 0.3s ease'
+                                            }}
+                                            className="form-input-standard"
+                                        />
                                     </div>
-                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                                        <label style={{ fontSize: '0.9rem', fontWeight: '600' }}>Message</label>
-                                        <textarea required placeholder="Tell us more about your inquiry..." rows="5" style={{ padding: '0.85rem', border: '1px solid #e2e8f0', borderRadius: 'var(--radius-md)', resize: 'none' }}></textarea>
+                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
+                                        <label style={{ fontSize: '0.9rem', fontWeight: '700', color: 'var(--text-main)', marginLeft: '4px' }}>Message</label>
+                                        <textarea
+                                            required
+                                            placeholder="Tell us more about your inquiry..."
+                                            rows="5"
+                                            style={{
+                                                padding: '1rem',
+                                                background: 'rgba(255, 255, 255, 0.5)',
+                                                border: '1px solid var(--glass-border)',
+                                                borderRadius: 'var(--radius-lg)',
+                                                resize: 'none',
+                                                outline: 'none',
+                                                transition: 'all 0.3s ease'
+                                            }}
+                                            className="form-input-standard"
+                                        ></textarea>
                                     </div>
-                                    <button type="submit" className="btn-primary" style={{ justifyContent: 'center', padding: '1rem' }}>
-                                        Send Inquiry <Send size={18} />
+                                    <button
+                                        type="submit"
+                                        className="btn-primary"
+                                        style={{
+                                            justifyContent: 'center',
+                                            padding: '1.1rem',
+                                            borderRadius: 'var(--radius-lg)',
+                                            fontWeight: '800',
+                                            fontSize: '1.1rem',
+                                            marginTop: '0.5rem',
+                                            boxShadow: '0 10px 20px rgba(6, 182, 212, 0.2)'
+                                        }}
+                                    >
+                                        Send Inquiry <Send size={20} />
                                     </button>
                                 </form>
                             )}
                         </div>
 
                         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1.5rem' }}>
-                            <div className="glass" style={{ padding: '1.5rem', borderRadius: 'var(--radius-lg)', textAlign: 'center' }}>
-                                <Phone size={24} color="var(--primary)" style={{ marginBottom: '1rem' }} />
-                                <h4 style={{ marginBottom: '0.5rem' }}>Call Us</h4>
-                                <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>+1 (555) 000-0000</p>
-                            </div>
-                            <div className="glass" style={{ padding: '1.5rem', borderRadius: 'var(--radius-lg)', textAlign: 'center' }}>
-                                <Mail size={24} color="var(--primary)" style={{ marginBottom: '1rem' }} />
-                                <h4 style={{ marginBottom: '0.5rem' }}>Email Us</h4>
-                                <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>hello@servicehub.com</p>
-                            </div>
-                            <div className="glass" style={{ padding: '1.5rem', borderRadius: 'var(--radius-lg)', textAlign: 'center' }}>
-                                <MapPin size={24} color="var(--primary)" style={{ marginBottom: '1rem' }} />
-                                <h4 style={{ marginBottom: '0.5rem' }}>Visit Us</h4>
-                                <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>123 Service Way, SF</p>
-                            </div>
+                            {[
+                                { icon: <Phone size={24} />, title: "Call Us", value: "+1 (555) 000-0000", color: "#06B6D4" },
+                                { icon: <Mail size={24} />, title: "Email Us", value: "hello@servicehub.com", color: "#10B981" },
+                                { icon: <MapPin size={24} />, title: "Visit Us", value: "123 Service Way, SF", color: "#8B5CF6" }
+                            ].map((item, i) => (
+                                <motion.div
+                                    key={i}
+                                    whileHover={{ y: -10 }}
+                                    transition={{ type: 'spring', stiffness: 500, damping: 20 }}
+                                    className="glass-card"
+                                    style={{
+                                        padding: '2rem 1.5rem',
+                                        borderRadius: 'var(--radius-xl)',
+                                        textAlign: 'center',
+                                        backdropFilter: 'blur(30px)',
+                                        background: 'var(--glass-bg)',
+                                        border: '1px solid var(--glass-border)'
+                                    }}
+                                >
+                                    <div style={{
+                                        color: item.color,
+                                        marginBottom: '1.25rem',
+                                        display: 'inline-flex',
+                                        padding: '12px',
+                                        borderRadius: '12px',
+                                        background: `${item.color}15`,
+                                        boxShadow: `0 0 20px ${item.color}20`
+                                    }}>
+                                        {item.icon}
+                                    </div>
+                                    <h4 style={{
+                                        marginBottom: '0.5rem',
+                                        fontFamily: "'Montserrat', sans-serif",
+                                        fontWeight: '700'
+                                    }}>{item.title}</h4>
+                                    <p style={{
+                                        color: 'var(--text-muted)',
+                                        fontSize: '0.95rem',
+                                        fontWeight: '500'
+                                    }}>{item.value}</p>
+                                </motion.div>
+                            ))}
                         </div>
                     </div>
 
@@ -148,9 +287,21 @@ const Contact = () => {
                             </div>
                         </div>
 
-                        <div className="glass" style={{ padding: '2.5rem', borderRadius: 'var(--radius-lg)' }}>
-                            <h3 style={{ marginBottom: '1.5rem' }}>Frequently Asked Questions</h3>
-                            <div>
+                        <div style={{
+                            padding: '3rem',
+                            borderRadius: 'var(--radius-2xl)',
+                            backdropFilter: 'blur(30px)',
+                            background: 'var(--glass-bg)',
+                            border: '1px solid var(--glass-border)',
+                            boxShadow: 'var(--shadow-xl)'
+                        }}>
+                            <h3 style={{
+                                marginBottom: '2.5rem',
+                                fontFamily: "'Montserrat', sans-serif",
+                                fontWeight: '800',
+                                fontSize: '1.5rem'
+                            }}>Frequently Asked Questions</h3>
+                            <div style={{ display: 'flex', flexDirection: 'column' }}>
                                 {faqs.map((faq, i) => (
                                     <FAQItem key={i} question={faq.question} answer={faq.answer} />
                                 ))}
@@ -160,10 +311,16 @@ const Contact = () => {
                 </div>
             </div>
             <style>{`
-        @media (min-width: 992px) {
-          .contact-grid { grid-template-columns: 1.2fr 0.8fr; }
-        }
-      `}</style>
+                @media (min-width: 992px) {
+                  .contact-grid { grid-template-columns: 1.2fr 0.8fr; }
+                }
+
+                .form-input-standard:focus {
+                    border-color: var(--primary) !important;
+                    background: white !important;
+                    box-shadow: 0 0 20px rgba(6, 182, 212, 0.1) !important;
+                }
+            `}</style>
         </div>
     );
 };

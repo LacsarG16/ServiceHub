@@ -10,7 +10,10 @@ import {
     Users,
     CheckCircle2,
     DollarSign,
-    Briefcase
+    Briefcase,
+    Menu,
+    LogOut,
+    Home
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -34,6 +37,7 @@ import NotificationDrawer from '../components/drawers/NotificationDrawer';
 
 const Dashboard = () => {
     const [activeTab, setActiveTab] = useState('overview');
+    const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(true);
 
     // Modal & Drawer State
     const [activeModal, setActiveModal] = useState(null); // 'service', 'booking', 'upgrade'
@@ -104,25 +108,35 @@ const Dashboard = () => {
     ];
 
     return (
-        <div style={{ display: 'flex', minHeight: '100vh', backgroundColor: '#fcfdfe' }}>
+        <div style={{ display: 'flex', minHeight: '100vh' }}>
             {/* Sidebar */}
-            <aside style={{
-                width: '280px',
-                backgroundColor: 'rgba(255, 255, 255, 0.9)',
-                borderRight: '1px solid #eef2f6',
-                padding: '100px 1.5rem 2.5rem',
-                position: 'fixed',
-                height: '100vh',
-                left: 0,
-                top: 0,
-                zIndex: 10,
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '2.5rem',
-                boxShadow: 'var(--shadow-premium)'
-            }}>
+            {/* Sidebar */}
+            <aside
+                onMouseEnter={() => setIsSidebarCollapsed(false)}
+                onMouseLeave={() => setIsSidebarCollapsed(true)}
+                style={{
+                    width: isSidebarCollapsed ? '80px' : '280px',
+                    transition: 'width 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                    backdropFilter: 'blur(30px)',
+                    backgroundColor: 'var(--glass-bg)',
+                    borderRight: '1px solid var(--glass-border)',
+                    padding: isSidebarCollapsed ? '2rem 1rem' : '2rem 1.5rem',
+                    position: 'fixed',
+                    height: '100vh',
+                    left: 0,
+                    top: 0,
+                    zIndex: 50,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '2.5rem',
+                    overflowX: 'hidden'
+                }}>
+                {/* Logo Area (Sidebar) - Optional or keep empty if Logo in header */}
+                {/* For now, keeping clean or maybe just the Collapse toggle if preferred inside, 
+                    but user asked for Hamburger in Header. So sidebar is just content. */}
+
                 {/* Navigation Items */}
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', flex: 1 }}>
                     {sidebarItems.map((item) => (
                         <button
                             key={item.id}
@@ -132,8 +146,11 @@ const Dashboard = () => {
                                 alignItems: 'center',
                                 gap: '1rem',
                                 padding: '1rem 1.25rem',
+                                justifyContent: isSidebarCollapsed ? 'center' : 'flex-start',
                                 borderRadius: '16px',
-                                background: activeTab === item.id ? 'rgba(59, 130, 246, 0.08)' : 'transparent',
+                                padding: '1rem 1.25rem',
+                                borderRadius: '16px',
+                                background: activeTab === item.id ? 'var(--primary-light)' : 'transparent',
                                 color: activeTab === item.id ? 'var(--primary)' : 'var(--text-muted)',
                                 fontWeight: '700',
                                 transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
@@ -167,57 +184,156 @@ const Dashboard = () => {
                                 justifyContent: 'center',
                                 padding: '0.4rem',
                                 borderRadius: '10px',
-                                background: activeTab === item.id ? 'white' : 'transparent',
+                                padding: '0.4rem',
+                                borderRadius: '10px',
+                                background: activeTab === item.id ? 'var(--white)' : 'transparent',
                                 boxShadow: activeTab === item.id ? '0 4px 6px -1px rgba(0,0,0,0.05)' : 'none'
                             }}>
                                 {React.cloneElement(item.icon, { size: 18, strokeWidth: activeTab === item.id ? 2.5 : 2 })}
                             </span>
-                            <span style={{ fontSize: '0.95rem' }}>{item.label}</span>
+                            {!isSidebarCollapsed && (
+                                <motion.span
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    transition={{ duration: 0.2 }}
+                                    style={{ fontSize: '0.95rem', whiteSpace: 'nowrap' }}
+                                >
+                                    {item.label}
+                                </motion.span>
+                            )}
                         </button>
                     ))}
+                </div>
+
+                {/* Bottom Actions */}
+                <div style={{ borderTop: '1px solid var(--glass-border)', paddingTop: '1.5rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                    <button
+                        onClick={() => window.location.href = '/'}
+                        style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '1rem',
+                            padding: isSidebarCollapsed ? '1rem' : '0.75rem 1rem',
+                            borderRadius: '12px',
+                            background: 'var(--primary)',
+                            color: 'white',
+                            border: 'none',
+                            cursor: 'pointer',
+                            justifyContent: 'center',
+                            transition: 'all 0.2s',
+                            marginBottom: '0.5rem',
+                            boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
+                        }}
+                        className="hover-lift"
+                    >
+                        <Home size={isSidebarCollapsed ? 24 : 20} />
+                        {!isSidebarCollapsed && <span style={{ fontWeight: '600', fontSize: '0.9rem' }}>Back to Home</span>}
+                    </button>
+                    <button
+                        style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '1rem',
+                            padding: '0.75rem 1rem',
+                            borderRadius: '12px',
+                            background: 'transparent',
+                            color: '#ef4444',
+                            border: 'none',
+                            cursor: 'pointer',
+                            justifyContent: isSidebarCollapsed ? 'center' : 'flex-start',
+                            transition: 'all 0.2s'
+                        }}
+                        className="hover:bg-red-50 dark:hover:bg-red-900/10"
+                    >
+                        <LogOut size={20} />
+                        {!isSidebarCollapsed && <span style={{ fontWeight: '600', fontSize: '0.9rem' }}>Log Out</span>}
+                    </button>
                 </div>
             </aside>
 
             {/* Main Content */}
             <main style={{
                 flex: 1,
-                padding: '100px 3rem 3rem',
-                marginLeft: '280px',
+                padding: '2rem 3rem 3rem',
+                marginLeft: isSidebarCollapsed ? '80px' : '280px',
+                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                 minWidth: 0
             }}>
                 <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '3rem' }}>
-                    <div>
-                        <h1 style={{ fontSize: '2.25rem', fontWeight: '850', color: 'var(--text-main)', letterSpacing: '-1px', marginBottom: '0.5rem' }}>Good morning, John!</h1>
-                        <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem', fontWeight: '500' }}>Here's what's happening with your business today.</p>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
+                        <div>
+                            <h1 style={{
+                                fontSize: '2.2rem',
+                                fontWeight: '900',
+                                color: 'var(--text-main)',
+                                fontFamily: "'Montserrat', sans-serif",
+                                letterSpacing: '-0.5px',
+                                marginBottom: '0.2rem',
+                                lineHeight: '1.2'
+                            }}>Good day, <span className="text-gradient-primary">John!</span></h1>
+                            <p style={{ color: 'var(--text-muted)', fontSize: '1rem', fontWeight: '500' }}>Here's what's happening today.</p>
+                        </div>
                     </div>
-                    <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
-                        {/* Notification Bell */}
-                        <div
-                            onClick={() => setIsDrawerOpen(true)}
-                            style={{
-                                position: 'relative',
-                                cursor: 'pointer',
-                                padding: '0.75rem',
-                                borderRadius: '16px',
-                                background: 'white',
-                                border: '1px solid #eff3f7',
-                                boxShadow: 'var(--shadow-sm)'
-                            }}
-                            className="hover-lift"
-                        >
-                            <Bell size={22} color="var(--text-main)" />
-                            {/* Pulsing indicator */}
+
+                    <div style={{ display: 'flex', gap: '2rem', alignItems: 'center' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                            <div style={{
+                                backgroundColor: 'var(--primary)',
+                                color: 'white',
+                                padding: '0.4rem',
+                                borderRadius: '10px',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                boxShadow: '0 4px 12px rgba(59, 130, 246, 0.3)'
+                            }}>
+                                <Briefcase size={20} strokeWidth={2.5} />
+                            </div>
                             <span style={{
-                                position: 'absolute',
-                                top: '10px',
-                                right: '10px',
-                                width: '10px',
-                                height: '10px',
-                                backgroundColor: 'var(--accent)',
-                                borderRadius: '50%',
-                                border: '2px solid white',
-                                boxShadow: '0 0 0 2px rgba(245, 158, 11, 0.2)'
-                            }}></span>
+                                fontSize: '1.25rem',
+                                fontWeight: '800',
+                                color: 'var(--text-main)',
+                                letterSpacing: '-0.5px',
+                                fontFamily: "'Montserrat', sans-serif"
+                            }}>
+                                Service<span style={{ color: 'var(--primary)' }}>Hub</span>
+                            </span>
+                        </div>
+
+                        <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
+                            {/* Notification Bell */}
+                            <div
+                                onClick={() => setIsDrawerOpen(true)}
+                                style={{
+                                    position: 'relative',
+                                    cursor: 'pointer',
+                                    padding: '0.75rem',
+                                    borderRadius: '16px',
+                                    cursor: 'pointer',
+                                    padding: '0.75rem',
+                                    borderRadius: '16px',
+                                    background: 'var(--white)',
+                                    border: '1px solid var(--glass-border)',
+                                    boxShadow: 'var(--shadow-sm)'
+                                }}
+                                className="hover-lift"
+                            >
+                                <Bell size={22} color="var(--text-main)" />
+                                {/* Pulsing indicator */}
+                                <span style={{
+                                    position: 'absolute',
+                                    top: '10px',
+                                    right: '10px',
+                                    width: '10px',
+                                    height: '10px',
+                                    width: '10px',
+                                    height: '10px',
+                                    backgroundColor: 'var(--accent)',
+                                    borderRadius: '50%',
+                                    border: '2px solid var(--white)',
+                                    boxShadow: '0 0 0 2px rgba(245, 158, 11, 0.2)'
+                                }}></span>
+                            </div>
                         </div>
                     </div>
                 </header>
