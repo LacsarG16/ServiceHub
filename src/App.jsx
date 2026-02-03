@@ -26,7 +26,7 @@ import ParticleBackground from './components/ParticleBackground';
 
 function App() {
   const location = useLocation();
-  const isDashboard = location.pathname === '/dashboard';
+  const isDashboard = location.pathname === '/dashboard' || location.pathname === '/customer-dashboard';
 
   const handleFABClick = () => {
     toast.success('Need help? Our support team is here for you!', {

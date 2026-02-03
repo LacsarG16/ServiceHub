@@ -13,10 +13,12 @@ import {
     MapPin,
     Star,
     Clock,
-    ArrowRight
+    ArrowRight,
+    CreditCard
 } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import DepositPaymentModal from '../components/modals/DepositPaymentModal';
 
 const CustomerDashboard = () => {
     const { logout } = useAuth();
@@ -24,6 +26,13 @@ const CustomerDashboard = () => {
     const [activeTab, setActiveTab] = useState('overview');
     const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
+    const [isDepositModalOpen, setIsDepositModalOpen] = useState(false);
+    const [selectedBookingForDeposit, setSelectedBookingForDeposit] = useState(null);
+
+    const handleOpenDeposit = (booking) => {
+        setSelectedBookingForDeposit(booking);
+        setIsDepositModalOpen(true);
+    };
 
     const handleLogout = () => {
         logout();
@@ -32,9 +41,10 @@ const CustomerDashboard = () => {
 
     // Mock Data
     const bookings = [
-        { id: 1, service: 'House Cleaning', provider: 'Cleaning Pros', date: 'Oct 24, 2023', time: '10:00 AM', status: 'Confirmed', image: 'https://images.unsplash.com/photo-1581578731117-104f8a3d46a8?auto=format&fit=crop&q=80&w=200' },
-        { id: 2, service: 'Plumbing Repair', provider: 'Quick Fix Plumbing', date: 'Nov 02, 2023', time: '02:00 PM', status: 'Pending', image: 'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?auto=format&fit=crop&q=80&w=200' },
-        { id: 3, service: 'Lawn Mowing', provider: 'Green Thumb', date: 'Sept 15, 2023', time: '09:00 AM', status: 'Completed', image: 'https://images.unsplash.com/photo-1558904541-efa843a96f01?auto=format&fit=crop&q=80&w=200' }
+        { id: 1, service: 'House Cleaning', provider: 'Cleaning Pros', date: 'Oct 24, 2023', time: '10:00 AM', status: 'Confirmed', image: 'https://images.unsplash.com/photo-1581578731117-104f8a3d46a8?auto=format&fit=crop&q=80&w=200', price: 1200 },
+        { id: 2, service: 'Plumbing Repair', provider: 'Quick Fix Plumbing', date: 'Nov 02, 2023', time: '02:00 PM', status: 'Approved', image: 'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?auto=format&fit=crop&q=80&w=200', price: 850 },
+        { id: 3, service: 'Lawn Mowing', provider: 'Green Thumb', date: 'Sept 15, 2023', time: '09:00 AM', status: 'Completed', image: 'https://images.unsplash.com/photo-1558904541-efa843a96f01?auto=format&fit=crop&q=80&w=200', price: 450 },
+        { id: 4, service: 'Electrical Wiring', provider: 'John Doe', date: 'Nov 10, 2023', time: '11:00 AM', status: 'Pending', image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=200', price: 0 }
     ];
 
     const recommendedProviders = [
@@ -161,44 +171,77 @@ const CustomerDashboard = () => {
     const BookingsContent = () => (
         <div>
             <h2 style={{ fontSize: '1.8rem', fontWeight: '700', marginBottom: '2rem', color: 'var(--text-main)' }}>My Bookings</h2>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(350px, 1fr))', gap: '1.5rem' }}>
                 {bookings.map(booking => (
-                    <div key={booking.id} className="glass-card" style={{
+                    <div key={booking.id} className="glass-card hover-lift" style={{
                         padding: '1.5rem',
                         borderRadius: '20px',
                         background: 'var(--glass-bg)',
                         border: '1px solid var(--glass-border)',
                         display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                        flexWrap: 'wrap',
+                        flexDirection: 'column',
                         gap: '1rem'
                     }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
-                            <img src={booking.image} alt={booking.service} style={{ width: '80px', height: '80px', borderRadius: '16px', objectFit: 'cover' }} />
-                            <div>
-                                <h3 style={{ fontSize: '1.2rem', fontWeight: '700', color: 'var(--text-main)', marginBottom: '4px' }}>{booking.service}</h3>
-                                <p style={{ color: 'var(--text-muted)', marginBottom: '4px' }}>by {booking.provider}</p>
-                                <div style={{ display: 'flex', gap: '1rem', fontSize: '0.9rem', color: 'var(--text-muted)' }}>
-                                    <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}><Calendar size={14} /> {booking.date}</span>
-                                    <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}><Clock size={14} /> {booking.time}</span>
-                                </div>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                            <img src={booking.image} alt={booking.service} style={{ width: '70px', height: '70px', borderRadius: '16px', objectFit: 'cover' }} />
+                            <div style={{ flex: 1 }}>
+                                <h3 style={{ fontSize: '1.1rem', fontWeight: '700', color: 'var(--text-main)', marginBottom: '4px' }}>{booking.service}</h3>
+                                <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>by {booking.provider}</p>
                             </div>
                         </div>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', fontSize: '0.9rem', color: 'var(--text-muted)' }}>
+                            <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><Calendar size={14} /> {booking.date}</span>
+                            <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><Clock size={14} /> {booking.time}</span>
+                        </div>
+                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingTop: '0.5rem', borderTop: '1px solid var(--glass-border)' }}>
                             <span style={{
-                                padding: '0.5rem 1rem',
+                                padding: '0.4rem 0.8rem',
                                 borderRadius: '99px',
-                                fontSize: '0.9rem',
-                                fontWeight: '600',
-                                backgroundColor: booking.status === 'Confirmed' ? 'rgba(16, 185, 129, 0.1)' : booking.status === 'Completed' ? 'rgba(59, 130, 246, 0.1)' : 'rgba(245, 158, 11, 0.1)',
-                                color: booking.status === 'Confirmed' ? '#10b981' : booking.status === 'Completed' ? '#3b82f6' : '#f59e0b'
+                                fontSize: '0.8rem',
+                                fontWeight: '700',
+                                backgroundColor: booking.status === 'Confirmed' ? 'rgba(16, 185, 129, 0.1)'
+                                    : booking.status === 'Completed' ? 'rgba(59, 130, 246, 0.1)'
+                                        : booking.status === 'Approved' ? 'rgba(124, 58, 237, 0.1)'
+                                            : 'rgba(245, 158, 11, 0.1)',
+                                color: booking.status === 'Confirmed' ? '#10b981'
+                                    : booking.status === 'Completed' ? '#3b82f6'
+                                        : booking.status === 'Approved' ? '#7c3aed'
+                                            : '#f59e0b',
+                                border: `1px solid ${booking.status === 'Confirmed' ? 'rgba(16, 185, 129, 0.2)'
+                                    : booking.status === 'Completed' ? 'rgba(59, 130, 246, 0.2)'
+                                        : booking.status === 'Approved' ? 'rgba(124, 58, 237, 0.2)'
+                                            : 'rgba(245, 158, 11, 0.2)'
+                                    }`
                             }}>
                                 {booking.status}
                             </span>
-                            <button style={{ padding: '0.5rem', borderRadius: '50%', border: '1px solid var(--glass-border)', background: 'transparent', cursor: 'pointer' }}>
-                                <ArrowRight size={20} color="var(--text-muted)" />
-                            </button>
+
+                            {booking.status === 'Approved' ? (
+                                <button
+                                    onClick={() => handleOpenDeposit(booking)}
+                                    className="hover-lift"
+                                    style={{
+                                        padding: '0.5rem 1rem',
+                                        borderRadius: '12px',
+                                        background: 'var(--primary)',
+                                        color: 'white',
+                                        border: 'none',
+                                        fontSize: '0.85rem',
+                                        fontWeight: '600',
+                                        cursor: 'pointer',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        gap: '6px',
+                                        boxShadow: '0 4px 12px rgba(59, 130, 246, 0.3)'
+                                    }}
+                                >
+                                    <CreditCard size={14} /> Pay Deposit
+                                </button>
+                            ) : (
+                                <button style={{ padding: '0.5rem', borderRadius: '50%', border: '1px solid var(--glass-border)', background: 'transparent', cursor: 'pointer' }} className="hover-lift">
+                                    <ArrowRight size={18} color="var(--text-muted)" />
+                                </button>
+                            )}
                         </div>
                     </div>
                 ))}
@@ -247,181 +290,175 @@ const CustomerDashboard = () => {
     };
 
     return (
-        <div style={{ display: 'flex', minHeight: '100vh', background: 'var(--background)' }}>
-            {/* Sidebar */}
-            <aside
-                onMouseEnter={() => setIsSidebarCollapsed(false)}
-                onMouseLeave={() => setIsSidebarCollapsed(true)}
-                style={{
-                    width: isSidebarCollapsed ? '80px' : '280px',
-                    transition: 'width 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                    backdropFilter: 'blur(30px)',
-                    backgroundColor: 'var(--glass-bg)',
-                    borderRight: '1px solid var(--glass-border)',
-                    padding: isSidebarCollapsed ? '2rem 1rem' : '2rem 1.5rem',
-                    position: 'fixed',
-                    height: '100vh',
-                    left: 0,
-                    top: 0,
-                    zIndex: 50,
+        <div style={{ minHeight: '100vh', background: 'var(--background)', paddingBottom: '3rem' }}>
+
+            {/* Header */}
+            <header style={{
+                padding: '1.5rem 2rem',
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                background: 'var(--glass-bg)',
+                backdropFilter: 'blur(20px)',
+                borderBottom: '1px solid var(--glass-border)',
+                position: 'sticky',
+                top: 0,
+                zIndex: 40
+            }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                    <div style={{
+                        backgroundColor: 'var(--primary)',
+                        color: 'white',
+                        padding: '0.4rem',
+                        borderRadius: '10px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        boxShadow: '0 4px 12px rgba(59, 130, 246, 0.3)'
+                    }}>
+                        <Home size={20} strokeWidth={2.5} />
+                    </div>
+                    <span style={{
+                        fontSize: '1.25rem',
+                        fontWeight: '800',
+                        color: 'var(--text-main)',
+                        letterSpacing: '-0.5px',
+                        fontFamily: "'Montserrat', sans-serif"
+                    }}>
+                        Service<span style={{ color: 'var(--primary)' }}>Hub</span>
+                    </span>
+                </div>
+
+                <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+                    {/* Home Button */}
+                    <Link to="/" style={{
+                        padding: '0.6rem',
+                        borderRadius: '12px',
+                        background: 'var(--background)',
+                        color: 'var(--text-muted)',
+                        border: '1px solid var(--glass-border)'
+                    }} className="hover-lift">
+                        <Home size={20} />
+                    </Link>
+
+                    {/* Notification Bell */}
+                    <div style={{
+                        position: 'relative',
+                        cursor: 'pointer',
+                        padding: '0.6rem',
+                        borderRadius: '12px',
+                        background: 'var(--background)',
+                        border: '1px solid var(--glass-border)',
+                    }} className="hover-lift">
+                        <Bell size={20} color="var(--text-muted)" />
+                        <span style={{ position: 'absolute', top: '8px', right: '8px', width: '8px', height: '8px', backgroundColor: 'var(--accent)', borderRadius: '50%' }}></span>
+                    </div>
+
+                    {/* Profile & Logout */}
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', paddingLeft: '1rem', borderLeft: '1px solid var(--glass-border)' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                            <div>
+                                <h1 style={{ fontSize: '1rem', fontWeight: '700', textAlign: 'right', lineHeight: '1.2' }}>Alex Johnson</h1>
+                                <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', textAlign: 'right' }}>Customer</p>
+                            </div>
+                            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=100" alt="Alex" style={{ width: '40px', height: '40px', borderRadius: '50%', objectFit: 'cover', border: '2px solid var(--primary)' }} />
+
+                            <button
+                                onClick={handleLogout}
+                                style={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '0.5rem',
+                                    padding: '0.5rem 1rem',
+                                    borderRadius: '10px',
+                                    background: 'rgba(239, 68, 68, 0.1)',
+                                    color: '#ef4444',
+                                    fontWeight: '600',
+                                    fontSize: '0.9rem',
+                                    transition: 'all 0.2s',
+                                    marginLeft: '0.5rem'
+                                }}
+                                className="hover-lift"
+                            >
+                                <LogOut size={16} />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            {/* Floating Vertical Navigation Sidebar */}
+            <div style={{
+                position: 'fixed',
+                left: '1.5rem',
+                top: '50%',
+                transform: 'translateY(-50%)',
+                zIndex: 100
+            }}>
+                <div className="glass-card" style={{
                     display: 'flex',
                     flexDirection: 'column',
-                    gap: '2.5rem',
-                    overflowX: 'hidden'
+                    padding: '0.75rem',
+                    gap: '0.75rem',
+                    borderRadius: 'var(--radius-2xl)',
+                    background: 'var(--white)',
+                    boxShadow: 'var(--shadow-lg)'
                 }}>
-
-                {/* Navigation Items */}
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', flex: 1, marginTop: '2rem' }}>
                     {sidebarItems.map((item) => (
                         <button
                             key={item.id}
                             onClick={() => setActiveTab(item.id)}
+                            className="hover-lift"
                             style={{
                                 display: 'flex',
                                 alignItems: 'center',
-                                gap: '1rem',
-                                padding: '1rem 1.25rem',
-                                justifyContent: isSidebarCollapsed ? 'center' : 'flex-start',
-                                borderRadius: '16px',
-                                background: activeTab === item.id ? 'var(--primary-light)' : 'transparent',
-                                color: activeTab === item.id ? 'var(--primary)' : 'var(--text-muted)',
-                                fontWeight: '700',
+                                justifyContent: 'center',
+                                padding: '1rem',
+                                borderRadius: 'var(--radius-xl)',
+                                background: activeTab === item.id ? 'var(--primary)' : 'transparent',
+                                color: activeTab === item.id ? 'white' : 'var(--text-muted)',
                                 transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                                border: 'none',
-                                textAlign: 'left',
-                                cursor: 'pointer',
                                 position: 'relative',
-                                overflow: 'hidden'
+                                border: 'none',
+                                cursor: 'pointer'
                             }}
-                            className="hover-lift"
+                            title={item.label}
                         >
-                            {/* Active Indicator */}
+                            {React.cloneElement(item.icon, { size: 22, strokeWidth: activeTab === item.id ? 2.5 : 2 })}
                             {activeTab === item.id && (
                                 <motion.div
-                                    layoutId="activeTab"
+                                    layoutId="activeTabGlow"
                                     style={{
                                         position: 'absolute',
-                                        left: 0,
-                                        top: '20%',
-                                        height: '60%',
-                                        width: '4px',
-                                        backgroundColor: 'var(--primary)',
-                                        borderTopRightRadius: '4px',
-                                        borderBottomRightRadius: '4px'
+                                        inset: 0,
+                                        borderRadius: 'var(--radius-xl)',
+                                        background: 'var(--primary)',
+                                        zIndex: -1,
+                                        opacity: 0.5,
+                                        filter: 'blur(12px)'
                                     }}
                                 />
-                            )}
-                            <span style={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                padding: '0.4rem',
-                                borderRadius: '10px',
-                                background: activeTab === item.id ? 'var(--white)' : 'transparent',
-                                boxShadow: activeTab === item.id ? '0 4px 6px -1px rgba(0,0,0,0.05)' : 'none'
-                            }}>
-                                {React.cloneElement(item.icon, { size: 18, strokeWidth: activeTab === item.id ? 2.5 : 2 })}
-                            </span>
-                            {!isSidebarCollapsed && (
-                                <motion.span
-                                    initial={{ opacity: 0 }}
-                                    animate={{ opacity: 1 }}
-                                    transition={{ duration: 0.2 }}
-                                    style={{ fontSize: '0.95rem', whiteSpace: 'nowrap' }}
-                                >
-                                    {item.label}
-                                </motion.span>
                             )}
                         </button>
                     ))}
                 </div>
+            </div >
 
-                {/* Bottom Actions */}
-                <div style={{ borderTop: '1px solid var(--glass-border)', paddingTop: '1.5rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                    <button
-                        onClick={() => window.location.href = '/'}
-                        style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '1rem',
-                            padding: isSidebarCollapsed ? '1rem' : '0.75rem 1rem',
-                            borderRadius: '12px',
-                            background: 'var(--primary)',
-                            color: 'white',
-                            border: 'none',
-                            cursor: 'pointer',
-                            justifyContent: 'center',
-                            transition: 'all 0.2s',
-                            marginBottom: '0.5rem',
-                            boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
-                        }}
-                        className="hover-lift"
-                    >
-                        <Home size={isSidebarCollapsed ? 24 : 20} />
-                        {!isSidebarCollapsed && <span style={{ fontWeight: '600', fontSize: '0.9rem' }}>Back to Home</span>}
-                    </button>
-                    <button
-                        onClick={handleLogout}
-                        style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '1rem',
-                            padding: '0.75rem 1rem',
-                            borderRadius: '12px',
-                            background: 'transparent',
-                            color: '#ef4444',
-                            border: 'none',
-                            cursor: 'pointer',
-                            justifyContent: isSidebarCollapsed ? 'center' : 'flex-start',
-                            transition: 'all 0.2s'
-                        }}
-                        className="hover:bg-red-50 dark:hover:bg-red-900/10"
-                    >
-                        <LogOut size={20} />
-                        {!isSidebarCollapsed && <span style={{ fontWeight: '600', fontSize: '0.9rem' }}>Log Out</span>}
-                    </button>
+            <main style={{ maxWidth: '1280px', margin: '0 auto', padding: '2rem', paddingLeft: '7rem' }}>
+                {/* Welcome Message */}
+                <div style={{ marginBottom: '3rem' }}>
+                    <h1 style={{
+                        fontSize: '2.5rem',
+                        fontWeight: '900',
+                        color: 'var(--text-main)',
+                        fontFamily: "'Montserrat', sans-serif",
+                        letterSpacing: '-0.5px',
+                        marginBottom: '0.5rem',
+                        lineHeight: '1.2'
+                    }}>Welcome back, <span className="text-gradient-primary">Alex!</span></h1>
+                    <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem', fontWeight: '500' }}>Manage your services and bookings.</p>
                 </div>
-            </aside>
 
-            {/* Main Content */}
-            <main style={{
-                flex: 1,
-                padding: '2rem 3rem 3rem',
-                marginLeft: isSidebarCollapsed ? '80px' : '280px',
-                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                minWidth: 0
-            }}>
-                <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '3rem' }}>
-                    <div>
-                        <h1 style={{
-                            fontSize: '2.2rem',
-                            fontWeight: '900',
-                            color: 'var(--text-main)',
-                            fontFamily: "'Montserrat', sans-serif",
-                            letterSpacing: '-0.5px',
-                            marginBottom: '0.2rem',
-                            lineHeight: '1.2'
-                        }}>Welcome back, <span className="text-gradient-primary">Alex!</span></h1>
-                        <p style={{ color: 'var(--text-muted)', fontSize: '1rem', fontWeight: '500' }}>Manage your services and bookings.</p>
-                    </div>
-                    <div style={{ display: 'flex', gap: '2rem', alignItems: 'center' }}>
-                        <div style={{
-                            position: 'relative',
-                            cursor: 'pointer',
-                            padding: '0.75rem',
-                            borderRadius: '16px',
-                            background: 'var(--white)',
-                            border: '1px solid var(--glass-border)',
-                            boxShadow: 'var(--shadow-sm)'
-                        }} className="hover-lift">
-                            <Bell size={22} color="var(--text-main)" />
-                            <span style={{ position: 'absolute', top: '10px', right: '10px', width: '8px', height: '8px', backgroundColor: 'var(--accent)', borderRadius: '50%' }}></span>
-                        </div>
-                        <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: 'var(--primary-light)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: '700', color: 'var(--primary)' }}>
-                            AJ
-                        </div>
-                    </div>
-                </header>
 
                 <AnimatePresence mode="wait">
                     <motion.div
@@ -435,6 +472,12 @@ const CustomerDashboard = () => {
                     </motion.div>
                 </AnimatePresence>
             </main>
+
+            <DepositPaymentModal
+                isOpen={isDepositModalOpen}
+                onClose={() => setIsDepositModalOpen(false)}
+                booking={selectedBookingForDeposit}
+            />
         </div>
     );
 };
