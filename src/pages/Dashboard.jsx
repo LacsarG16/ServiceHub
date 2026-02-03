@@ -238,15 +238,24 @@ const Dashboard = () => {
                 transform: 'translateY(-50%)',
                 zIndex: 100
             }}>
-                <div className="glass-card" style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    padding: '0.75rem',
-                    gap: '0.75rem',
-                    borderRadius: 'var(--radius-2xl)',
-                    background: 'var(--white)',
-                    boxShadow: 'var(--shadow-lg)'
-                }}>
+                <motion.div
+                    className="glass-card"
+                    initial={{ width: 'auto' }}
+                    animate={{ width: isSidebarCollapsed ? 'auto' : '240px' }}
+                    onMouseEnter={() => setIsSidebarCollapsed(false)}
+                    onMouseLeave={() => setIsSidebarCollapsed(true)}
+                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                    style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        padding: '0.75rem',
+                        gap: '0.75rem',
+                        borderRadius: 'var(--radius-2xl)',
+                        background: 'var(--white)',
+                        boxShadow: 'var(--shadow-lg)',
+                        overflow: 'hidden'
+                    }}
+                >
                     {sidebarItems.map((item) => (
                         <button
                             key={item.id}
@@ -255,19 +264,42 @@ const Dashboard = () => {
                             style={{
                                 display: 'flex',
                                 alignItems: 'center',
-                                justifyContent: 'center',
+                                justifyContent: isSidebarCollapsed ? 'center' : 'flex-start',
                                 padding: '1rem',
                                 borderRadius: 'var(--radius-xl)',
                                 background: activeTab === item.id ? 'var(--primary)' : 'transparent',
                                 color: activeTab === item.id ? 'white' : 'var(--text-muted)',
-                                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                                transition: 'background 0.3s, color 0.3s',
                                 position: 'relative',
                                 border: 'none',
-                                cursor: 'pointer'
+                                cursor: 'pointer',
+                                whiteSpace: 'nowrap',
+                                width: '100%'
                             }}
-                            title={item.label}
+                            title={isSidebarCollapsed ? item.label : ''}
                         >
-                            {React.cloneElement(item.icon, { size: 22, strokeWidth: activeTab === item.id ? 2.5 : 2 })}
+                            <div style={{ minWidth: '22px', display: 'flex', justifyContent: 'center' }}>
+                                {React.cloneElement(item.icon, { size: 22, strokeWidth: activeTab === item.id ? 2.5 : 2 })}
+                            </div>
+
+                            <AnimatePresence>
+                                {!isSidebarCollapsed && (
+                                    <motion.span
+                                        initial={{ opacity: 0, x: -10 }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                        exit={{ opacity: 0, x: -10 }}
+                                        transition={{ duration: 0.2, delay: 0.1 }}
+                                        style={{
+                                            marginLeft: '0.75rem',
+                                            fontWeight: '600',
+                                            fontSize: '0.95rem'
+                                        }}
+                                    >
+                                        {item.label}
+                                    </motion.span>
+                                )}
+                            </AnimatePresence>
+
                             {activeTab === item.id && (
                                 <motion.div
                                     layoutId="activeTabGlow"
@@ -284,7 +316,7 @@ const Dashboard = () => {
                             )}
                         </button>
                     ))}
-                </div>
+                </motion.div>
             </div>
 
             {/* Main Content */}
