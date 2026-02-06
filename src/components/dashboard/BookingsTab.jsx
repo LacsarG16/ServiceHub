@@ -109,82 +109,96 @@ const BookingsTab = ({ onBookingClick, onAddBooking }) => {
         const monthEnd = endOfMonth(monthStart);
         const startDate = startOfWeek(monthStart);
         const endDate = endOfWeek(monthEnd);
-
         const days = eachDayOfInterval({ start: startDate, end: endDate });
 
         return (
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: '1px', background: 'var(--glass-border)', borderRadius: 'var(--radius-md)', overflow: 'hidden', border: '1px solid var(--glass-border)' }}>
-                {days.map(day => {
-                    const status = getAvailabilityStatus(day);
-                    const isSelected = isSameDay(day, selectedDate);
-                    const isCurrentMonth = isSameMonth(day, monthStart);
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: '0.5rem' }}>
+                {days.map((day, i) => {
                     const dayBookings = bookings.filter(b => isSameDay(b.date, day));
+                    const status = getAvailabilityStatus(day);
+                    const isCurrentMonth = isSameMonth(day, currentMonth);
+                    const isSelected = isSameDay(day, selectedDate);
+                    const isTodayDate = isToday(day);
+
+                    let bgColor = 'transparent';
+                    let borderColor = 'var(--glass-border)';
+
+                    if (status === 'available') {
+                        bgColor = 'rgba(16, 185, 129, 0.05)';
+                        borderColor = '#10b981';
+                    } else if (status === 'partially-booked' || status === 'booked') {
+                        bgColor = 'rgba(59, 130, 246, 0.05)';
+                        borderColor = 'var(--primary)';
+                    } else if (status === 'fully-booked') {
+                        bgColor = 'rgba(239, 68, 68, 0.05)';
+                        borderColor = '#ef4444';
+                    } else if (status === 'limited') {
+                        bgColor = 'rgba(245, 158, 11, 0.05)';
+                        borderColor = '#f59e0b';
+                    }
 
                     return (
                         <div
-                            key={day.toISOString()}
+                            key={i}
                             onClick={() => setSelectedDate(day)}
                             style={{
-                                minHeight: '100px',
-                                background: isCurrentMonth ? 'var(--white)' : 'var(--background)',
                                 padding: '0.75rem',
+                                borderRadius: '12px',
+                                border: isSelected ? `2px solid var(--primary)` : `1px solid ${borderColor}`,
+                                background: isSelected ? 'var(--primary-light)' : bgColor,
                                 cursor: 'pointer',
                                 transition: 'all 0.2s',
-                                border: isSelected ? '2px solid var(--primary)' : '2px solid transparent',
-                                position: 'relative'
+                                opacity: isCurrentMonth ? 1 : 0.3,
+                                position: 'relative',
+                                minHeight: '70px'
+                            }}
+                            onMouseEnter={(e) => {
+                                if (!isSelected) e.currentTarget.style.transform = 'scale(1.05)';
+                            }}
+                            onMouseLeave={(e) => {
+                                e.currentTarget.style.transform = 'scale(1)';
                             }}
                         >
-                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.25rem' }}>
                                 <span style={{
                                     fontSize: '0.9rem',
-                                    fontWeight: isToday(day) ? '800' : '500',
-                                    color: isToday(day) ? 'var(--primary)' : isCurrentMonth ? 'var(--text-main)' : 'var(--text-muted)'
+                                    fontWeight: isTodayDate ? '800' : '600',
+                                    color: isTodayDate ? 'var(--primary)' : 'var(--text-main)'
                                 }}>
                                     {format(day, 'd')}
                                 </span>
-                                {isCurrentMonth && (
-                                    <div style={{
-                                        width: '8px',
-                                        height: '8px',
-                                        borderRadius: '50%',
-                                        backgroundColor: status === 'available' ? '#10b981' : status === 'fully-booked' ? '#ef4444' : 'var(--primary)'
-                                    }}></div>
+                                {dayBookings.length > 0 && (
+                                    <span style={{
+                                        fontSize: '0.7rem',
+                                        fontWeight: '700',
+                                        color: 'var(--primary)',
+                                        background: 'rgba(59, 130, 246, 0.1)',
+                                        padding: '0.15rem 0.4rem',
+                                        borderRadius: '6px'
+                                    }}>
+                                        {dayBookings.length}
+                                    </span>
                                 )}
                             </div>
-
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                                {dayBookings.slice(0, 2).map((b, idx) => (
-                                    <div
-                                        key={idx}
-                                        onClick={(e) => {
-                                            e.stopPropagation();
-                                            onBookingClick(b);
-                                        }}
-                                        style={{
-                                            fontSize: '0.65rem',
-                                            padding: '2px 6px',
-                                            borderRadius: '4px',
-                                            background: b.status === 'Cancelled' ? 'rgba(239, 68, 68, 0.1)' : 'rgba(59, 130, 246, 0.1)',
-                                            color: b.status === 'Cancelled' ? '#ef4444' : 'var(--primary)',
-                                            fontWeight: '700',
-                                            whiteSpace: 'nowrap',
-                                            overflow: 'hidden',
-                                            textOverflow: 'ellipsis'
-                                        }}
-                                    >
-                                        {b.customer.split(' ')[0]} - {b.time}
-                                    </div>
-                                ))}
-                                {dayBookings.length > 2 && (
-                                    <span style={{ fontSize: '0.6rem', color: 'var(--text-muted)', fontWeight: '600' }}>+ {dayBookings.length - 2} more</span>
-                                )}
-                            </div>
+                            {isTodayDate && (
+                                <div style={{
+                                    width: '4px',
+                                    height: '4px',
+                                    borderRadius: '50%',
+                                    background: 'var(--primary)',
+                                    position: 'absolute',
+                                    bottom: '0.5rem',
+                                    left: '50%',
+                                    transform: 'translateX(-50%)'
+                                }}></div>
+                            )}
                         </div>
                     );
                 })}
             </div>
         );
     };
+
 
     const renderDetails = () => {
         const dayBookings = bookings.filter(b => isSameDay(b.date, selectedDate));
@@ -403,7 +417,83 @@ const BookingsTab = ({ onBookingClick, onAddBooking }) => {
                     </div>
                 </>
             ) : (
-                <div style={{ display: 'grid', gridTemplateColumns: '1.8fr 1fr', gap: '2.5rem' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: '320px 1fr 350px', gap: '2rem' }}>
+                    {/* LEFT SIDEBAR */}
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                        {/* Monthly Summary */}
+                        <div style={{
+                            padding: '1.5rem',
+                            borderRadius: 'var(--radius-xl)',
+                            background: 'var(--white)',
+                            border: '1px solid var(--glass-border)',
+                            boxShadow: '0 4px 15px rgba(0,0,0,0.02)'
+                        }}>
+                            <h3 style={{ fontSize: '0.95rem', fontWeight: '800', marginBottom: '1.25rem', color: 'var(--text-main)' }}>
+                                {format(currentMonth, 'MMMM')}
+                            </h3>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                                <div>
+                                    <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '0.25rem', fontWeight: '600' }}>Total</p>
+                                    <p style={{ fontSize: '1.5rem', fontWeight: '800', color: 'var(--text-main)' }}>{bookings.length}</p>
+                                </div>
+                                <div>
+                                    <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '0.25rem', fontWeight: '600' }}>Revenue</p>
+                                    <p style={{ fontSize: '1.5rem', fontWeight: '800', color: '#10b981' }}>$720</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* This Week */}
+                        <div style={{
+                            padding: '1.5rem',
+                            borderRadius: 'var(--radius-xl)',
+                            background: 'linear-gradient(135deg, #1e3a8a 0%, var(--primary) 100%)',
+                            color: 'white',
+                            boxShadow: '0 10px 25px -5px rgba(59, 130, 246, 0.3)'
+                        }}>
+                            <h3 style={{ fontSize: '0.95rem', fontWeight: '800', marginBottom: '1rem' }}>This Week</h3>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                    <span style={{ fontSize: '0.8rem', opacity: 0.9 }}>Bookings</span>
+                                    <span style={{ fontSize: '1.1rem', fontWeight: '800' }}>12</span>
+                                </div>
+                                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                    <span style={{ fontSize: '0.8rem', opacity: 0.9 }}>Revenue</span>
+                                    <span style={{ fontSize: '1.1rem', fontWeight: '800' }}>$1,440</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Status Breakdown */}
+                        <div style={{
+                            padding: '1.5rem',
+                            borderRadius: 'var(--radius-xl)',
+                            background: 'var(--white)',
+                            border: '1px solid var(--glass-border)',
+                            boxShadow: '0 4px 15px rgba(0,0,0,0.02)'
+                        }}>
+                            <h3 style={{ fontSize: '0.95rem', fontWeight: '800', marginBottom: '1rem', color: 'var(--text-main)' }}>Status</h3>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                    <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--primary)' }}></div>
+                                    <span style={{ fontSize: '0.8rem', flex: 1 }}>Upcoming</span>
+                                    <span style={{ fontSize: '0.85rem', fontWeight: '700' }}>3</span>
+                                </div>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                    <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#10b981' }}></div>
+                                    <span style={{ fontSize: '0.8rem', flex: 1 }}>Completed</span>
+                                    <span style={{ fontSize: '0.85rem', fontWeight: '700' }}>1</span>
+                                </div>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                    <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#ef4444' }}></div>
+                                    <span style={{ fontSize: '0.8rem', flex: 1 }}>Cancelled</span>
+                                    <span style={{ fontSize: '0.85rem', fontWeight: '700' }}>1</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* MAIN CONTENT - Calendar */}
                     <div style={{
                         padding: '2.5rem',
                         borderRadius: 'var(--radius-xl)',
@@ -415,7 +505,91 @@ const BookingsTab = ({ onBookingClick, onAddBooking }) => {
                         {renderDays()}
                         {renderCells()}
                     </div>
-                    {renderDetails()}
+
+                    {/* RIGHT SIDEBAR */}
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                        {/* Popular Times */}
+                        <div style={{
+                            padding: '1.5rem',
+                            borderRadius: 'var(--radius-xl)',
+                            background: 'var(--white)',
+                            border: '1px solid var(--glass-border)',
+                            boxShadow: '0 4px 15px rgba(0,0,0,0.02)'
+                        }}>
+                            <h3 style={{ fontSize: '0.95rem', fontWeight: '800', marginBottom: '1.25rem', color: 'var(--text-main)' }}>Popular Times</h3>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                                <div style={{
+                                    padding: '0.75rem',
+                                    borderRadius: '10px',
+                                    background: 'var(--background)',
+                                    border: '1px solid var(--glass-border)'
+                                }}>
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                        <span style={{ fontSize: '0.85rem', fontWeight: '700', color: 'var(--text-main)' }}>09:00 AM</span>
+                                        <span style={{ fontSize: '0.75rem', fontWeight: '700', color: 'var(--primary)' }}>3</span>
+                                    </div>
+                                </div>
+                                <div style={{
+                                    padding: '0.75rem',
+                                    borderRadius: '10px',
+                                    background: 'var(--background)',
+                                    border: '1px solid var(--glass-border)'
+                                }}>
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                        <span style={{ fontSize: '0.85rem', fontWeight: '700', color: 'var(--text-main)' }}>02:00 PM</span>
+                                        <span style={{ fontSize: '0.75rem', fontWeight: '700', color: 'var(--primary)' }}>2</span>
+                                    </div>
+                                </div>
+                                <div style={{
+                                    padding: '0.75rem',
+                                    borderRadius: '10px',
+                                    background: 'var(--background)',
+                                    border: '1px solid var(--glass-border)'
+                                }}>
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                        <span style={{ fontSize: '0.85rem', fontWeight: '700', color: 'var(--text-main)' }}>03:00 PM</span>
+                                        <span style={{ fontSize: '0.75rem', fontWeight: '700', color: 'var(--primary)' }}>1</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Revenue Insights */}
+                        <div style={{
+                            padding: '1.5rem',
+                            borderRadius: 'var(--radius-xl)',
+                            background: 'var(--white)',
+                            border: '1px solid var(--glass-border)',
+                            boxShadow: '0 4px 15px rgba(0,0,0,0.02)'
+                        }}>
+                            <h3 style={{ fontSize: '0.95rem', fontWeight: '800', marginBottom: '1.25rem', color: 'var(--text-main)' }}>Insights</h3>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                                <div>
+                                    <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '0.5rem' }}>Avg/Booking</p>
+                                    <p style={{ fontSize: '1.25rem', fontWeight: '800', color: 'var(--text-main)' }}>$120</p>
+                                </div>
+                                <div>
+                                    <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '0.5rem' }}>Completion</p>
+                                    <p style={{ fontSize: '1.25rem', fontWeight: '800', color: '#10b981' }}>83%</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Retention */}
+                        <div style={{
+                            padding: '1.5rem',
+                            borderRadius: 'var(--radius-xl)',
+                            background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+                            color: 'white',
+                            boxShadow: '0 10px 25px -5px rgba(16, 185, 129, 0.3)'
+                        }}>
+                            <h3 style={{ fontSize: '0.95rem', fontWeight: '800', marginBottom: '0.75rem' }}>Retention</h3>
+                            <p style={{ fontSize: '2rem', fontWeight: '900', marginBottom: '0.5rem' }}>68%</p>
+                            <p style={{ fontSize: '0.75rem', opacity: 0.9 }}>Return within 30 days</p>
+                        </div>
+
+                        {renderDetails()}
+                    </div>
                 </div>
             )}
         </div>

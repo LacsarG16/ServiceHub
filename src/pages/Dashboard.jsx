@@ -320,7 +320,7 @@ const Dashboard = () => {
             </div>
 
             {/* Main Content */}
-            <main style={{ maxWidth: '1280px', margin: '0 auto', padding: '2rem', paddingLeft: '7rem' }}>
+            <main style={{ width: '100%', padding: '2rem 3rem', paddingLeft: '8rem' }}>
                 {/* Welcome Message */}
                 <div style={{ marginBottom: '3rem' }}>
                     <h1 style={{

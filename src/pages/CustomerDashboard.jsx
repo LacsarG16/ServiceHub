@@ -63,106 +63,302 @@ const CustomerDashboard = () => {
     // --- Tab Content Components ---
 
     const OverviewContent = () => (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '2.5rem' }}>
-            {/* Search Banner */}
-            <div className="glass-card" style={{
-                padding: '2rem',
-                borderRadius: '24px',
-                background: 'linear-gradient(135deg, rgba(59,130,246,0.1) 0%, rgba(147,51,234,0.1) 100%)',
-                border: '1px solid var(--glass-border)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                flexWrap: 'wrap',
-                gap: '2rem'
-            }}>
-                <div style={{ flex: 1, minWidth: '300px' }}>
-                    <h2 style={{ fontSize: '1.5rem', fontWeight: '800', marginBottom: '0.5rem', color: 'var(--text-main)' }}>Find the perfect service</h2>
-                    <p style={{ color: 'var(--text-muted)' }}>Search for providers in your area</p>
-                </div>
+        <div style={{ display: 'grid', gridTemplateColumns: '320px 1fr 350px', gap: '2rem' }}>
+            {/* LEFT SIDEBAR */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                {/* Quick Stats */}
                 <div style={{
-                    flex: 1,
-                    minWidth: '300px',
+                    padding: '1.5rem',
+                    borderRadius: 'var(--radius-xl)',
+                    background: 'var(--white)',
+                    border: '1px solid var(--glass-border)',
+                    boxShadow: '0 4px 15px rgba(0,0,0,0.02)'
+                }}>
+                    <h3 style={{ fontSize: '0.95rem', fontWeight: '800', marginBottom: '1.25rem', color: 'var(--text-main)' }}>My Bookings</h3>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                        <div>
+                            <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '0.25rem', fontWeight: '600' }}>Total</p>
+                            <p style={{ fontSize: '1.5rem', fontWeight: '800', color: 'var(--text-main)' }}>{bookings.length}</p>
+                        </div>
+                        <div>
+                            <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '0.25rem', fontWeight: '600' }}>Active</p>
+                            <p style={{ fontSize: '1.5rem', fontWeight: '800', color: 'var(--primary)' }}>{bookings.filter(b => b.status !== 'Completed').length}</p>
+                        </div>
+                        <div>
+                            <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '0.25rem', fontWeight: '600' }}>Completed</p>
+                            <p style={{ fontSize: '1.5rem', fontWeight: '800', color: '#10b981' }}>{bookings.filter(b => b.status === 'Completed').length}</p>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Spending Summary */}
+                <div style={{
+                    padding: '1.5rem',
+                    borderRadius: 'var(--radius-xl)',
+                    background: 'linear-gradient(135deg, #1e3a8a 0%, var(--primary) 100%)',
+                    color: 'white',
+                    boxShadow: '0 10px 25px -5px rgba(59, 130, 246, 0.3)'
+                }}>
+                    <h3 style={{ fontSize: '0.95rem', fontWeight: '800', marginBottom: '1rem' }}>Spending</h3>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                        <div>
+                            <p style={{ fontSize: '0.75rem', opacity: 0.9, marginBottom: '0.25rem' }}>Total Spent</p>
+                            <p style={{ fontSize: '1.75rem', fontWeight: '900' }}>R{bookings.reduce((sum, b) => sum + b.price, 0).toLocaleString()}</p>
+                        </div>
+                        <div style={{ paddingTop: '0.75rem', borderTop: '1px solid rgba(255,255,255,0.2)' }}>
+                            <p style={{ fontSize: '0.75rem', opacity: 0.9, marginBottom: '0.25rem' }}>Avg/Booking</p>
+                            <p style={{ fontSize: '1.1rem', fontWeight: '700' }}>R{Math.round(bookings.reduce((sum, b) => sum + b.price, 0) / bookings.length).toLocaleString()}</p>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Favorite Providers */}
+                <div style={{
+                    padding: '1.5rem',
+                    borderRadius: 'var(--radius-xl)',
+                    background: 'var(--white)',
+                    border: '1px solid var(--glass-border)',
+                    boxShadow: '0 4px 15px rgba(0,0,0,0.02)'
+                }}>
+                    <h3 style={{ fontSize: '0.95rem', fontWeight: '800', marginBottom: '1.25rem', color: 'var(--text-main)' }}>Favorites</h3>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
+                        {recommendedProviders.slice(0, 2).map((provider) => (
+                            <div key={provider.id} style={{
+                                padding: '0.75rem',
+                                borderRadius: '10px',
+                                background: 'var(--background)',
+                                border: '1px solid var(--glass-border)',
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '0.75rem'
+                            }}>
+                                <img src={provider.image} alt={provider.name} style={{ width: '40px', height: '40px', borderRadius: '50%', objectFit: 'cover' }} />
+                                <div style={{ flex: 1 }}>
+                                    <p style={{ fontSize: '0.8rem', fontWeight: '700', color: 'var(--text-main)' }}>{provider.name}</p>
+                                    <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>{provider.service}</p>
+                                </div>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                                    <Star size={12} fill="#fbbf24" color="#fbbf24" />
+                                    <span style={{ fontSize: '0.75rem', fontWeight: '700' }}>{provider.rating}</span>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
+
+            {/* MAIN CONTENT */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '2.5rem' }}>
+                {/* Search Banner */}
+                <div className="glass-card" style={{
+                    padding: '2rem',
+                    borderRadius: '24px',
+                    background: 'linear-gradient(135deg, rgba(59,130,246,0.1) 0%, rgba(147,51,234,0.1) 100%)',
+                    border: '1px solid var(--glass-border)',
                     display: 'flex',
                     alignItems: 'center',
-                    gap: '1rem',
-                    background: 'var(--white)',
-                    padding: '0.75rem 1rem',
-                    borderRadius: '16px',
-                    boxShadow: 'var(--shadow-sm)'
+                    justifyContent: 'space-between',
+                    flexWrap: 'wrap',
+                    gap: '2rem'
                 }}>
-                    <Search size={20} color="var(--text-muted)" />
-                    <input
-                        type="text"
-                        placeholder="e.g. Plumber, Cleaner..."
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                        style={{ border: 'none', outline: 'none', flex: 1, fontSize: '1rem', background: 'transparent' }}
-                    />
-                    <button className="btn-primary" style={{ padding: '0.5rem 1rem', borderRadius: '10px', fontSize: '0.9rem' }}>Search</button>
+                    <div style={{ flex: 1, minWidth: '300px' }}>
+                        <h2 style={{ fontSize: '1.5rem', fontWeight: '800', marginBottom: '0.5rem', color: 'var(--text-main)' }}>Find the perfect service</h2>
+                        <p style={{ color: 'var(--text-muted)' }}>Search for providers in your area</p>
+                    </div>
+                    <div style={{
+                        flex: 1,
+                        minWidth: '300px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '1rem',
+                        background: 'var(--white)',
+                        padding: '0.75rem 1rem',
+                        borderRadius: '16px',
+                        boxShadow: 'var(--shadow-sm)'
+                    }}>
+                        <Search size={20} color="var(--text-muted)" />
+                        <input
+                            type="text"
+                            placeholder="e.g. Plumber, Cleaner..."
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                            style={{ border: 'none', outline: 'none', flex: 1, fontSize: '1rem', background: 'transparent' }}
+                        />
+                        <button className="btn-primary" style={{ padding: '0.5rem 1rem', borderRadius: '10px', fontSize: '0.9rem' }}>Search</button>
+                    </div>
                 </div>
-            </div>
 
-            {/* Active Bookings Summary */}
-            <div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
-                    <h3 style={{ fontSize: '1.25rem', fontWeight: '700', color: 'var(--text-main)' }}>Upcoming Bookings</h3>
-                    <button onClick={() => setActiveTab('bookings')} style={{ color: 'var(--primary)', fontWeight: '600', background: 'transparent', border: 'none', cursor: 'pointer' }}>View All</button>
-                </div>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem' }}>
-                    {bookings.filter(b => b.status !== 'Completed').slice(0, 2).map(booking => (
-                        <div key={booking.id} className="glass-card hover-lift" style={{ padding: '1.5rem', borderRadius: '20px', background: 'var(--glass-bg)', border: '1px solid var(--glass-border)' }}>
-                            <div style={{ display: 'flex', gap: '1rem', marginBottom: '1rem' }}>
-                                <img src={booking.image} alt={booking.service} style={{ width: '50px', height: '50px', borderRadius: '12px', objectFit: 'cover' }} />
-                                <div>
-                                    <h4 style={{ fontWeight: '700', color: 'var(--text-main)' }}>{booking.service}</h4>
-                                    <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>{booking.provider}</p>
-                                </div>
-                            </div>
-                            <div style={{ display: 'flex', gap: '1rem', fontSize: '0.9rem', color: 'var(--text-muted)' }}>
-                                <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}><Calendar size={14} /> {booking.date}</span>
-                                <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}><Clock size={14} /> {booking.time}</span>
-                            </div>
-                        </div>
-                    ))}
-                    {bookings.filter(b => b.status !== 'Completed').length === 0 && (
-                        <p style={{ color: 'var(--text-muted)', fontStyle: 'italic' }}>No upcoming bookings.</p>
-                    )}
-                </div>
-            </div>
-
-            {/* Recommended */}
-            <div>
-                <h3 style={{ fontSize: '1.25rem', fontWeight: '700', color: 'var(--text-main)', marginBottom: '1.5rem' }}>Recommended for You</h3>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '1.5rem' }}>
-                    {recommendedProviders.map((provider) => (
-                        <div
-                            key={provider.id}
-                            className="glass-card hover-lift"
-                            style={{
-                                padding: '1.5rem',
-                                borderRadius: '20px',
-                                background: 'var(--glass-bg)',
-                                border: '1px solid var(--glass-border)',
-                                position: 'relative'
-                            }}
-                        >
-                            <Link to={`/profile/${provider.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
-                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1rem' }}>
-                                    <img src={provider.image} alt={provider.name} style={{ width: '60px', height: '60px', borderRadius: '50%', objectFit: 'cover' }} />
-                                    <div style={{ display: 'flex', alignItems: 'center', gap: '4px', background: 'var(--white)', padding: '4px 8px', borderRadius: '8px', boxShadow: 'var(--shadow-sm)' }}>
-                                        <Star size={14} fill="#fbbf24" color="#fbbf24" />
-                                        <span style={{ fontSize: '0.85rem', fontWeight: '700' }}>{provider.rating}</span>
+                {/* Active Bookings Summary */}
+                <div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+                        <h3 style={{ fontSize: '1.25rem', fontWeight: '700', color: 'var(--text-main)' }}>Upcoming Bookings</h3>
+                        <button onClick={() => setActiveTab('bookings')} style={{ color: 'var(--primary)', fontWeight: '600', background: 'transparent', border: 'none', cursor: 'pointer' }}>View All</button>
+                    </div>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem' }}>
+                        {bookings.filter(b => b.status !== 'Completed').slice(0, 2).map(booking => (
+                            <div key={booking.id} className="glass-card hover-lift" style={{ padding: '1.5rem', borderRadius: '20px', background: 'var(--glass-bg)', border: '1px solid var(--glass-border)' }}>
+                                <div style={{ display: 'flex', gap: '1rem', marginBottom: '1rem' }}>
+                                    <img src={booking.image} alt={booking.service} style={{ width: '50px', height: '50px', borderRadius: '12px', objectFit: 'cover' }} />
+                                    <div>
+                                        <h4 style={{ fontWeight: '700', color: 'var(--text-main)' }}>{booking.service}</h4>
+                                        <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>{booking.provider}</p>
                                     </div>
                                 </div>
-                                <h4 style={{ fontSize: '1.1rem', fontWeight: '700', marginBottom: '4px' }}>{provider.name}</h4>
-                                <p style={{ color: 'var(--primary)', fontSize: '0.9rem', fontWeight: '600', marginBottom: '0.5rem' }}>{provider.service}</p>
-                                <p style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.85rem', color: 'var(--text-muted)' }}>
-                                    <MapPin size={14} /> {provider.location}
-                                </p>
-                            </Link>
+                                <div style={{ display: 'flex', gap: '1rem', fontSize: '0.9rem', color: 'var(--text-muted)' }}>
+                                    <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}><Calendar size={14} /> {booking.date}</span>
+                                    <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}><Clock size={14} /> {booking.time}</span>
+                                </div>
+                            </div>
+                        ))}
+                        {bookings.filter(b => b.status !== 'Completed').length === 0 && (
+                            <p style={{ color: 'var(--text-muted)', fontStyle: 'italic' }}>No upcoming bookings.</p>
+                        )}
+                    </div>
+                </div>
+
+                {/* Recommended */}
+                <div>
+                    <h3 style={{ fontSize: '1.25rem', fontWeight: '700', color: 'var(--text-main)', marginBottom: '1.5rem' }}>Recommended for You</h3>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))', gap: '1.5rem' }}>
+                        {recommendedProviders.map((provider) => (
+                            <div
+                                key={provider.id}
+                                className="glass-card hover-lift"
+                                style={{
+                                    padding: '1.5rem',
+                                    borderRadius: '20px',
+                                    background: 'var(--glass-bg)',
+                                    border: '1px solid var(--glass-border)',
+                                    position: 'relative'
+                                }}
+                            >
+                                <Link to={`/profile/${provider.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1rem' }}>
+                                        <img src={provider.image} alt={provider.name} style={{ width: '60px', height: '60px', borderRadius: '50%', objectFit: 'cover' }} />
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '4px', background: 'var(--white)', padding: '4px 8px', borderRadius: '8px', boxShadow: 'var(--shadow-sm)' }}>
+                                            <Star size={14} fill="#fbbf24" color="#fbbf24" />
+                                            <span style={{ fontSize: '0.85rem', fontWeight: '700' }}>{provider.rating}</span>
+                                        </div>
+                                    </div>
+                                    <h4 style={{ fontSize: '1.1rem', fontWeight: '700', marginBottom: '4px' }}>{provider.name}</h4>
+                                    <p style={{ color: 'var(--primary)', fontSize: '0.9rem', fontWeight: '600', marginBottom: '0.5rem' }}>{provider.service}</p>
+                                    <p style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.85rem', color: 'var(--text-muted)' }}>
+                                        <MapPin size={14} /> {provider.location}
+                                    </p>
+                                </Link>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
+
+            {/* RIGHT SIDEBAR */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                {/* Recent Activity */}
+                <div style={{
+                    padding: '1.5rem',
+                    borderRadius: 'var(--radius-xl)',
+                    background: 'var(--white)',
+                    border: '1px solid var(--glass-border)',
+                    boxShadow: '0 4px 15px rgba(0,0,0,0.02)'
+                }}>
+                    <h3 style={{ fontSize: '0.95rem', fontWeight: '800', marginBottom: '1.25rem', color: 'var(--text-main)' }}>Recent Activity</h3>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                        <div style={{
+                            padding: '1rem',
+                            borderRadius: '10px',
+                            background: 'var(--background)',
+                            borderLeft: '3px solid var(--primary)'
+                        }}>
+                            <p style={{ fontSize: '0.8rem', fontWeight: '700', marginBottom: '0.35rem', color: 'var(--text-main)' }}>Booking Confirmed</p>
+                            <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>House Cleaning - Oct 24</p>
                         </div>
-                    ))}
+                        <div style={{
+                            padding: '1rem',
+                            borderRadius: '10px',
+                            background: 'var(--background)',
+                            borderLeft: '3px solid #10b981'
+                        }}>
+                            <p style={{ fontSize: '0.8rem', fontWeight: '700', marginBottom: '0.35rem', color: 'var(--text-main)' }}>Service Completed</p>
+                            <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>Lawn Mowing - Sept 15</p>
+                        </div>
+                        <div style={{
+                            padding: '1rem',
+                            borderRadius: '10px',
+                            background: 'var(--background)',
+                            borderLeft: '3px solid #f59e0b'
+                        }}>
+                            <p style={{ fontSize: '0.8rem', fontWeight: '700', marginBottom: '0.35rem', color: 'var(--text-main)' }}>Payment Pending</p>
+                            <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>Electrical Wiring - Nov 10</p>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Quick Actions */}
+                <div style={{
+                    padding: '1.5rem',
+                    borderRadius: 'var(--radius-xl)',
+                    background: 'var(--white)',
+                    border: '1px solid var(--glass-border)',
+                    boxShadow: '0 4px 15px rgba(0,0,0,0.02)'
+                }}>
+                    <h3 style={{ fontSize: '0.95rem', fontWeight: '800', marginBottom: '1.25rem', color: 'var(--text-main)' }}>Quick Actions</h3>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                        <button
+                            onClick={() => navigate('/directory')}
+                            className="hover-lift"
+                            style={{
+                                padding: '0.85rem',
+                                borderRadius: '12px',
+                                background: 'var(--primary)',
+                                color: 'white',
+                                border: 'none',
+                                fontSize: '0.85rem',
+                                fontWeight: '700',
+                                cursor: 'pointer',
+                                textAlign: 'left',
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '0.5rem',
+                                boxShadow: '0 4px 12px rgba(59, 130, 246, 0.3)'
+                            }}
+                        >
+                            <Search size={16} /> Book a Service
+                        </button>
+                        <button
+                            onClick={() => setActiveTab('favorites')}
+                            className="hover-lift"
+                            style={{
+                                padding: '0.85rem',
+                                borderRadius: '12px',
+                                background: 'var(--background)',
+                                color: 'var(--text-main)',
+                                border: '1px solid var(--glass-border)',
+                                fontSize: '0.85rem',
+                                fontWeight: '700',
+                                cursor: 'pointer',
+                                textAlign: 'left',
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '0.5rem'
+                            }}
+                        >
+                            <Heart size={16} /> View Favorites
+                        </button>
+                    </div>
+                </div>
+
+                {/* Savings Card */}
+                <div style={{
+                    padding: '1.5rem',
+                    borderRadius: 'var(--radius-xl)',
+                    background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+                    color: 'white',
+                    boxShadow: '0 10px 25px -5px rgba(16, 185, 129, 0.3)'
+                }}>
+                    <h3 style={{ fontSize: '0.95rem', fontWeight: '800', marginBottom: '0.75rem' }}>Loyalty Points</h3>
+                    <p style={{ fontSize: '2rem', fontWeight: '900', marginBottom: '0.5rem' }}>250</p>
+                    <p style={{ fontSize: '0.75rem', opacity: 0.9 }}>Earn rewards with every booking!</p>
                 </div>
             </div>
         </div>
@@ -395,15 +591,24 @@ const CustomerDashboard = () => {
                 transform: 'translateY(-50%)',
                 zIndex: 100
             }}>
-                <div className="glass-card" style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    padding: '0.75rem',
-                    gap: '0.75rem',
-                    borderRadius: 'var(--radius-2xl)',
-                    background: 'var(--white)',
-                    boxShadow: 'var(--shadow-lg)'
-                }}>
+                <motion.div
+                    className="glass-card"
+                    initial={{ width: 'auto' }}
+                    animate={{ width: isSidebarCollapsed ? 'auto' : '240px' }}
+                    onMouseEnter={() => setIsSidebarCollapsed(false)}
+                    onMouseLeave={() => setIsSidebarCollapsed(true)}
+                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                    style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        padding: '0.75rem',
+                        gap: '0.75rem',
+                        borderRadius: 'var(--radius-2xl)',
+                        background: 'var(--white)',
+                        boxShadow: 'var(--shadow-lg)',
+                        overflow: 'hidden'
+                    }}
+                >
                     {sidebarItems.map((item) => (
                         <button
                             key={item.id}
@@ -412,19 +617,42 @@ const CustomerDashboard = () => {
                             style={{
                                 display: 'flex',
                                 alignItems: 'center',
-                                justifyContent: 'center',
+                                justifyContent: isSidebarCollapsed ? 'center' : 'flex-start',
                                 padding: '1rem',
                                 borderRadius: 'var(--radius-xl)',
                                 background: activeTab === item.id ? 'var(--primary)' : 'transparent',
                                 color: activeTab === item.id ? 'white' : 'var(--text-muted)',
-                                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                                transition: 'background 0.3s, color 0.3s',
                                 position: 'relative',
                                 border: 'none',
-                                cursor: 'pointer'
+                                cursor: 'pointer',
+                                whiteSpace: 'nowrap',
+                                width: '100%'
                             }}
-                            title={item.label}
+                            title={isSidebarCollapsed ? item.label : ''}
                         >
-                            {React.cloneElement(item.icon, { size: 22, strokeWidth: activeTab === item.id ? 2.5 : 2 })}
+                            <div style={{ minWidth: '22px', display: 'flex', justifyContent: 'center' }}>
+                                {React.cloneElement(item.icon, { size: 22, strokeWidth: activeTab === item.id ? 2.5 : 2 })}
+                            </div>
+
+                            <AnimatePresence>
+                                {!isSidebarCollapsed && (
+                                    <motion.span
+                                        initial={{ opacity: 0, x: -10 }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                        exit={{ opacity: 0, x: -10 }}
+                                        transition={{ duration: 0.2, delay: 0.1 }}
+                                        style={{
+                                            marginLeft: '0.75rem',
+                                            fontWeight: '600',
+                                            fontSize: '0.95rem'
+                                        }}
+                                    >
+                                        {item.label}
+                                    </motion.span>
+                                )}
+                            </AnimatePresence>
+
                             {activeTab === item.id && (
                                 <motion.div
                                     layoutId="activeTabGlow"
@@ -441,10 +669,10 @@ const CustomerDashboard = () => {
                             )}
                         </button>
                     ))}
-                </div>
+                </motion.div>
             </div >
 
-            <main style={{ maxWidth: '1280px', margin: '0 auto', padding: '2rem', paddingLeft: '7rem' }}>
+            <main style={{ width: '100%', padding: '2rem 3rem', paddingLeft: '8rem' }}>
                 {/* Welcome Message */}
                 <div style={{ marginBottom: '3rem' }}>
                     <h1 style={{
