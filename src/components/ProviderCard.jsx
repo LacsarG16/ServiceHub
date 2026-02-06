@@ -9,13 +9,12 @@ const ProviderCard = ({ provider }) => {
     return (
         <motion.div
             whileHover={{
-                y: -10,
-                boxShadow: '0 20px 40px rgba(6, 182, 212, 0.25), 0 0 20px rgba(6, 182, 212, 0.15)'
+                scale: 1.05,
+                boxShadow: 'var(--shadow-premium)'
             }}
             transition={{
-                type: 'spring',
-                stiffness: 500,
-                damping: 20
+                duration: 0.5,
+                ease: [0.2, 0.8, 0.2, 1]
             }}
             className="glass-card"
             style={{

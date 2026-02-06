@@ -18,23 +18,23 @@ const AnimatedSection = ({
 
     const animations = {
         fadeUp: {
-            hidden: { opacity: 0, y: 50 },
+            hidden: { opacity: 0, y: 20 },
             visible: { opacity: 1, y: 0 }
         },
         fadeDown: {
-            hidden: { opacity: 0, y: -50 },
+            hidden: { opacity: 0, y: -20 },
             visible: { opacity: 1, y: 0 }
         },
         fadeLeft: {
-            hidden: { opacity: 0, x: -50 },
+            hidden: { opacity: 0, x: -20 },
             visible: { opacity: 1, x: 0 }
         },
         fadeRight: {
-            hidden: { opacity: 0, x: 50 },
+            hidden: { opacity: 0, x: 20 },
             visible: { opacity: 1, x: 0 }
         },
         scale: {
-            hidden: { opacity: 0, scale: 0.8 },
+            hidden: { opacity: 0, scale: 0.95 },
             visible: { opacity: 1, scale: 1 }
         },
         fade: {
@@ -54,7 +54,7 @@ const AnimatedSection = ({
             transition={{
                 duration,
                 delay,
-                ease: [0.25, 0.46, 0.45, 0.94]
+                ease: [0.2, 0.8, 0.2, 1]
             }}
             className={className}
             {...props}

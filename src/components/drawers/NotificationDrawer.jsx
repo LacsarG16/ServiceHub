@@ -55,15 +55,17 @@ const NotificationDrawer = () => {
                         style={{
                             padding: '1.25rem',
                             borderRadius: 'var(--radius-md)',
-                            background: notif.unread ? 'rgba(59, 130, 246, 0.04)' : 'transparent',
-                            border: notif.unread ? '1px solid rgba(59, 130, 246, 0.1)' : '1px solid transparent',
+                            background: notif.unread ? 'var(--primary-light)' : 'rgba(255, 255, 255, 0.03)',
+                            border: '1px solid var(--glass-border)',
                             display: 'flex',
                             gap: '1rem',
                             cursor: 'pointer',
                             transition: 'all 0.2s',
+                            backdropFilter: 'var(--glass-blur)',
+                            WebkitBackdropFilter: 'var(--glass-blur)'
                         }}
-                        onMouseEnter={(e) => e.currentTarget.style.background = '#f8fafc'}
-                        onMouseLeave={(e) => e.currentTarget.style.background = notif.unread ? 'rgba(59, 130, 246, 0.04)' : 'transparent'}
+                        onMouseEnter={(e) => e.currentTarget.style.background = 'var(--primary-light)'}
+                        onMouseLeave={(e) => e.currentTarget.style.background = notif.unread ? 'var(--primary-light)' : 'rgba(255, 255, 255, 0.03)'}
                     >
                         <div style={{
                             minWidth: '40px',
@@ -95,7 +97,9 @@ const NotificationDrawer = () => {
                     width: '100%',
                     padding: '1rem',
                     borderRadius: 'var(--radius-md)',
-                    background: '#f8fafc',
+                    background: 'var(--glass-bg)',
+                    backdropFilter: 'var(--glass-blur)',
+                    border: '1px solid var(--glass-border)',
                     color: 'var(--text-main)',
                     fontWeight: '700',
                     display: 'flex',

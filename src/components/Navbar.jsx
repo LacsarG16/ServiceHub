@@ -32,14 +32,14 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`fixed w-full z-[100] transition-all duration-500`}
+      className={`fixed top-0 w-full z-[100] transition-all duration-500`}
       style={{
         padding: scrolled ? '0.75rem 0' : '1.5rem 0',
         background: scrolled ? 'var(--navbar-bg-scrolled)' : 'transparent',
-        backdropFilter: scrolled ? 'blur(20px) saturate(180%)' : 'none',
-        WebkitBackdropFilter: scrolled ? 'blur(20px) saturate(180%)' : 'none',
+        backdropFilter: scrolled ? 'var(--glass-blur)' : 'none',
+        WebkitBackdropFilter: scrolled ? 'var(--glass-blur)' : 'none',
         borderBottom: scrolled ? '1px solid var(--navbar-border-scrolled)' : '1px solid transparent',
-        boxShadow: scrolled ? '0 4px 30px rgba(0, 0, 0, 0.05)' : 'none'
+        boxShadow: scrolled ? '0 12px 40px rgba(0, 0, 0, 0.08)' : 'none'
       }}
     >
       <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -212,7 +212,8 @@ const Navbar = () => {
             width: '40px',
             height: '40px',
             borderRadius: '10px',
-            backgroundColor: isOpen ? '#f1f5f9' : 'transparent',
+            backgroundColor: isOpen ? 'var(--glass-bg)' : 'transparent',
+            border: isOpen ? '1px solid var(--glass-border)' : '1px solid transparent',
             transition: 'all 0.3s'
           }}
           onClick={() => setIsOpen(!isOpen)}
@@ -236,12 +237,14 @@ const Navbar = () => {
               left: 0,
               width: '100%',
               height: '100vh',
-              backgroundColor: 'white',
+              background: 'var(--glass-bg)',
+              backdropFilter: 'var(--glass-blur)',
+              WebkitBackdropFilter: 'var(--glass-blur)',
               padding: '80px 2rem 2rem',
               display: 'flex',
               flexDirection: 'column',
               gap: '1rem',
-              boxShadow: 'var(--shadow-lg)',
+              borderBottom: '1px solid var(--glass-border)',
               zIndex: 105
             }}
           >
@@ -261,7 +264,7 @@ const Navbar = () => {
                     fontWeight: '700',
                     color: location.pathname === link.path ? 'var(--primary)' : 'var(--text-main)',
                     display: 'block',
-                    borderBottom: '1px solid #f1f5f9'
+                    borderBottom: '1px solid var(--glass-border)'
                   }}
                 >
                   {link.name}

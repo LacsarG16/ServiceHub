@@ -8,14 +8,13 @@ const ServiceCard = ({ icon: Icon, title, desc, delay, color = "#06B6D4" }) => (
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         whileHover={{
-            y: -10,
+            scale: 1.05,
             boxShadow: `0 20px 40px ${color}25, 0 0 20px ${color}15`
         }}
         transition={{
-            type: 'spring',
-            stiffness: 500,
-            damping: 20,
-            delay: delay // Keep the entrance delay
+            duration: 0.5,
+            ease: [0.2, 0.8, 0.2, 1],
+            delay: delay
         }}
         style={{
             padding: '2.5rem 2rem',

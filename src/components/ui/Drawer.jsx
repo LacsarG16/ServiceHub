@@ -13,7 +13,7 @@ const Drawer = ({ isOpen, onClose, title, children }) => {
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         onClick={onClose}
-                        style={{ position: 'absolute', inset: 0, background: 'rgba(15, 23, 42, 0.2)', backdropFilter: 'blur(4px)' }}
+                        style={{ position: 'absolute', inset: 0, background: 'rgba(15, 23, 42, 0.3)', backdropFilter: 'blur(20px)' }}
                     />
 
                     {/* Drawer Content */}
@@ -22,21 +22,21 @@ const Drawer = ({ isOpen, onClose, title, children }) => {
                         animate={{ x: 0 }}
                         exit={{ x: '100%' }}
                         transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+                        className="glass"
                         style={{
                             position: 'relative',
                             width: '100%',
                             maxWidth: '400px',
                             height: '100%',
-                            background: 'white',
-                            boxShadow: '-10px 0 15px -3px rgb(0 0 0 / 0.1)',
+                            borderLeft: '1px solid var(--glass-border)',
                             display: 'flex',
                             flexDirection: 'column'
                         }}
                     >
                         {/* Header */}
-                        <div style={{ padding: '1.5rem', borderBottom: '1px solid #f1f5f9', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <div style={{ padding: '1.5rem', borderBottom: '1px solid var(--glass-border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                             <h3 style={{ fontSize: '1.25rem', fontWeight: '700' }}>{title}</h3>
-                            <button onClick={onClose} style={{ padding: '0.5rem', borderRadius: '50%', background: '#f8fafc', color: 'var(--text-muted)' }}>
+                            <button onClick={onClose} style={{ padding: '0.5rem', borderRadius: '50%', background: 'rgba(125, 125, 125, 0.1)', color: 'var(--text-muted)', border: '1px solid var(--glass-border)' }}>
                                 <X size={20} />
                             </button>
                         </div>

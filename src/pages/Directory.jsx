@@ -186,20 +186,23 @@ const Directory = () => {
                         </div>
 
                         {/* Search Action Button */}
-                        <button style={{
-                            background: 'linear-gradient(135deg, var(--primary), var(--primary-hover))',
-                            color: 'white',
-                            width: '48px',
-                            height: '48px',
-                            borderRadius: '50%',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            flexShrink: 0,
-                            boxShadow: '0 4px 12px rgba(6, 182, 212, 0.3)',
-                            border: 'none',
-                            cursor: 'pointer'
-                        }}>
+                        <button
+                            className="hover-lift"
+                            style={{
+                                background: 'linear-gradient(135deg, var(--primary), var(--primary-hover))',
+                                color: 'white',
+                                width: '48px',
+                                height: '48px',
+                                borderRadius: '50%',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                flexShrink: 0,
+                                boxShadow: '0 4px 12px rgba(6, 182, 212, 0.3)',
+                                border: 'none',
+                                cursor: 'pointer'
+                            }}
+                        >
                             <Search size={20} />
                         </button>
                     </div>

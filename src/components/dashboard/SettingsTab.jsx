@@ -15,7 +15,7 @@ const SettingsTab = ({ onUpgrade }) => {
         switch (activeSection) {
             case 'notifications':
                 return (
-                    <div className="glass" style={{ padding: '2.5rem', borderRadius: 'var(--radius-lg)', background: 'var(--white)' }}>
+                    <div className="glass-card" style={{ padding: '2.5rem', borderRadius: 'var(--radius-lg)', background: 'var(--glass-card-bg)', backdropFilter: 'var(--glass-blur)', WebkitBackdropFilter: 'var(--glass-blur)', border: '1px solid var(--glass-card-border)', boxShadow: 'var(--glass-card-shadow)' }}>
                         <h3 style={{ fontSize: '1.25rem', marginBottom: '1.5rem' }}>Notifications</h3>
                         <p style={{ color: 'var(--text-muted)', marginBottom: '2rem' }}>Choose how you want to be notified about your business activity.</p>
 
@@ -47,7 +47,7 @@ const SettingsTab = ({ onUpgrade }) => {
                 );
             case 'security':
                 return (
-                    <div className="glass" style={{ padding: '2.5rem', borderRadius: 'var(--radius-lg)', background: 'var(--white)' }}>
+                    <div className="glass-card" style={{ padding: '2.5rem', borderRadius: 'var(--radius-lg)', background: 'var(--glass-card-bg)', backdropFilter: 'var(--glass-blur)', WebkitBackdropFilter: 'var(--glass-blur)', border: '1px solid var(--glass-card-border)', boxShadow: 'var(--glass-card-shadow)' }}>
                         <h3 style={{ fontSize: '1.25rem', marginBottom: '2rem' }}>Security Settings</h3>
 
                         <form style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', marginBottom: '3rem' }}>
@@ -86,7 +86,7 @@ const SettingsTab = ({ onUpgrade }) => {
                 );
             case 'billing':
                 return (
-                    <div className="glass" style={{ padding: '2.5rem', borderRadius: 'var(--radius-lg)', background: 'var(--white)' }}>
+                    <div className="glass-card" style={{ padding: '2.5rem', borderRadius: 'var(--radius-lg)', background: 'var(--glass-card-bg)', backdropFilter: 'var(--glass-blur)', WebkitBackdropFilter: 'var(--glass-blur)', border: '1px solid var(--glass-card-border)', boxShadow: 'var(--glass-card-shadow)' }}>
                         <h3 style={{ fontSize: '1.25rem', marginBottom: '1.5rem' }}>Billing & Plans</h3>
 
                         <div style={{ padding: '1.5rem', borderRadius: 'var(--radius-md)', background: 'var(--background)', border: '1px solid var(--glass-border)', marginBottom: '2rem' }}>
@@ -120,7 +120,7 @@ const SettingsTab = ({ onUpgrade }) => {
             case 'profile':
             default:
                 return (
-                    <div className="glass" style={{ padding: '2.5rem', borderRadius: 'var(--radius-lg)', background: 'var(--white)' }}>
+                    <div className="glass-card" style={{ padding: '2.5rem', borderRadius: 'var(--radius-lg)', background: 'var(--glass-card-bg)', backdropFilter: 'var(--glass-blur)', WebkitBackdropFilter: 'var(--glass-blur)', border: '1px solid var(--glass-card-border)', boxShadow: 'var(--glass-card-shadow)' }}>
                         <h3 style={{ fontSize: '1.25rem', marginBottom: '2rem' }}>Profile Information</h3>
 
                         <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', marginBottom: '2.5rem' }}>
@@ -136,19 +136,19 @@ const SettingsTab = ({ onUpgrade }) => {
                         <form style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                                 <label style={{ fontSize: '0.9rem', fontWeight: '600', color: 'var(--text-muted)' }}>First Name</label>
-                                <input type="text" defaultValue="John" style={{ padding: '0.75rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--glass-border)', outline: 'none', background: 'var(--background)', color: 'var(--text-main)' }} />
+                                <input type="text" defaultValue="John" />
                             </div>
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                                 <label style={{ fontSize: '0.9rem', fontWeight: '600', color: 'var(--text-muted)' }}>Last Name</label>
-                                <input type="text" defaultValue="Doe" style={{ padding: '0.75rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--glass-border)', outline: 'none', background: 'var(--background)', color: 'var(--text-main)' }} />
+                                <input type="text" defaultValue="Doe" />
                             </div>
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', gridColumn: 'span 2' }}>
                                 <label style={{ fontSize: '0.9rem', fontWeight: '600', color: 'var(--text-muted)' }}>Email Address</label>
-                                <input type="email" defaultValue="john.doe@example.com" style={{ padding: '0.75rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--glass-border)', outline: 'none', background: 'var(--background)', color: 'var(--text-main)' }} />
+                                <input type="email" defaultValue="john.doe@example.com" />
                             </div>
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', gridColumn: 'span 2' }}>
                                 <label style={{ fontSize: '0.9rem', fontWeight: '600', color: 'var(--text-muted)' }}>Bio</label>
-                                <textarea rows="4" defaultValue="Professional cleaning service with over 5 years of experience..." style={{ padding: '0.75rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--glass-border)', outline: 'none', resize: 'none', background: 'var(--background)', color: 'var(--text-main)' }}></textarea>
+                                <textarea rows="4" defaultValue="Professional cleaning service with over 5 years of experience..."></textarea>
                             </div>
                             <div style={{ gridColumn: 'span 2', display: 'flex', justifyContent: 'flex-end', marginTop: '1rem' }}>
                                 <button className="btn-primary" type="button" style={{ padding: '0.75rem 2rem' }}>Save Changes</button>

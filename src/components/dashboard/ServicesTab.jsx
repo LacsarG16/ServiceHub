@@ -71,9 +71,11 @@ const ServicesTab = ({ onAddService, onEditService }) => {
                     <div style={{
                         padding: '1.5rem',
                         borderRadius: 'var(--radius-xl)',
-                        background: 'var(--white)',
-                        border: '1px solid var(--glass-border)',
-                        boxShadow: '0 4px 15px rgba(0,0,0,0.02)'
+                        background: 'var(--glass-card-bg)',
+                        backdropFilter: 'var(--glass-blur)',
+                        WebkitBackdropFilter: 'var(--glass-blur)',
+                        border: '1px solid var(--glass-card-border)',
+                        boxShadow: 'var(--glass-card-shadow)'
                     }}>
                         <h3 style={{ fontSize: '0.95rem', fontWeight: '800', marginBottom: '1.25rem', color: 'var(--text-main)' }}>Top Performers</h3>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
@@ -98,9 +100,9 @@ const ServicesTab = ({ onAddService, onEditService }) => {
                     <div style={{
                         padding: '1.5rem',
                         borderRadius: 'var(--radius-xl)',
-                        background: 'linear-gradient(135deg, #1e3a8a 0%, var(--primary) 100%)',
+                        background: 'linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%)',
                         color: 'white',
-                        boxShadow: '0 10px 25px -5px rgba(59, 130, 246, 0.3)'
+                        boxShadow: 'var(--shadow-premium)'
                     }}>
                         <h3 style={{ fontSize: '0.95rem', fontWeight: '800', marginBottom: '1rem' }}>Overview</h3>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
@@ -125,9 +127,11 @@ const ServicesTab = ({ onAddService, onEditService }) => {
                     <div style={{
                         padding: '1.5rem',
                         borderRadius: 'var(--radius-xl)',
-                        background: 'var(--white)',
-                        border: '1px solid var(--glass-border)',
-                        boxShadow: '0 4px 15px rgba(0,0,0,0.02)'
+                        background: 'var(--glass-card-bg)',
+                        backdropFilter: 'var(--glass-blur)',
+                        WebkitBackdropFilter: 'var(--glass-blur)',
+                        border: '1px solid var(--glass-card-border)',
+                        boxShadow: 'var(--glass-card-shadow)'
                     }}>
                         <h3 style={{ fontSize: '0.95rem', fontWeight: '800', marginBottom: '1rem', color: 'var(--text-main)' }}>Total Bookings</h3>
                         <p style={{ fontSize: '2rem', fontWeight: '900', color: 'var(--primary)' }}>
@@ -149,10 +153,12 @@ const ServicesTab = ({ onAddService, onEditService }) => {
                             style={{
                                 padding: '2rem',
                                 borderRadius: 'var(--radius-xl)',
-                                background: 'var(--white)',
+                                background: 'var(--glass-card-bg)',
+                                backdropFilter: 'var(--glass-blur)',
+                                WebkitBackdropFilter: 'var(--glass-blur)',
                                 position: 'relative',
-                                border: '1px solid var(--glass-border)',
-                                boxShadow: '0 10px 30px -5px rgba(0,0,0,0.03)'
+                                border: '1px solid var(--glass-card-border)',
+                                boxShadow: 'var(--glass-card-shadow)'
                             }}
                         >
                             {/* Status Badge */}
@@ -253,9 +259,11 @@ const ServicesTab = ({ onAddService, onEditService }) => {
                     <div style={{
                         padding: '1.5rem',
                         borderRadius: 'var(--radius-xl)',
-                        background: 'var(--white)',
-                        border: '1px solid var(--glass-border)',
-                        boxShadow: '0 4px 15px rgba(0,0,0,0.02)'
+                        background: 'var(--glass-card-bg)',
+                        backdropFilter: 'var(--glass-blur)',
+                        WebkitBackdropFilter: 'var(--glass-blur)',
+                        border: '1px solid var(--glass-card-border)',
+                        boxShadow: 'var(--glass-card-shadow)'
                     }}>
                         <h3 style={{ fontSize: '0.95rem', fontWeight: '800', marginBottom: '1.25rem', color: 'var(--text-main)' }}>Recommendations</h3>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
@@ -284,9 +292,9 @@ const ServicesTab = ({ onAddService, onEditService }) => {
                     <div style={{
                         padding: '1.5rem',
                         borderRadius: 'var(--radius-xl)',
-                        background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+                        background: 'linear-gradient(135deg, var(--secondary) 0%, var(--accent) 100%)',
                         color: 'white',
-                        boxShadow: '0 10px 25px -5px rgba(16, 185, 129, 0.3)'
+                        boxShadow: 'var(--shadow-premium)'
                     }}>
                         <h3 style={{ fontSize: '0.95rem', fontWeight: '800', marginBottom: '0.75rem' }}>Avg Revenue</h3>
                         <p style={{ fontSize: '2rem', fontWeight: '900', marginBottom: '0.5rem' }}>$58</p>
@@ -297,9 +305,11 @@ const ServicesTab = ({ onAddService, onEditService }) => {
                     <div style={{
                         padding: '1.5rem',
                         borderRadius: 'var(--radius-xl)',
-                        background: 'var(--white)',
-                        border: '1px solid var(--glass-border)',
-                        boxShadow: '0 4px 15px rgba(0,0,0,0.02)'
+                        background: 'var(--glass-card-bg)',
+                        backdropFilter: 'var(--glass-blur)',
+                        WebkitBackdropFilter: 'var(--glass-blur)',
+                        border: '1px solid var(--glass-card-border)',
+                        boxShadow: 'var(--glass-card-shadow)'
                     }}>
                         <h3 style={{ fontSize: '0.95rem', fontWeight: '800', marginBottom: '1.25rem', color: 'var(--text-main)' }}>Feedback Highlights</h3>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>

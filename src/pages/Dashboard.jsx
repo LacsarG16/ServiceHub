@@ -124,8 +124,9 @@ const Dashboard = () => {
                 display: 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'center',
-                background: 'var(--glass-bg)',
-                backdropFilter: 'blur(20px)',
+                background: 'var(--navbar-bg-scrolled)',
+                backdropFilter: 'var(--glass-blur)',
+                WebkitBackdropFilter: 'var(--glass-blur)',
                 borderBottom: '1px solid var(--glass-border)',
                 position: 'sticky',
                 top: 0,
@@ -162,7 +163,9 @@ const Dashboard = () => {
                         style={{
                             padding: '0.6rem',
                             borderRadius: '12px',
-                            background: 'var(--background)',
+                            background: 'var(--glass-bg)',
+                            backdropFilter: 'var(--glass-blur)',
+                            WebkitBackdropFilter: 'var(--glass-blur)',
                             color: 'var(--text-muted)',
                             border: '1px solid var(--glass-border)'
                         }}
@@ -179,7 +182,9 @@ const Dashboard = () => {
                             cursor: 'pointer',
                             padding: '0.6rem',
                             borderRadius: '12px',
-                            background: 'var(--background)',
+                            background: 'var(--glass-bg)',
+                            backdropFilter: 'var(--glass-blur)',
+                            WebkitBackdropFilter: 'var(--glass-blur)',
                             border: '1px solid var(--glass-border)',
                         }}
                         className="hover-lift"
@@ -239,9 +244,10 @@ const Dashboard = () => {
                 zIndex: 100
             }}>
                 <motion.div
-                    className="glass-card"
-                    initial={{ width: 'auto' }}
-                    animate={{ width: isSidebarCollapsed ? 'auto' : '240px' }}
+                    layout
+                    className="glass-card stationary-card"
+                    initial={{ width: '78px' }}
+                    animate={{ width: isSidebarCollapsed ? '78px' : '240px' }}
                     onMouseEnter={() => setIsSidebarCollapsed(false)}
                     onMouseLeave={() => setIsSidebarCollapsed(true)}
                     transition={{ type: "spring", stiffness: 300, damping: 30 }}
@@ -251,8 +257,11 @@ const Dashboard = () => {
                         padding: '0.75rem',
                         gap: '0.75rem',
                         borderRadius: 'var(--radius-2xl)',
-                        background: 'var(--white)',
-                        boxShadow: 'var(--shadow-lg)',
+                        background: 'var(--glass-card-bg)',
+                        backdropFilter: 'var(--glass-blur)',
+                        WebkitBackdropFilter: 'var(--glass-blur)',
+                        border: '1px solid var(--glass-card-border)',
+                        boxShadow: 'var(--glass-card-shadow)',
                         overflow: 'hidden'
                     }}
                 >
@@ -265,11 +274,12 @@ const Dashboard = () => {
                                 display: 'flex',
                                 alignItems: 'center',
                                 justifyContent: isSidebarCollapsed ? 'center' : 'flex-start',
-                                padding: '1rem',
+                                padding: isSidebarCollapsed ? '1rem 0' : '1rem',
                                 borderRadius: 'var(--radius-xl)',
                                 background: activeTab === item.id ? 'var(--primary)' : 'transparent',
+                                border: '1px solid ' + (activeTab === item.id ? 'var(--primary)' : 'transparent'),
                                 color: activeTab === item.id ? 'white' : 'var(--text-muted)',
-                                transition: 'background 0.3s, color 0.3s',
+                                transition: 'all 0.3s var(--ease-premium)',
                                 position: 'relative',
                                 border: 'none',
                                 cursor: 'pointer',
@@ -278,9 +288,12 @@ const Dashboard = () => {
                             }}
                             title={isSidebarCollapsed ? item.label : ''}
                         >
-                            <div style={{ minWidth: '22px', display: 'flex', justifyContent: 'center' }}>
+                            <motion.div
+                                layout
+                                style={{ minWidth: '30px', display: 'flex', justifyContent: 'center' }}
+                            >
                                 {React.cloneElement(item.icon, { size: 22, strokeWidth: activeTab === item.id ? 2.5 : 2 })}
-                            </div>
+                            </motion.div>
 
                             <AnimatePresence>
                                 {!isSidebarCollapsed && (
@@ -305,12 +318,12 @@ const Dashboard = () => {
                                     layoutId="activeTabGlow"
                                     style={{
                                         position: 'absolute',
-                                        inset: 0,
+                                        inset: '-2px',
                                         borderRadius: 'var(--radius-xl)',
                                         background: 'var(--primary)',
                                         zIndex: -1,
-                                        opacity: 0.5,
-                                        filter: 'blur(12px)'
+                                        opacity: 0.3,
+                                        filter: 'blur(15px)'
                                     }}
                                 />
                             )}

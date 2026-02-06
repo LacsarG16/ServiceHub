@@ -15,7 +15,7 @@ const AnalyticsTab = () => {
 
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1.5rem', marginBottom: '2.5rem' }}>
                 {stats.map((stat, i) => (
-                    <div key={i} className="glass" style={{ padding: '1.5rem', borderRadius: 'var(--radius-lg)', background: 'var(--white)' }}>
+                    <div key={i} className="glass-card" style={{ padding: '1.5rem', borderRadius: 'var(--radius-lg)', background: 'var(--glass-card-bg)', backdropFilter: 'var(--glass-blur)', WebkitBackdropFilter: 'var(--glass-blur)', border: '1px solid var(--glass-card-border)', boxShadow: 'var(--glass-card-shadow)' }}>
                         <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '0.5rem' }}>{stat.label}</p>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
                             <h3 style={{ fontSize: '1.75rem' }}>{stat.value}</h3>
@@ -29,7 +29,7 @@ const AnalyticsTab = () => {
             </div>
 
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem', marginBottom: '2rem' }}>
-                <div className="glass" style={{ padding: '2rem', borderRadius: 'var(--radius-lg)', background: 'var(--white)', minHeight: '350px' }}>
+                <div className="glass-card" style={{ padding: '2rem', borderRadius: 'var(--radius-lg)', background: 'var(--glass-card-bg)', backdropFilter: 'var(--glass-blur)', WebkitBackdropFilter: 'var(--glass-blur)', border: '1px solid var(--glass-card-border)', boxShadow: 'var(--glass-card-shadow)', minHeight: '350px' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '2rem' }}>
                         <h3 style={{ fontSize: '1.15rem' }}>Revenue Growth</h3>
                         <select style={{ padding: '0.4rem', borderRadius: '6px', border: '1px solid var(--glass-border)', fontSize: '0.8rem', background: 'var(--white)', color: 'var(--text-main)' }}>
@@ -50,7 +50,7 @@ const AnalyticsTab = () => {
                     </div>
                 </div>
 
-                <div className="glass" style={{ padding: '2rem', borderRadius: 'var(--radius-lg)', background: 'var(--white)', minHeight: '350px' }}>
+                <div className="glass-card" style={{ padding: '2rem', borderRadius: 'var(--radius-lg)', background: 'var(--glass-card-bg)', backdropFilter: 'var(--glass-blur)', WebkitBackdropFilter: 'var(--glass-blur)', border: '1px solid var(--glass-card-border)', boxShadow: 'var(--glass-card-shadow)', minHeight: '350px' }}>
                     <h3 style={{ fontSize: '1.15rem', marginBottom: '2rem' }}>Customer Acquisition</h3>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                         {[

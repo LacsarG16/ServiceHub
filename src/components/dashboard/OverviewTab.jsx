@@ -24,9 +24,11 @@ const OverviewTab = ({ stats, recentBookings, onBookingClick, onUpgrade }) => {
                 <div style={{
                     padding: '1.5rem',
                     borderRadius: 'var(--radius-xl)',
-                    background: 'var(--white)',
-                    border: '1px solid var(--glass-border)',
-                    boxShadow: '0 4px 15px rgba(0,0,0,0.02)'
+                    background: 'var(--glass-card-bg)',
+                    backdropFilter: 'var(--glass-blur)',
+                    WebkitBackdropFilter: 'var(--glass-blur)',
+                    border: '1px solid var(--glass-card-border)',
+                    boxShadow: 'var(--glass-card-shadow)'
                 }}>
                     <h3 style={{ fontSize: '0.95rem', fontWeight: '800', marginBottom: '1.25rem', color: 'var(--text-main)' }}>Quick Stats</h3>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
@@ -58,9 +60,9 @@ const OverviewTab = ({ stats, recentBookings, onBookingClick, onUpgrade }) => {
                 <div style={{
                     padding: '1.5rem',
                     borderRadius: 'var(--radius-xl)',
-                    background: 'linear-gradient(135deg, var(--primary) 0%, #60a5fa 100%)',
+                    background: 'linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%)',
                     color: 'white',
-                    boxShadow: '0 10px 25px -5px rgba(59, 130, 246, 0.3)'
+                    boxShadow: 'var(--shadow-premium)'
                 }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
                         <Calendar size={16} />
@@ -126,9 +128,11 @@ const OverviewTab = ({ stats, recentBookings, onBookingClick, onUpgrade }) => {
                         <div key={i} className="hover-lift" style={{
                             padding: '1.75rem',
                             borderRadius: 'var(--radius-xl)',
-                            background: 'var(--white)',
-                            border: '1px solid var(--glass-border)',
-                            boxShadow: '0 10px 30px -5px rgba(0,0,0,0.03)'
+                            background: 'var(--glass-card-bg)',
+                            backdropFilter: 'var(--glass-blur)',
+                            WebkitBackdropFilter: 'var(--glass-blur)',
+                            border: '1px solid var(--glass-card-border)',
+                            boxShadow: 'var(--glass-card-shadow)'
                         }}>
                             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1.25rem' }}>
                                 <div style={{
@@ -165,9 +169,11 @@ const OverviewTab = ({ stats, recentBookings, onBookingClick, onUpgrade }) => {
                 <div style={{
                     padding: '2rem',
                     borderRadius: 'var(--radius-xl)',
-                    background: 'var(--white)',
-                    border: '1px solid var(--glass-border)',
-                    boxShadow: '0 10px 30px -5px rgba(0,0,0,0.03)',
+                    background: 'var(--glass-card-bg)',
+                    backdropFilter: 'var(--glass-blur)',
+                    WebkitBackdropFilter: 'var(--glass-blur)',
+                    border: '1px solid var(--glass-card-border)',
+                    boxShadow: 'var(--glass-card-shadow)',
                     marginBottom: '2rem'
                 }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
@@ -240,9 +246,11 @@ const OverviewTab = ({ stats, recentBookings, onBookingClick, onUpgrade }) => {
                 <div style={{
                     padding: '2rem',
                     borderRadius: 'var(--radius-xl)',
-                    background: 'var(--white)',
-                    border: '1px solid var(--glass-border)',
-                    boxShadow: '0 10px 30px -5px rgba(0,0,0,0.03)'
+                    background: 'var(--glass-card-bg)',
+                    backdropFilter: 'var(--glass-blur)',
+                    WebkitBackdropFilter: 'var(--glass-blur)',
+                    border: '1px solid var(--glass-card-border)',
+                    boxShadow: 'var(--glass-card-shadow)'
                 }}>
                     <h3 style={{ fontSize: '1.15rem', fontWeight: '800', marginBottom: '1.5rem' }}>Market Performance</h3>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
@@ -285,9 +293,11 @@ const OverviewTab = ({ stats, recentBookings, onBookingClick, onUpgrade }) => {
                 <div style={{
                     padding: '1.5rem',
                     borderRadius: 'var(--radius-xl)',
-                    background: 'var(--white)',
-                    border: '1px solid var(--glass-border)',
-                    boxShadow: '0 4px 15px rgba(0,0,0,0.02)'
+                    background: 'var(--glass-card-bg)',
+                    backdropFilter: 'var(--glass-blur)',
+                    WebkitBackdropFilter: 'var(--glass-blur)',
+                    border: '1px solid var(--glass-card-border)',
+                    boxShadow: 'var(--glass-card-shadow)'
                 }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1.25rem' }}>
                         <Clock size={18} color="var(--primary)" />
@@ -319,9 +329,11 @@ const OverviewTab = ({ stats, recentBookings, onBookingClick, onUpgrade }) => {
                 <div style={{
                     padding: '1.5rem',
                     borderRadius: 'var(--radius-xl)',
-                    background: 'var(--white)',
-                    border: '1px solid var(--glass-border)',
-                    boxShadow: '0 4px 15px rgba(0,0,0,0.02)'
+                    background: 'var(--glass-card-bg)',
+                    backdropFilter: 'var(--glass-blur)',
+                    WebkitBackdropFilter: 'var(--glass-blur)',
+                    border: '1px solid var(--glass-card-border)',
+                    boxShadow: 'var(--glass-card-shadow)'
                 }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1.25rem' }}>
                         <Bell size={18} color="var(--primary)" />
@@ -351,11 +363,11 @@ const OverviewTab = ({ stats, recentBookings, onBookingClick, onUpgrade }) => {
 
                 {/* Upgrade Card */}
                 <div style={{
-                    background: 'linear-gradient(135deg, #1e3a8a 0%, var(--primary) 100%)',
+                    background: 'linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%)',
                     padding: '1.5rem',
                     borderRadius: 'var(--radius-xl)',
                     color: 'white',
-                    boxShadow: '0 20px 40px -10px rgba(59, 130, 246, 0.25)',
+                    boxShadow: 'var(--shadow-premium)',
                     position: 'relative',
                     overflow: 'hidden'
                 }}>

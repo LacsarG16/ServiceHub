@@ -70,9 +70,11 @@ const CustomerDashboard = () => {
                 <div style={{
                     padding: '1.5rem',
                     borderRadius: 'var(--radius-xl)',
-                    background: 'var(--white)',
-                    border: '1px solid var(--glass-border)',
-                    boxShadow: '0 4px 15px rgba(0,0,0,0.02)'
+                    background: 'var(--glass-card-bg)',
+                    backdropFilter: 'var(--glass-blur)',
+                    WebkitBackdropFilter: 'var(--glass-blur)',
+                    border: '1px solid var(--glass-card-border)',
+                    boxShadow: 'var(--glass-card-shadow)'
                 }}>
                     <h3 style={{ fontSize: '0.95rem', fontWeight: '800', marginBottom: '1.25rem', color: 'var(--text-main)' }}>My Bookings</h3>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
@@ -95,9 +97,9 @@ const CustomerDashboard = () => {
                 <div style={{
                     padding: '1.5rem',
                     borderRadius: 'var(--radius-xl)',
-                    background: 'linear-gradient(135deg, #1e3a8a 0%, var(--primary) 100%)',
+                    background: 'linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%)',
                     color: 'white',
-                    boxShadow: '0 10px 25px -5px rgba(59, 130, 246, 0.3)'
+                    boxShadow: 'var(--shadow-premium)'
                 }}>
                     <h3 style={{ fontSize: '0.95rem', fontWeight: '800', marginBottom: '1rem' }}>Spending</h3>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
@@ -116,9 +118,11 @@ const CustomerDashboard = () => {
                 <div style={{
                     padding: '1.5rem',
                     borderRadius: 'var(--radius-xl)',
-                    background: 'var(--white)',
-                    border: '1px solid var(--glass-border)',
-                    boxShadow: '0 4px 15px rgba(0,0,0,0.02)'
+                    background: 'var(--glass-card-bg)',
+                    backdropFilter: 'var(--glass-blur)',
+                    WebkitBackdropFilter: 'var(--glass-blur)',
+                    border: '1px solid var(--glass-card-border)',
+                    boxShadow: 'var(--glass-card-shadow)'
                 }}>
                     <h3 style={{ fontSize: '0.95rem', fontWeight: '800', marginBottom: '1.25rem', color: 'var(--text-main)' }}>Favorites</h3>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
@@ -126,8 +130,8 @@ const CustomerDashboard = () => {
                             <div key={provider.id} style={{
                                 padding: '0.75rem',
                                 borderRadius: '10px',
-                                background: 'var(--background)',
-                                border: '1px solid var(--glass-border)',
+                                background: 'var(--glass-card-bg)',
+                                border: '1px solid var(--glass-card-border)',
                                 display: 'flex',
                                 alignItems: 'center',
                                 gap: '0.75rem'
@@ -153,8 +157,10 @@ const CustomerDashboard = () => {
                 <div className="glass-card" style={{
                     padding: '2rem',
                     borderRadius: '24px',
-                    background: 'linear-gradient(135deg, rgba(59,130,246,0.1) 0%, rgba(147,51,234,0.1) 100%)',
-                    border: '1px solid var(--glass-border)',
+                    background: 'linear-gradient(135deg, var(--primary-light) 0%, rgba(147,51,234,0.05) 100%)',
+                    border: '1px solid var(--glass-card-border)',
+                    backdropFilter: 'var(--glass-blur)',
+                    WebkitBackdropFilter: 'var(--glass-blur)',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'space-between',
@@ -171,10 +177,11 @@ const CustomerDashboard = () => {
                         display: 'flex',
                         alignItems: 'center',
                         gap: '1rem',
-                        background: 'var(--white)',
+                        background: 'var(--glass-card-bg)',
                         padding: '0.75rem 1rem',
                         borderRadius: '16px',
-                        boxShadow: 'var(--shadow-sm)'
+                        border: '1px solid var(--glass-card-border)',
+                        boxShadow: 'var(--glass-card-shadow)'
                     }}>
                         <Search size={20} color="var(--text-muted)" />
                         <input
@@ -182,7 +189,7 @@ const CustomerDashboard = () => {
                             placeholder="e.g. Plumber, Cleaner..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
-                            style={{ border: 'none', outline: 'none', flex: 1, fontSize: '1rem', background: 'transparent' }}
+                            style={{ border: 'none', outline: 'none', flex: 1, background: 'transparent' }}
                         />
                         <button className="btn-primary" style={{ padding: '0.5rem 1rem', borderRadius: '10px', fontSize: '0.9rem' }}>Search</button>
                     </div>
@@ -196,7 +203,7 @@ const CustomerDashboard = () => {
                     </div>
                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem' }}>
                         {bookings.filter(b => b.status !== 'Completed').slice(0, 2).map(booking => (
-                            <div key={booking.id} className="glass-card hover-lift" style={{ padding: '1.5rem', borderRadius: '20px', background: 'var(--glass-bg)', border: '1px solid var(--glass-border)' }}>
+                            <div key={booking.id} className="glass-card hover-lift" style={{ padding: '1.5rem', borderRadius: '20px', background: 'var(--glass-card-bg)', backdropFilter: 'var(--glass-blur)', WebkitBackdropFilter: 'var(--glass-blur)', border: '1px solid var(--glass-card-border)', boxShadow: 'var(--glass-card-shadow)' }}>
                                 <div style={{ display: 'flex', gap: '1rem', marginBottom: '1rem' }}>
                                     <img src={booking.image} alt={booking.service} style={{ width: '50px', height: '50px', borderRadius: '12px', objectFit: 'cover' }} />
                                     <div>
@@ -227,15 +234,18 @@ const CustomerDashboard = () => {
                                 style={{
                                     padding: '1.5rem',
                                     borderRadius: '20px',
-                                    background: 'var(--glass-bg)',
-                                    border: '1px solid var(--glass-border)',
+                                    background: 'var(--glass-card-bg)',
+                                    backdropFilter: 'var(--glass-blur)',
+                                    WebkitBackdropFilter: 'var(--glass-blur)',
+                                    border: '1px solid var(--glass-card-border)',
+                                    boxShadow: 'var(--glass-card-shadow)',
                                     position: 'relative'
                                 }}
                             >
                                 <Link to={`/profile/${provider.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
                                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1rem' }}>
                                         <img src={provider.image} alt={provider.name} style={{ width: '60px', height: '60px', borderRadius: '50%', objectFit: 'cover' }} />
-                                        <div style={{ display: 'flex', alignItems: 'center', gap: '4px', background: 'var(--white)', padding: '4px 8px', borderRadius: '8px', boxShadow: 'var(--shadow-sm)' }}>
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '4px', background: 'var(--glass-bg)', backdropFilter: 'blur(10px)', padding: '4px 8px', borderRadius: '8px', border: '1px solid var(--glass-card-border)' }}>
                                             <Star size={14} fill="#fbbf24" color="#fbbf24" />
                                             <span style={{ fontSize: '0.85rem', fontWeight: '700' }}>{provider.rating}</span>
                                         </div>
@@ -258,9 +268,11 @@ const CustomerDashboard = () => {
                 <div style={{
                     padding: '1.5rem',
                     borderRadius: 'var(--radius-xl)',
-                    background: 'var(--white)',
-                    border: '1px solid var(--glass-border)',
-                    boxShadow: '0 4px 15px rgba(0,0,0,0.02)'
+                    background: 'var(--glass-card-bg)',
+                    backdropFilter: 'var(--glass-blur)',
+                    WebkitBackdropFilter: 'var(--glass-blur)',
+                    border: '1px solid var(--glass-card-border)',
+                    boxShadow: 'var(--glass-card-shadow)'
                 }}>
                     <h3 style={{ fontSize: '0.95rem', fontWeight: '800', marginBottom: '1.25rem', color: 'var(--text-main)' }}>Recent Activity</h3>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
@@ -298,9 +310,11 @@ const CustomerDashboard = () => {
                 <div style={{
                     padding: '1.5rem',
                     borderRadius: 'var(--radius-xl)',
-                    background: 'var(--white)',
-                    border: '1px solid var(--glass-border)',
-                    boxShadow: '0 4px 15px rgba(0,0,0,0.02)'
+                    background: 'var(--glass-card-bg)',
+                    backdropFilter: 'var(--glass-blur)',
+                    WebkitBackdropFilter: 'var(--glass-blur)',
+                    border: '1px solid var(--glass-card-border)',
+                    boxShadow: 'var(--glass-card-shadow)'
                 }}>
                     <h3 style={{ fontSize: '0.95rem', fontWeight: '800', marginBottom: '1.25rem', color: 'var(--text-main)' }}>Quick Actions</h3>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
@@ -331,9 +345,9 @@ const CustomerDashboard = () => {
                             style={{
                                 padding: '0.85rem',
                                 borderRadius: '12px',
-                                background: 'var(--background)',
+                                background: 'var(--glass-card-bg)',
                                 color: 'var(--text-main)',
-                                border: '1px solid var(--glass-border)',
+                                border: '1px solid var(--glass-card-border)',
                                 fontSize: '0.85rem',
                                 fontWeight: '700',
                                 cursor: 'pointer',
@@ -352,9 +366,9 @@ const CustomerDashboard = () => {
                 <div style={{
                     padding: '1.5rem',
                     borderRadius: 'var(--radius-xl)',
-                    background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+                    background: 'linear-gradient(135deg, var(--secondary) 0%, #059669 100%)',
                     color: 'white',
-                    boxShadow: '0 10px 25px -5px rgba(16, 185, 129, 0.3)'
+                    boxShadow: 'var(--shadow-premium)'
                 }}>
                     <h3 style={{ fontSize: '0.95rem', fontWeight: '800', marginBottom: '0.75rem' }}>Loyalty Points</h3>
                     <p style={{ fontSize: '2rem', fontWeight: '900', marginBottom: '0.5rem' }}>250</p>
@@ -372,8 +386,11 @@ const CustomerDashboard = () => {
                     <div key={booking.id} className="glass-card hover-lift" style={{
                         padding: '1.5rem',
                         borderRadius: '20px',
-                        background: 'var(--glass-bg)',
-                        border: '1px solid var(--glass-border)',
+                        background: 'var(--glass-card-bg)',
+                        backdropFilter: 'var(--glass-blur)',
+                        WebkitBackdropFilter: 'var(--glass-blur)',
+                        border: '1px solid var(--glass-card-border)',
+                        boxShadow: 'var(--glass-card-shadow)',
                         display: 'flex',
                         flexDirection: 'column',
                         gap: '1rem'
@@ -459,15 +476,15 @@ const CustomerDashboard = () => {
     const SettingsContent = () => (
         <div style={{ maxWidth: '600px' }}>
             <h2 style={{ fontSize: '1.8rem', fontWeight: '700', marginBottom: '2rem', color: 'var(--text-main)' }}>Account Settings</h2>
-            <div className="glass-card" style={{ padding: '2rem', borderRadius: '24px', border: '1px solid var(--glass-border)', background: 'var(--glass-bg)' }}>
+            <div className="glass-card" style={{ padding: '2rem', borderRadius: '24px', background: 'var(--glass-card-bg)', backdropFilter: 'var(--glass-blur)', WebkitBackdropFilter: 'var(--glass-blur)', border: '1px solid var(--glass-card-border)', boxShadow: 'var(--glass-card-shadow)' }}>
                 <form style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                     <div>
                         <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '600', color: 'var(--text-main)' }}>Full Name</label>
-                        <input type="text" defaultValue="Alex Johnson" style={{ width: '100%', padding: '0.75rem', borderRadius: '12px', border: '1px solid var(--glass-border)', background: 'var(--background)' }} />
+                        <input type="text" defaultValue="Alex Johnson" />
                     </div>
                     <div>
                         <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '600', color: 'var(--text-main)' }}>Email Address</label>
-                        <input type="email" defaultValue="alex@example.com" style={{ width: '100%', padding: '0.75rem', borderRadius: '12px', border: '1px solid var(--glass-border)', background: 'var(--background)' }} />
+                        <input type="email" defaultValue="alex@example.com" />
                     </div>
                     <button type="button" className="btn-primary" style={{ padding: '1rem', borderRadius: '12px', marginTop: '1rem', justifyContent: 'center' }}>Save Changes</button>
                 </form>
@@ -494,8 +511,9 @@ const CustomerDashboard = () => {
                 display: 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'center',
-                background: 'var(--glass-bg)',
-                backdropFilter: 'blur(20px)',
+                background: 'var(--navbar-bg-scrolled)',
+                backdropFilter: 'var(--glass-blur)',
+                WebkitBackdropFilter: 'var(--glass-blur)',
                 borderBottom: '1px solid var(--glass-border)',
                 position: 'sticky',
                 top: 0,
@@ -592,9 +610,10 @@ const CustomerDashboard = () => {
                 zIndex: 100
             }}>
                 <motion.div
-                    className="glass-card"
-                    initial={{ width: 'auto' }}
-                    animate={{ width: isSidebarCollapsed ? 'auto' : '240px' }}
+                    layout
+                    className="glass-card stationary-card"
+                    initial={{ width: '78px' }}
+                    animate={{ width: isSidebarCollapsed ? '78px' : '240px' }}
                     onMouseEnter={() => setIsSidebarCollapsed(false)}
                     onMouseLeave={() => setIsSidebarCollapsed(true)}
                     transition={{ type: "spring", stiffness: 300, damping: 30 }}
@@ -604,8 +623,11 @@ const CustomerDashboard = () => {
                         padding: '0.75rem',
                         gap: '0.75rem',
                         borderRadius: 'var(--radius-2xl)',
-                        background: 'var(--white)',
-                        boxShadow: 'var(--shadow-lg)',
+                        background: 'var(--glass-card-bg)',
+                        backdropFilter: 'var(--glass-blur)',
+                        WebkitBackdropFilter: 'var(--glass-blur)',
+                        border: '1px solid var(--glass-card-border)',
+                        boxShadow: 'var(--glass-card-shadow)',
                         overflow: 'hidden'
                     }}
                 >
@@ -618,11 +640,12 @@ const CustomerDashboard = () => {
                                 display: 'flex',
                                 alignItems: 'center',
                                 justifyContent: isSidebarCollapsed ? 'center' : 'flex-start',
-                                padding: '1rem',
+                                padding: isSidebarCollapsed ? '1rem 0' : '1rem',
                                 borderRadius: 'var(--radius-xl)',
                                 background: activeTab === item.id ? 'var(--primary)' : 'transparent',
+                                border: '1px solid ' + (activeTab === item.id ? 'var(--primary)' : 'transparent'),
                                 color: activeTab === item.id ? 'white' : 'var(--text-muted)',
-                                transition: 'background 0.3s, color 0.3s',
+                                transition: 'all 0.3s var(--ease-premium)',
                                 position: 'relative',
                                 border: 'none',
                                 cursor: 'pointer',
@@ -631,9 +654,12 @@ const CustomerDashboard = () => {
                             }}
                             title={isSidebarCollapsed ? item.label : ''}
                         >
-                            <div style={{ minWidth: '22px', display: 'flex', justifyContent: 'center' }}>
+                            <motion.div
+                                layout
+                                style={{ minWidth: '30px', display: 'flex', justifyContent: 'center' }}
+                            >
                                 {React.cloneElement(item.icon, { size: 22, strokeWidth: activeTab === item.id ? 2.5 : 2 })}
-                            </div>
+                            </motion.div>
 
                             <AnimatePresence>
                                 {!isSidebarCollapsed && (
@@ -658,12 +684,12 @@ const CustomerDashboard = () => {
                                     layoutId="activeTabGlow"
                                     style={{
                                         position: 'absolute',
-                                        inset: 0,
+                                        inset: '-2px',
                                         borderRadius: 'var(--radius-xl)',
                                         background: 'var(--primary)',
                                         zIndex: -1,
-                                        opacity: 0.5,
-                                        filter: 'blur(12px)'
+                                        opacity: 0.3,
+                                        filter: 'blur(15px)'
                                     }}
                                 />
                             )}

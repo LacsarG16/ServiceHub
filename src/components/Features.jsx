@@ -73,10 +73,10 @@ const Features = () => {
                             {/* Card */}
                             <motion.div
                                 whileHover={{
-                                    y: -10,
+                                    scale: 1.05,
                                     boxShadow: `0 20px 40px ${step.color}25, 0 0 20px ${step.color}15`
                                 }}
-                                transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+                                transition={{ duration: 0.5, ease: [0.2, 0.8, 0.2, 1] }}
                                 className="glass-card"
                                 style={{
                                     padding: '2.5rem 2rem',

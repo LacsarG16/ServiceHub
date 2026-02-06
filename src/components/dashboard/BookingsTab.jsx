@@ -205,7 +205,7 @@ const BookingsTab = ({ onBookingClick, onAddBooking }) => {
         const status = getAvailabilityStatus(selectedDate);
 
         return (
-            <div className="glass" style={{ padding: '2rem', borderRadius: 'var(--radius-lg)', background: 'var(--white)', position: 'relative' }}>
+            <div className="glass-card" style={{ padding: '2rem', borderRadius: 'var(--radius-lg)', background: 'var(--glass-card-bg)', backdropFilter: 'var(--glass-blur)', WebkitBackdropFilter: 'var(--glass-blur)', border: '1px solid var(--glass-card-border)', boxShadow: 'var(--glass-card-shadow)', position: 'relative' }}>
                 <div style={{ borderBottom: '1px solid #f1f5f9', paddingBottom: '1.5rem', marginBottom: '1.5rem' }}>
                     <h3 style={{ fontSize: '1.1rem', marginBottom: '0.5rem' }}>Schedule for {format(selectedDate, 'EEEE, MMMM do')}</h3>
                     <div style={{ display: 'flex', gap: '1rem' }}>
@@ -308,10 +308,12 @@ const BookingsTab = ({ onBookingClick, onAddBooking }) => {
                     <div style={{
                         padding: '1.5rem 2rem',
                         borderRadius: 'var(--radius-xl)',
-                        background: 'var(--white)',
+                        background: 'var(--glass-card-bg)',
+                        backdropFilter: 'var(--glass-blur)',
+                        WebkitBackdropFilter: 'var(--glass-blur)',
                         marginBottom: '2.5rem',
-                        border: '1px solid var(--glass-border)',
-                        boxShadow: '0 4px 20px rgba(0,0,0,0.02)'
+                        border: '1px solid var(--glass-card-border)',
+                        boxShadow: 'var(--glass-card-shadow)'
                     }}>
                         <div style={{ display: 'flex', gap: '1.5rem', flexWrap: 'wrap' }}>
                             <div style={{ flex: 1, position: 'relative', minWidth: '300px' }}>
@@ -338,10 +340,12 @@ const BookingsTab = ({ onBookingClick, onAddBooking }) => {
 
                     <div style={{
                         borderRadius: 'var(--radius-xl)',
-                        background: 'var(--white)',
+                        background: 'var(--glass-card-bg)',
+                        backdropFilter: 'var(--glass-blur)',
+                        WebkitBackdropFilter: 'var(--glass-blur)',
                         overflow: 'hidden',
-                        border: '1px solid var(--glass-border)',
-                        boxShadow: '0 10px 30px -5px rgba(0,0,0,0.03)'
+                        border: '1px solid var(--glass-card-border)',
+                        boxShadow: 'var(--glass-card-shadow)'
                     }}>
                         <table style={{ width: '100%', borderCollapse: 'separate', borderSpacing: '0' }}>
                             <thead style={{ background: 'var(--background)' }}>
@@ -424,9 +428,11 @@ const BookingsTab = ({ onBookingClick, onAddBooking }) => {
                         <div style={{
                             padding: '1.5rem',
                             borderRadius: 'var(--radius-xl)',
-                            background: 'var(--white)',
-                            border: '1px solid var(--glass-border)',
-                            boxShadow: '0 4px 15px rgba(0,0,0,0.02)'
+                            background: 'var(--glass-card-bg)',
+                            backdropFilter: 'var(--glass-blur)',
+                            WebkitBackdropFilter: 'var(--glass-blur)',
+                            border: '1px solid var(--glass-card-border)',
+                            boxShadow: 'var(--glass-card-shadow)'
                         }}>
                             <h3 style={{ fontSize: '0.95rem', fontWeight: '800', marginBottom: '1.25rem', color: 'var(--text-main)' }}>
                                 {format(currentMonth, 'MMMM')}
@@ -447,9 +453,9 @@ const BookingsTab = ({ onBookingClick, onAddBooking }) => {
                         <div style={{
                             padding: '1.5rem',
                             borderRadius: 'var(--radius-xl)',
-                            background: 'linear-gradient(135deg, #1e3a8a 0%, var(--primary) 100%)',
+                            background: 'linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%)',
                             color: 'white',
-                            boxShadow: '0 10px 25px -5px rgba(59, 130, 246, 0.3)'
+                            boxShadow: 'var(--shadow-premium)'
                         }}>
                             <h3 style={{ fontSize: '0.95rem', fontWeight: '800', marginBottom: '1rem' }}>This Week</h3>
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
@@ -468,9 +474,11 @@ const BookingsTab = ({ onBookingClick, onAddBooking }) => {
                         <div style={{
                             padding: '1.5rem',
                             borderRadius: 'var(--radius-xl)',
-                            background: 'var(--white)',
-                            border: '1px solid var(--glass-border)',
-                            boxShadow: '0 4px 15px rgba(0,0,0,0.02)'
+                            background: 'var(--glass-card-bg)',
+                            backdropFilter: 'var(--glass-blur)',
+                            WebkitBackdropFilter: 'var(--glass-blur)',
+                            border: '1px solid var(--glass-card-border)',
+                            boxShadow: 'var(--glass-card-shadow)'
                         }}>
                             <h3 style={{ fontSize: '0.95rem', fontWeight: '800', marginBottom: '1rem', color: 'var(--text-main)' }}>Status</h3>
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
@@ -497,9 +505,11 @@ const BookingsTab = ({ onBookingClick, onAddBooking }) => {
                     <div style={{
                         padding: '2.5rem',
                         borderRadius: 'var(--radius-xl)',
-                        background: 'var(--white)',
-                        border: '1px solid var(--glass-border)',
-                        boxShadow: '0 10px 30px -5px rgba(0,0,0,0.03)'
+                        background: 'var(--glass-card-bg)',
+                        backdropFilter: 'var(--glass-blur)',
+                        WebkitBackdropFilter: 'var(--glass-blur)',
+                        border: '1px solid var(--glass-card-border)',
+                        boxShadow: 'var(--glass-card-shadow)'
                     }}>
                         {renderHeader()}
                         {renderDays()}
@@ -512,9 +522,11 @@ const BookingsTab = ({ onBookingClick, onAddBooking }) => {
                         <div style={{
                             padding: '1.5rem',
                             borderRadius: 'var(--radius-xl)',
-                            background: 'var(--white)',
-                            border: '1px solid var(--glass-border)',
-                            boxShadow: '0 4px 15px rgba(0,0,0,0.02)'
+                            background: 'var(--glass-card-bg)',
+                            backdropFilter: 'var(--glass-blur)',
+                            WebkitBackdropFilter: 'var(--glass-blur)',
+                            border: '1px solid var(--glass-card-border)',
+                            boxShadow: 'var(--glass-card-shadow)'
                         }}>
                             <h3 style={{ fontSize: '0.95rem', fontWeight: '800', marginBottom: '1.25rem', color: 'var(--text-main)' }}>Popular Times</h3>
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
@@ -558,9 +570,11 @@ const BookingsTab = ({ onBookingClick, onAddBooking }) => {
                         <div style={{
                             padding: '1.5rem',
                             borderRadius: 'var(--radius-xl)',
-                            background: 'var(--white)',
-                            border: '1px solid var(--glass-border)',
-                            boxShadow: '0 4px 15px rgba(0,0,0,0.02)'
+                            background: 'var(--glass-card-bg)',
+                            backdropFilter: 'var(--glass-blur)',
+                            WebkitBackdropFilter: 'var(--glass-blur)',
+                            border: '1px solid var(--glass-card-border)',
+                            boxShadow: 'var(--glass-card-shadow)'
                         }}>
                             <h3 style={{ fontSize: '0.95rem', fontWeight: '800', marginBottom: '1.25rem', color: 'var(--text-main)' }}>Insights</h3>
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
@@ -579,9 +593,9 @@ const BookingsTab = ({ onBookingClick, onAddBooking }) => {
                         <div style={{
                             padding: '1.5rem',
                             borderRadius: 'var(--radius-xl)',
-                            background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+                            background: 'linear-gradient(135deg, var(--secondary) 0%, var(--accent) 100%)',
                             color: 'white',
-                            boxShadow: '0 10px 25px -5px rgba(16, 185, 129, 0.3)'
+                            boxShadow: 'var(--shadow-premium)'
                         }}>
                             <h3 style={{ fontSize: '0.95rem', fontWeight: '800', marginBottom: '0.75rem' }}>Retention</h3>
                             <p style={{ fontSize: '2rem', fontWeight: '900', marginBottom: '0.5rem' }}>68%</p>

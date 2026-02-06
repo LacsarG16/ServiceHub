@@ -86,10 +86,11 @@ const Profile = () => {
                                     borderRadius: 'var(--radius-2xl)',
                                     padding: '2.5rem',
                                     position: 'relative',
-                                    backdropFilter: 'blur(40px)',
-                                    background: 'var(--glass-bg)',
-                                    border: '1px solid var(--glass-border)',
-                                    boxShadow: 'var(--shadow-premium)'
+                                    backdropFilter: 'var(--glass-blur)',
+                                    WebkitBackdropFilter: 'var(--glass-blur)',
+                                    background: 'var(--glass-card-bg)',
+                                    border: '1px solid var(--glass-card-border)',
+                                    boxShadow: 'var(--glass-card-shadow)'
                                 }}
                             >
                                 <div style={{ display: 'flex', gap: '2rem', alignItems: 'flex-start' }}>
@@ -135,23 +136,27 @@ const Profile = () => {
                                             </div>
                                             <div style={{ display: 'flex', gap: '1rem' }}>
                                                 <button className="hover-lift" style={{
-                                                    background: 'var(--white)',
+                                                    background: 'var(--glass-bg)',
                                                     border: '1px solid var(--glass-border)',
                                                     borderRadius: '12px',
                                                     padding: '10px',
                                                     color: 'var(--text-muted)',
                                                     cursor: 'pointer',
-                                                    transition: 'all 0.2s',
+                                                    transition: 'all 0.3s var(--ease-premium)',
+                                                    backdropFilter: 'var(--glass-blur)',
+                                                    WebkitBackdropFilter: 'var(--glass-blur)',
                                                     boxShadow: 'var(--shadow-sm)'
                                                 }}><Heart size={20} /></button>
                                                 <button className="hover-lift" style={{
-                                                    background: 'var(--white)',
+                                                    background: 'var(--glass-bg)',
                                                     border: '1px solid var(--glass-border)',
                                                     borderRadius: '12px',
                                                     padding: '10px',
                                                     color: 'var(--text-muted)',
                                                     cursor: 'pointer',
-                                                    transition: 'all 0.2s',
+                                                    transition: 'all 0.3s var(--ease-premium)',
+                                                    backdropFilter: 'var(--glass-blur)',
+                                                    WebkitBackdropFilter: 'var(--glass-blur)',
                                                     boxShadow: 'var(--shadow-sm)'
                                                 }}><Share2 size={20} /></button>
                                             </div>
@@ -204,10 +209,11 @@ const Profile = () => {
                             style={{
                                 borderRadius: 'var(--radius-2xl)',
                                 padding: '2.5rem',
-                                backdropFilter: 'blur(30px)',
-                                background: 'var(--glass-bg)',
-                                border: '1px solid var(--glass-border)',
-                                boxShadow: 'var(--shadow-premium)'
+                                backdropFilter: 'var(--glass-blur)',
+                                WebkitBackdropFilter: 'var(--glass-blur)',
+                                background: 'var(--glass-card-bg)',
+                                border: '1px solid var(--glass-card-border)',
+                                boxShadow: 'var(--glass-card-shadow)'
                             }}
                         >
                             <h2 style={{
@@ -229,13 +235,15 @@ const Profile = () => {
                             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
                                 {provider.expertise.map((skill, idx) => (
                                     <span key={idx} style={{
-                                        backgroundColor: 'var(--white)',
+                                        backgroundColor: 'var(--glass-bg)',
                                         color: 'var(--text-main)',
                                         border: '1px solid var(--glass-border)',
                                         padding: '0.65rem 1.25rem',
                                         borderRadius: '12px',
                                         fontSize: '0.9rem',
                                         fontWeight: '600',
+                                        backdropFilter: 'var(--glass-blur)',
+                                        WebkitBackdropFilter: 'var(--glass-blur)',
                                         boxShadow: 'var(--shadow-sm)'
                                     }}>
                                         {skill}
@@ -255,7 +263,8 @@ const Profile = () => {
                                 style={{
                                     borderRadius: 'var(--radius-2xl)',
                                     padding: '2.5rem',
-                                    backdropFilter: 'blur(30px)',
+                                    backdropFilter: 'var(--glass-blur)',
+                                    WebkitBackdropFilter: 'var(--glass-blur)',
                                     background: 'var(--glass-bg)',
                                     border: '1px solid var(--glass-border)',
                                     boxShadow: 'var(--shadow-premium)'
@@ -290,8 +299,8 @@ const Profile = () => {
                                         <div key={idx} className="hover-lift" style={{
                                             borderRadius: '16px',
                                             overflow: 'hidden',
-                                            boxShadow: 'var(--shadow-md)',
-                                            border: '4px solid var(--white)',
+                                            boxShadow: 'var(--shadow-premium)',
+                                            border: '1px solid var(--glass-card-border)',
                                             position: 'relative',
                                             aspectRatio: '16/10'
                                         }}>
@@ -313,7 +322,8 @@ const Profile = () => {
                                 style={{
                                     borderRadius: 'var(--radius-2xl)',
                                     padding: '2.5rem',
-                                    backdropFilter: 'blur(30px)',
+                                    backdropFilter: 'var(--glass-blur)',
+                                    WebkitBackdropFilter: 'var(--glass-blur)',
                                     background: 'var(--glass-bg)',
                                     border: '1px solid var(--glass-border)',
                                     boxShadow: 'var(--shadow-premium)'
@@ -333,7 +343,7 @@ const Profile = () => {
                                     Client Reviews
                                 </h2>
                                 <div style={{ display: 'flex', gap: '3rem', marginBottom: '3rem', flexWrap: 'wrap', alignItems: 'center' }}>
-                                    <div style={{ textAlign: 'center', minWidth: '140px', padding: '1.5rem', background: 'var(--white)', borderRadius: '20px', border: '1px solid var(--glass-border)' }}>
+                                    <div style={{ textAlign: 'center', minWidth: '140px', padding: '1.5rem', background: 'var(--glass-bg)', backdropFilter: 'var(--glass-blur)', WebkitBackdropFilter: 'var(--glass-blur)', borderRadius: '20px', border: '1px solid var(--glass-border)' }}>
                                         <div style={{ fontSize: '3.5rem', fontWeight: '900', color: 'var(--text-main)', lineHeight: '1', fontFamily: "'Montserrat', sans-serif" }}>{provider.reviewData.average}</div>
                                         <div style={{ display: 'flex', color: 'var(--accent)', justifyContent: 'center', margin: '0.75rem 0' }}>
                                             {[...Array(5)].map((_, i) => (
@@ -366,7 +376,9 @@ const Profile = () => {
                                             width: '56px',
                                             height: '56px',
                                             borderRadius: '16px',
-                                            backgroundColor: 'var(--background)',
+                                            backgroundColor: 'var(--glass-bg)',
+                                            backdropFilter: 'var(--glass-blur)',
+                                            WebkitBackdropFilter: 'var(--glass-blur)',
                                             border: '1px solid var(--glass-border)',
                                             display: 'flex',
                                             alignItems: 'center',
@@ -396,12 +408,13 @@ const Profile = () => {
                         <div className="glass-card sticky-sidebar" style={{
                             padding: '2rem',
                             borderRadius: 'var(--radius-2xl)',
-                            backdropFilter: 'blur(40px)',
-                            background: 'var(--white)',
-                            border: '1px solid var(--glass-border)',
+                            backdropFilter: 'var(--glass-blur)',
+                            WebkitBackdropFilter: 'var(--glass-blur)',
+                            background: 'var(--glass-card-bg)',
+                            border: '1px solid var(--glass-card-border)',
                             position: 'sticky',
                             top: '120px',
-                            boxShadow: '0 20px 40px -10px rgba(0,0,0,0.1)'
+                            boxShadow: 'var(--glass-card-shadow)'
                         }}>
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginBottom: '2rem' }}>
                                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
@@ -578,13 +591,16 @@ const Profile = () => {
                             animate={{ scale: 1, opacity: 1, y: 0 }}
                             exit={{ scale: 0.9, opacity: 0, y: 20 }}
                             style={{
-                                backgroundColor: 'var(--white)',
+                                background: 'var(--glass-card-bg)',
+                                backdropFilter: 'var(--glass-blur)',
+                                WebkitBackdropFilter: 'var(--glass-blur)',
                                 padding: '4rem 3rem',
                                 borderRadius: '32px',
                                 maxWidth: '480px',
                                 width: '100%',
                                 textAlign: 'center',
-                                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)'
+                                border: '1px solid var(--glass-card-border)',
+                                boxShadow: 'var(--glass-card-shadow)'
                             }}
                         >
                             <div style={{

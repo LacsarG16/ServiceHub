@@ -13,7 +13,7 @@ const Modal = ({ isOpen, onClose, title, children }) => {
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         onClick={onClose}
-                        style={{ position: 'absolute', inset: 0, background: 'rgba(15, 23, 42, 0.4)', backdropFilter: 'blur(8px)' }}
+                        style={{ position: 'absolute', inset: 0, background: 'rgba(15, 23, 42, 0.3)', backdropFilter: 'blur(20px)' }}
                     />
 
                     {/* Modal Content */}
@@ -21,20 +21,18 @@ const Modal = ({ isOpen, onClose, title, children }) => {
                         initial={{ opacity: 0, scale: 0.95, y: 20 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.95, y: 20 }}
+                        className="glass-card stationary-card"
                         style={{
                             position: 'relative',
                             width: '100%',
                             maxWidth: '600px',
-                            background: 'white',
-                            borderRadius: 'var(--radius-lg)',
-                            boxShadow: 'var(--shadow-lg)',
                             overflow: 'hidden',
                         }}
                     >
                         {/* Header */}
-                        <div style={{ padding: '1.5rem', borderBottom: '1px solid #f1f5f9', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <div style={{ padding: '1.5rem', borderBottom: '1px solid var(--glass-border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                             <h3 style={{ fontSize: '1.25rem', fontWeight: '700' }}>{title}</h3>
-                            <button onClick={onClose} style={{ padding: '0.5rem', borderRadius: '50%', background: '#f8fafc', color: 'var(--text-muted)' }}>
+                            <button onClick={onClose} style={{ padding: '0.5rem', borderRadius: '50%', background: 'rgba(125, 125, 125, 0.1)', color: 'var(--text-muted)', border: '1px solid var(--glass-border)' }}>
                                 <X size={20} />
                             </button>
                         </div>
