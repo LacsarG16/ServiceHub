@@ -1,11 +1,13 @@
-import React from 'react';
-import { User, Bell, Shield, CreditCard, ChevronRight } from 'lucide-react';
+import { useTheme } from '../../context/ThemeContext';
+import { User, Bell, Shield, CreditCard, ChevronRight, Palette } from 'lucide-react';
 
 const SettingsTab = ({ onUpgrade }) => {
     const [activeSection, setActiveSection] = React.useState('profile');
+    const { showAurora, toggleAurora } = useTheme();
 
     const sections = [
         { id: 'profile', icon: <User size={20} />, label: 'Profile Information' },
+        { id: 'appearance', icon: <Palette size={20} />, label: 'Appearance' },
         { id: 'notifications', icon: <Bell size={20} />, label: 'Notifications' },
         { id: 'security', icon: <Shield size={20} />, label: 'Security' },
         { id: 'billing', icon: <CreditCard size={20} />, label: 'Billing & Plans' }
@@ -13,6 +15,33 @@ const SettingsTab = ({ onUpgrade }) => {
 
     const renderSectionContent = () => {
         switch (activeSection) {
+            case 'appearance':
+                return (
+                    <div className="glass-card" style={{ padding: '2.5rem', borderRadius: 'var(--radius-lg)', background: 'var(--glass-card-bg)', backdropFilter: 'var(--glass-blur)', WebkitBackdropFilter: 'var(--glass-blur)', border: '1px solid var(--glass-card-border)', boxShadow: 'var(--glass-card-shadow)' }}>
+                        <h3 style={{ fontSize: '1.25rem', marginBottom: '1.5rem' }}>Appearance Settings</h3>
+                        <p style={{ color: 'var(--text-muted)', marginBottom: '2rem' }}>Customize the visual effects and theme of your dashboard.</p>
+
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingBottom: '1.5rem' }}>
+                                <div>
+                                    <h4 style={{ fontWeight: '600', marginBottom: '0.25rem' }}>Aurora Background</h4>
+                                    <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>Enable the dynamic colorful aurora effect. Disabling it creates a deeper cinematic starry look.</p>
+                                </div>
+                                <label style={{ position: 'relative', display: 'inline-block', width: '44px', height: '24px' }}>
+                                    <input
+                                        type="checkbox"
+                                        checked={showAurora}
+                                        onChange={toggleAurora}
+                                        style={{ opacity: 0, width: 0, height: 0 }}
+                                    />
+                                    <span style={{ position: 'absolute', cursor: 'pointer', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: showAurora ? 'var(--primary)' : '#cbd5e1', transition: '.4s', borderRadius: '34px' }}>
+                                        <span style={{ position: 'absolute', content: '""', height: '18px', width: '18px', left: showAurora ? '22px' : '4px', bottom: '3px', backgroundColor: 'var(--white)', transition: '.4s', borderRadius: '50%' }}></span>
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                );
             case 'notifications':
                 return (
                     <div className="glass-card" style={{ padding: '2.5rem', borderRadius: 'var(--radius-lg)', background: 'var(--glass-card-bg)', backdropFilter: 'var(--glass-blur)', WebkitBackdropFilter: 'var(--glass-blur)', border: '1px solid var(--glass-card-border)', boxShadow: 'var(--glass-card-shadow)' }}>

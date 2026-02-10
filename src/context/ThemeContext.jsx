@@ -15,6 +15,11 @@ export const ThemeProvider = ({ children }) => {
         return saved || 'aurora';
     });
 
+    const [showAurora, setShowAurora] = useState(() => {
+        const saved = localStorage.getItem('show-aurora');
+        return saved === null ? true : saved === 'true';
+    });
+
     useEffect(() => {
         // Apply theme to document element
         document.documentElement.setAttribute('data-theme', theme);
@@ -26,12 +31,20 @@ export const ThemeProvider = ({ children }) => {
         localStorage.setItem('theme-preset', preset);
     }, [preset]);
 
+    useEffect(() => {
+        localStorage.setItem('show-aurora', showAurora);
+    }, [showAurora]);
+
     const toggleTheme = () => {
         setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
     };
 
+    const toggleAurora = () => {
+        setShowAurora((prev) => !prev);
+    };
+
     return (
-        <ThemeContext.Provider value={{ theme, preset, toggleTheme, setPreset }}>
+        <ThemeContext.Provider value={{ theme, preset, showAurora, toggleTheme, setPreset, toggleAurora }}>
             {children}
         </ThemeContext.Provider>
     );

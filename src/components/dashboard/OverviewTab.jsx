@@ -20,42 +20,6 @@ const OverviewTab = ({ stats, recentBookings, onBookingClick, onUpgrade }) => {
         <div style={{ display: 'grid', gridTemplateColumns: '320px 1fr 350px', gap: '2rem' }}>
             {/* LEFT SIDEBAR */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-                {/* Quick Stats */}
-                <div style={{
-                    padding: '1.5rem',
-                    borderRadius: 'var(--radius-xl)',
-                    background: 'var(--glass-card-bg)',
-                    backdropFilter: 'var(--glass-blur)',
-                    WebkitBackdropFilter: 'var(--glass-blur)',
-                    border: '1px solid var(--glass-card-border)',
-                    boxShadow: 'var(--glass-card-shadow)'
-                }}>
-                    <h3 style={{ fontSize: '0.95rem', fontWeight: '800', marginBottom: '1.25rem', color: 'var(--text-main)' }}>Quick Stats</h3>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                        {stats.slice(0, 4).map((stat, i) => (
-                            <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                                <div style={{
-                                    width: '36px',
-                                    height: '36px',
-                                    borderRadius: '10px',
-                                    background: `${stat.icon.props.color}08`,
-                                    border: `1px solid ${stat.icon.props.color}15`,
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    flexShrink: 0
-                                }}>
-                                    {React.cloneElement(stat.icon, { size: 18 })}
-                                </div>
-                                <div style={{ flex: 1, minWidth: 0 }}>
-                                    <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '0.1rem', fontWeight: '600' }}>{stat.label}</p>
-                                    <p style={{ fontSize: '1.1rem', fontWeight: '800', color: 'var(--text-main)' }}>{stat.value}</p>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-
                 {/* Today's Date */}
                 <div style={{
                     padding: '1.5rem',

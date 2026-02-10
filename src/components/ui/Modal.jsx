@@ -2,7 +2,7 @@ import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
 
-const Modal = ({ isOpen, onClose, title, children }) => {
+const Modal = ({ isOpen, onClose, title, children, footer }) => {
     return (
         <AnimatePresence>
             {isOpen && (
@@ -38,9 +38,16 @@ const Modal = ({ isOpen, onClose, title, children }) => {
                         </div>
 
                         {/* Body */}
-                        <div style={{ padding: '1.5rem', maxHeight: '80vh', overflowY: 'auto' }}>
+                        <div style={{ padding: '1.5rem', maxHeight: footer ? 'calc(80vh - 130px)' : '80vh', overflowY: 'auto' }}>
                             {children}
                         </div>
+
+                        {/* Footer */}
+                        {footer && (
+                            <div style={{ padding: '1.5rem', borderTop: '1px solid var(--glass-border)', background: 'rgba(255, 255, 255, 0.02)' }}>
+                                {footer}
+                            </div>
+                        )}
                     </motion.div>
                 </div>
             )}

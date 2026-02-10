@@ -416,166 +416,91 @@ const Profile = () => {
                             top: '120px',
                             boxShadow: 'var(--glass-card-shadow)'
                         }}>
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginBottom: '2rem' }}>
-                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', marginBottom: '2rem' }}>
+                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                     <div>
-                                        <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem', fontWeight: '700', textTransform: 'uppercase' }}>Starting from</p>
-                                        <div style={{ fontSize: '2.5rem', fontWeight: '900', color: 'var(--text-main)', fontFamily: "'Montserrat', sans-serif" }}>
+                                        <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem', fontWeight: '700', textTransform: 'uppercase', marginBottom: '0.25rem' }}>Starting from</p>
+                                        <div style={{ fontSize: '2.5rem', fontWeight: '900', color: 'var(--text-main)', fontFamily: "'Montserrat', sans-serif", lineHeight: '1' }}>
                                             ${provider.price}<span style={{ fontSize: '1rem', color: 'var(--text-muted)', fontWeight: '500' }}>/hr</span>
                                         </div>
                                     </div>
-                                    <div style={{ padding: '0.5rem 1rem', background: 'rgba(16, 185, 129, 0.1)', color: '#10b981', borderRadius: '99px', fontSize: '0.85rem', fontWeight: '700' }}>
+                                    <div style={{ padding: '0.5rem 1rem', background: 'rgba(16, 185, 129, 0.1)', color: '#10b981', borderRadius: '99px', fontSize: '0.85rem', fontWeight: '700', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
+                                        <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#10b981' }}></span>
                                         Available Now
                                     </div>
                                 </div>
 
-                                <button
-                                    onClick={() => handleOpenBooking('fixed')}
-                                    className="btn-primary hover-lift"
-                                    style={{
-                                        width: '100%',
-                                        padding: '1rem',
-                                        borderRadius: '16px',
-                                        fontSize: '1.1rem',
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                        gap: '0.5rem'
-                                    }}
-                                >
-                                    Book Now
-                                </button>
-
-                                <button
-                                    onClick={() => handleOpenBooking('quote')}
-                                    className="hover-lift"
-                                    style={{
-                                        width: '100%',
-                                        padding: '1rem',
-                                        borderRadius: '16px',
-                                        fontSize: '1rem',
-                                        background: 'var(--background)',
-                                        color: 'var(--text-main)',
-                                        border: '1px solid var(--glass-border)',
-                                        fontWeight: '600'
-                                    }}
-                                >
-                                    Request Custom Quote
-                                </button>
-                            </div>
-
-                            <div style={{ marginBottom: '2rem' }}>
-                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-                                    <span style={{ fontWeight: '800', color: 'var(--text-main)', fontSize: '1.05rem' }}>Select Date</span>
-                                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', background: 'var(--background)', padding: '4px 8px', borderRadius: '8px' }}>
-                                        <ChevronLeft size={18} style={{ color: 'var(--text-muted)', cursor: 'pointer' }} />
-                                        <span style={{ fontSize: '0.85rem', fontWeight: '700', color: 'var(--text-main)' }}>Oct 2023</span>
-                                        <ChevronRight size={18} style={{ color: 'var(--text-muted)', cursor: 'pointer' }} />
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', padding: '1.25rem', backgroundColor: 'var(--background)', borderRadius: '1rem', border: '1px solid var(--glass-border)' }}>
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', fontSize: '0.9rem', color: 'var(--text-muted)' }}>
+                                        <Clock size={18} color="var(--primary)" />
+                                        <span>Responds in <strong>~1 hour</strong></span>
+                                    </div>
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', fontSize: '0.9rem', color: 'var(--text-muted)' }}>
+                                        <Check size={18} color="var(--primary)" />
+                                        <span><strong>124</strong> Jobs Completed</span>
+                                    </div>
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', fontSize: '0.9rem', color: 'var(--text-muted)' }}>
+                                        <Shield size={18} color="var(--primary)" />
+                                        <span>Licensed & Insured</span>
                                     </div>
                                 </div>
 
-                                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: '6px', textAlign: 'center', marginBottom: '8px' }}>
-                                    {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
-                                        <span key={day} style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: '700', textTransform: 'uppercase' }}>{day}</span>
-                                    ))}
-                                </div>
-                                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: '6px', textAlign: 'center' }}>
-                                    {/* Simplified Calendar Grid */}
-                                    <span style={{ padding: '8px' }}></span><span style={{ padding: '8px' }}></span>
-                                    {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map(d => (
-                                        <button
-                                            key={d}
-                                            onClick={() => setSelectedDate(d)}
-                                            style={{
-                                                width: '36px',
-                                                height: '36px',
-                                                margin: 'auto',
-                                                display: 'flex',
-                                                alignItems: 'center',
-                                                justifyContent: 'center',
-                                                backgroundColor: selectedDate === d ? 'var(--primary)' : d < 10 ? 'transparent' : 'var(--background)',
-                                                color: selectedDate === d ? 'white' : d < 10 ? 'var(--text-muted)' : 'var(--text-main)',
-                                                borderRadius: '10px',
-                                                fontWeight: '700',
-                                                fontSize: '0.9rem',
-                                                border: 'none',
-                                                boxShadow: selectedDate === d ? '0 10px 20px -5px rgba(59, 130, 246, 0.5)' : 'none',
-                                                cursor: 'pointer',
-                                                opacity: d < 6 ? 0.5 : 1
-                                            }}
-                                        >
-                                            {d}
-                                        </button>
-                                    ))}
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                                    <button
+                                        onClick={() => handleOpenBooking('fixed')}
+                                        className="btn-primary hover-lift"
+                                        style={{
+                                            width: '100%',
+                                            padding: '1.25rem',
+                                            borderRadius: '16px',
+                                            fontSize: '1.1rem',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            gap: '0.5rem',
+                                            fontWeight: '800',
+                                            boxShadow: '0 20px 40px -10px rgba(6, 182, 212, 0.4)'
+                                        }}
+                                    >
+                                        Book Now
+                                    </button>
+
+                                    <button
+                                        onClick={() => handleOpenBooking('quote')}
+                                        className="hover-lift"
+                                        style={{
+                                            width: '100%',
+                                            padding: '1rem',
+                                            borderRadius: '16px',
+                                            fontSize: '1rem',
+                                            background: 'transparent',
+                                            color: 'var(--text-main)',
+                                            border: '1px solid var(--glass-border)',
+                                            fontWeight: '700'
+                                        }}
+                                    >
+                                        Request Custom Quote
+                                    </button>
                                 </div>
                             </div>
 
-                            <div style={{ marginBottom: '2rem' }}>
-                                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '1rem' }}>
-                                    <Clock size={18} color="var(--primary)" />
-                                    <span style={{ fontSize: '1rem', fontWeight: '800', color: 'var(--text-main)' }}>Available Slots</span>
-                                </div>
-                                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '10px' }}>
-                                    {timeSlots.map((time) => (
-                                        <button
-                                            key={time}
-                                            onClick={() => setSelectedTime(time)}
-                                            style={{
-                                                padding: '12px',
-                                                fontSize: '0.85rem',
-                                                fontWeight: '700',
-                                                borderRadius: '12px',
-                                                border: '1px solid',
-                                                borderColor: selectedTime === time ? 'var(--primary)' : 'var(--glass-border)',
-                                                backgroundColor: selectedTime === time ? 'var(--primary-light)' : 'var(--background)',
-                                                color: selectedTime === time ? 'var(--primary)' : 'var(--text-muted)',
-                                                transition: 'all 0.2s',
-                                                cursor: 'pointer'
-                                            }}
-                                        >
-                                            {time}
-                                        </button>
-                                    ))}
-                                </div>
-                            </div>
-
-                            <div style={{ backgroundColor: 'var(--background)', padding: '16px', borderRadius: '16px', marginBottom: '2rem', border: '1px solid var(--glass-border)' }}>
-                                <div style={{ display: 'flex', alignItems: 'center', gap: '12px', color: 'var(--text-muted)' }}>
-                                    <MapPin size={20} color="var(--primary)" />
-                                    <div>
-                                        <p style={{ fontSize: '0.75rem', fontWeight: '600', textTransform: 'uppercase', marginBottom: '2px' }}>Service Location</p>
-                                        <input type="text" defaultValue="742 Evergreen Terrace, SF" style={{ background: 'none', border: 'none', fontSize: '0.95rem', fontWeight: '600', color: 'var(--text-main)', width: '100%', outline: 'none' }} />
-                                    </div>
-                                </div>
-                            </div>
-
-                            <button
-                                onClick={handleBooking}
-                                className="btn-primary"
-                                style={{
-                                    width: '100%',
-                                    padding: '1.25rem',
-                                    borderRadius: '16px',
-                                    fontWeight: '800',
-                                    fontSize: '1.1rem',
+                            <div style={{ borderTop: '1px solid var(--glass-border)', paddingTop: '1.5rem', textAlign: 'center' }}>
+                                <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '0.5rem' }}>Have questions?</p>
+                                <button className="hover-lift" style={{
+                                    background: 'none',
+                                    border: 'none',
+                                    color: 'var(--primary)',
+                                    fontWeight: '700',
+                                    fontSize: '0.95rem',
+                                    cursor: 'pointer',
                                     display: 'flex',
                                     alignItems: 'center',
                                     justifyContent: 'center',
-                                    gap: '12px',
-                                    marginBottom: '1.5rem',
-                                    boxShadow: '0 20px 40px -10px rgba(59, 130, 246, 0.4)',
-                                    background: 'linear-gradient(135deg, var(--primary) 0%, #2563eb 100%)',
-                                    border: 'none',
-                                    color: 'white',
-                                    cursor: 'pointer'
-                                }}
-                            >
-                                Confirm Booking <Send size={20} />
-                            </button>
-
-                            <div style={{ display: 'flex', justifyContent: 'center', gap: '24px', fontSize: '0.8rem', color: 'var(--text-muted)', fontWeight: '600' }}>
-                                <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><Shield size={16} color="#10b981" /> 100% Sceure</div>
-                                <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><Star size={16} color="var(--accent)" /> Satisfaction Guarantee</div>
+                                    gap: '0.5rem',
+                                    width: '100%'
+                                }}>
+                                    <MessageSquare size={18} /> Chat with John
+                                </button>
                             </div>
                         </div>
                     </aside>

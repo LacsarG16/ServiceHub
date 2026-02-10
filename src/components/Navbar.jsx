@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, User, Briefcase, Sun, Moon } from 'lucide-react';
+import { Menu, X, User, Briefcase, Sun, Moon, Sparkles } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion'; // eslint-disable-line no-unused-vars
 import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext';
@@ -8,7 +8,7 @@ import { useAuth } from '../context/AuthContext';
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const { theme, preset, toggleTheme, setPreset } = useTheme();
+  const { theme, preset, toggleTheme, setPreset, showAurora, toggleAurora } = useTheme();
   const { userType, logout, isAuthenticated } = useAuth();
   const location = useLocation();
 
@@ -196,6 +196,26 @@ const Navbar = () => {
                 }}
               >
                 {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
+              </button>
+
+              <button
+                onClick={toggleAurora}
+                title={showAurora ? "Disable Aurora Background" : "Enable Aurora Background"}
+                style={{
+                  background: showAurora ? 'rgba(6, 182, 212, 0.15)' : 'rgba(125, 125, 125, 0.1)',
+                  border: '1px solid ' + (showAurora ? 'var(--primary)' : 'var(--glass-border)'),
+                  borderRadius: '50%',
+                  width: '40px',
+                  height: '40px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: showAurora ? 'var(--primary)' : 'var(--text-main)',
+                  backdropFilter: 'blur(10px)',
+                  transition: 'all 0.3s ease'
+                }}
+              >
+                <Sparkles size={20} fill={showAurora ? "currentColor" : "none"} />
               </button>
             </div>
           </div>

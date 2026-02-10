@@ -117,7 +117,7 @@ const Dashboard = () => {
     ];
 
     return (
-        <div style={{ minHeight: '100vh', background: 'var(--background)', paddingBottom: '3rem' }}>
+        <div style={{ minHeight: '100vh', background: 'transparent', paddingBottom: '3rem' }}>
             {/* Header */}
             <header style={{
                 padding: '1.5rem 2rem',

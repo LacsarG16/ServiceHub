@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import Modal from '../ui/Modal';
 import { Calendar, Clock, DollarSign, FileText, Upload, ChevronRight, ChevronLeft, CheckCircle, AlertCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useBooking } from '../../context/BookingContext';
 
 const BookingRequestModal = ({ isOpen, onClose, service, provider }) => {
+    const { createBooking } = useBooking();
     const [step, setStep] = useState(1);
     const [bookingType, setBookingType] = useState('fixed'); // 'fixed' or 'quote'
     const [formData, setFormData] = useState({
@@ -30,13 +32,47 @@ const BookingRequestModal = ({ isOpen, onClose, service, provider }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log('Submitting booking:', { ...formData, type: bookingType });
+
+        // Create booking using BookingContext
+        const newBooking = createBooking({
+            service: service?.name || 'Service',
+            serviceId: service?.id,
+            provider: provider?.name || 'Provider',
+            providerId: provider?.id,
+            customer: 'Current User', // TODO: Get from AuthContext
+            type: bookingType,
+            price: service?.price || 0,
+            date: formData.date,
+            time: formData.time,
+            addons: formData.addons,
+            budgetRange: bookingType === 'quote' ? formData.budgetRange : null,
+            description: formData.description,
+            message: formData.message,
+            files: formData.files
+        });
+
         const event = new CustomEvent('show-toast', {
-            detail: { message: 'Request sent successfully! check your dashboard.', type: 'success' }
+            detail: {
+                message: `Booking request sent successfully! Reference: ${newBooking.id.slice(-8)}`,
+                type: 'success'
+            }
         });
         window.dispatchEvent(event);
+
         onClose();
         setStep(1);
+
+        // Reset form
+        setFormData({
+            serviceId: service?.id || '',
+            addons: [],
+            budgetRange: [1000, 5000],
+            description: '',
+            date: '',
+            time: '',
+            message: '',
+            files: []
+        });
     };
 
     const inputStyle = {
@@ -265,6 +301,54 @@ const BookingRequestModal = ({ isOpen, onClose, service, provider }) => {
             isOpen={isOpen}
             onClose={onClose}
             title={bookingType === 'fixed' ? 'Book Service' : 'Request Quote'}
+            footer={
+                <div style={{ display: 'flex', gap: '1rem' }}>
+                    {step > 1 && (
+                        <button
+                            type="button"
+                            onClick={handleBack}
+                            className="hover-lift"
+                            style={{
+                                padding: '0.75rem 1.5rem',
+                                borderRadius: 'var(--radius-xl)',
+                                background: 'transparent',
+                                border: '1px solid var(--glass-border)',
+                                color: 'var(--text-main)',
+                                fontWeight: '600',
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '0.5rem',
+                                cursor: 'pointer'
+                            }}
+                        >
+                            <ChevronLeft size={18} /> Back
+                        </button>
+                    )}
+                    <button
+                        type={step === 3 ? 'submit' : 'button'}
+                        form="booking-form"
+                        onClick={step === 3 ? undefined : handleNext}
+                        className="btn-primary hover-lift"
+                        style={{
+                            flex: 1,
+                            padding: '1rem',
+                            borderRadius: 'var(--radius-xl)',
+                            fontSize: '1rem',
+                            fontWeight: '700',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            gap: '0.5rem'
+                        }}
+                    >
+                        {step === 3
+                            ? (bookingType === 'fixed' ? 'Submit Booking Request' : 'Send Quote Request')
+                            : 'Continue'
+                        }
+                        {step !== 3 && <ChevronRight size={18} />}
+                    </button>
+                </div>
+            }
         >
             <div style={{ marginTop: '0.5rem' }}>
                 {/* Steps Indicator */}
@@ -305,7 +389,7 @@ const BookingRequestModal = ({ isOpen, onClose, service, provider }) => {
                     ))}
                 </div>
 
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit} id="booking-form">
                     <AnimatePresence mode="wait">
                         <motion.div
                             key={step}
@@ -319,52 +403,6 @@ const BookingRequestModal = ({ isOpen, onClose, service, provider }) => {
                             {step === 3 && renderStep3()}
                         </motion.div>
                     </AnimatePresence>
-
-                    <div style={{ display: 'flex', gap: '1rem', marginTop: '2.5rem', paddingTop: '1.5rem', borderTop: '1px solid var(--glass-border)' }}>
-                        {step > 1 && (
-                            <button
-                                type="button"
-                                onClick={handleBack}
-                                className="hover-lift"
-                                style={{
-                                    padding: '0.75rem 1.5rem',
-                                    borderRadius: 'var(--radius-xl)',
-                                    background: 'transparent',
-                                    border: '1px solid var(--glass-border)',
-                                    color: 'var(--text-main)',
-                                    fontWeight: '600',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    gap: '0.5rem',
-                                    cursor: 'pointer'
-                                }}
-                            >
-                                <ChevronLeft size={18} /> Back
-                            </button>
-                        )}
-                        <button
-                            type={step === 3 ? 'submit' : 'button'}
-                            onClick={step === 3 ? undefined : handleNext}
-                            className="btn-primary hover-lift"
-                            style={{
-                                flex: 1,
-                                padding: '1rem',
-                                borderRadius: 'var(--radius-xl)',
-                                fontSize: '1rem',
-                                fontWeight: '700',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                gap: '0.5rem'
-                            }}
-                        >
-                            {step === 3
-                                ? (bookingType === 'fixed' ? 'Submit Booking Request' : 'Send Quote Request')
-                                : 'Continue'
-                            }
-                            {step !== 3 && <ChevronRight size={18} />}
-                        </button>
-                    </div>
                 </form>
             </div>
         </Modal>
