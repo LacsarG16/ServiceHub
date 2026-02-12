@@ -4,7 +4,7 @@ import { Calendar, Clock, DollarSign, FileText, Upload, ChevronRight, ChevronLef
 import { motion, AnimatePresence } from 'framer-motion';
 import { useBooking } from '../../context/BookingContext';
 
-const BookingRequestModal = ({ isOpen, onClose, service, provider }) => {
+const BookingRequestModal = ({ isOpen, onClose, onSuccess, service, provider }) => {
     const { createBooking } = useBooking();
     const [step, setStep] = useState(1);
     const [bookingType, setBookingType] = useState('fixed'); // 'fixed' or 'quote'
@@ -27,11 +27,32 @@ const BookingRequestModal = ({ isOpen, onClose, service, provider }) => {
         }
     }, [service]);
 
-    const handleNext = () => setStep(prev => prev + 1);
+    React.useEffect(() => {
+        console.log('=== Step changed to:', step);
+    }, [step]);
+
+    const lastTransitionTimeRef = React.useRef(0);
+
+    const handleNext = () => {
+        console.log('=== handleNext called, current step:', step);
+        lastTransitionTimeRef.current = Date.now();
+        setStep(prev => {
+            console.log('=== Setting step from', prev, 'to', prev + 1);
+            return prev + 1;
+        });
+    };
     const handleBack = () => setStep(prev => prev - 1);
 
     const handleSubmit = (e) => {
+        console.log('=== handleSubmit called, current step:', step);
         e.preventDefault();
+
+        // Guard: Prevent submission if we just transitioned (click-through protection)
+        const timeSinceTransition = Date.now() - lastTransitionTimeRef.current;
+        if (timeSinceTransition < 500) {
+            console.log('=== BLOCKED: Submission too soon after transition (' + timeSinceTransition + 'ms)');
+            return;
+        }
 
         // Create booking using BookingContext
         const newBooking = createBooking({
@@ -60,6 +81,7 @@ const BookingRequestModal = ({ isOpen, onClose, service, provider }) => {
         window.dispatchEvent(event);
 
         onClose();
+        if (onSuccess) onSuccess();
         setStep(1);
 
         // Reset form
@@ -265,7 +287,7 @@ const BookingRequestModal = ({ isOpen, onClose, service, provider }) => {
     );
 
     const renderStep3 = () => (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', paddingBottom: '2rem' }}>
             <div style={cardStyle}>
                 <h4 style={{ fontSize: '1.1rem', fontWeight: '800', color: 'var(--text-main)', paddingBottom: '1rem', borderBottom: '1px solid var(--glass-border)', marginBottom: '1rem' }}>Request Summary</h4>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
@@ -324,29 +346,45 @@ const BookingRequestModal = ({ isOpen, onClose, service, provider }) => {
                             <ChevronLeft size={18} /> Back
                         </button>
                     )}
-                    <button
-                        type={step === 3 ? 'submit' : 'button'}
-                        form="booking-form"
-                        onClick={step === 3 ? undefined : handleNext}
-                        className="btn-primary hover-lift"
-                        style={{
-                            flex: 1,
-                            padding: '1rem',
-                            borderRadius: 'var(--radius-xl)',
-                            fontSize: '1rem',
-                            fontWeight: '700',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            gap: '0.5rem'
-                        }}
-                    >
-                        {step === 3
-                            ? (bookingType === 'fixed' ? 'Submit Booking Request' : 'Send Quote Request')
-                            : 'Continue'
-                        }
-                        {step !== 3 && <ChevronRight size={18} />}
-                    </button>
+                    {step === 3 ? (
+                        <button
+                            type="submit"
+                            form="booking-form"
+                            className="btn-primary hover-lift"
+                            style={{
+                                flex: 1,
+                                padding: '1rem',
+                                borderRadius: 'var(--radius-xl)',
+                                fontSize: '1rem',
+                                fontWeight: '700',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                gap: '0.5rem'
+                            }}
+                        >
+                            {bookingType === 'fixed' ? 'Submit Booking Request' : 'Send Quote Request'}
+                        </button>
+                    ) : (
+                        <button
+                            type="button"
+                            onClick={handleNext}
+                            className="btn-primary hover-lift"
+                            style={{
+                                flex: 1,
+                                padding: '1rem',
+                                borderRadius: 'var(--radius-xl)',
+                                fontSize: '1rem',
+                                fontWeight: '700',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                gap: '0.5rem'
+                            }}
+                        >
+                            Continue <ChevronRight size={18} />
+                        </button>
+                    )}
                 </div>
             }
         >
@@ -390,19 +428,11 @@ const BookingRequestModal = ({ isOpen, onClose, service, provider }) => {
                 </div>
 
                 <form onSubmit={handleSubmit} id="booking-form">
-                    <AnimatePresence mode="wait">
-                        <motion.div
-                            key={step}
-                            initial={{ opacity: 0, x: 20 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            exit={{ opacity: 0, x: -20 }}
-                            transition={{ duration: 0.3, ease: 'easeOut' }}
-                        >
-                            {step === 1 && renderStep1()}
-                            {step === 2 && renderStep2()}
-                            {step === 3 && renderStep3()}
-                        </motion.div>
-                    </AnimatePresence>
+                    <div style={{ minHeight: '400px' }}>
+                        {step === 1 && renderStep1()}
+                        {step === 2 && renderStep2()}
+                        {step === 3 && renderStep3()}
+                    </div>
                 </form>
             </div>
         </Modal>

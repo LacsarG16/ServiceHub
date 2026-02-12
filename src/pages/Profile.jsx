@@ -572,6 +572,7 @@ const Profile = () => {
             <BookingRequestModal
                 isOpen={isBookingModalOpen}
                 onClose={() => setIsBookingModalOpen(false)}
+                onSuccess={handleBooking}
                 service={{
                     id: 1,
                     name: initBookingType === 'quote' ? 'Custom Service Request' : 'Standard Electrical Service',

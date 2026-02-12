@@ -26,11 +26,14 @@ const Modal = ({ isOpen, onClose, title, children, footer }) => {
                             position: 'relative',
                             width: '100%',
                             maxWidth: '600px',
+                            maxHeight: '85vh',
+                            display: 'flex',
+                            flexDirection: 'column',
                             overflow: 'hidden',
                         }}
                     >
                         {/* Header */}
-                        <div style={{ padding: '1.5rem', borderBottom: '1px solid var(--glass-border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <div style={{ padding: '1.5rem', borderBottom: '1px solid var(--glass-border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexShrink: 0 }}>
                             <h3 style={{ fontSize: '1.25rem', fontWeight: '700' }}>{title}</h3>
                             <button onClick={onClose} style={{ padding: '0.5rem', borderRadius: '50%', background: 'rgba(125, 125, 125, 0.1)', color: 'var(--text-muted)', border: '1px solid var(--glass-border)' }}>
                                 <X size={20} />
@@ -38,13 +41,13 @@ const Modal = ({ isOpen, onClose, title, children, footer }) => {
                         </div>
 
                         {/* Body */}
-                        <div style={{ padding: '1.5rem', maxHeight: footer ? 'calc(80vh - 130px)' : '80vh', overflowY: 'auto' }}>
+                        <div style={{ padding: '1.5rem', overflowY: 'auto', flexGrow: 1, minHeight: 0 }}>
                             {children}
                         </div>
 
                         {/* Footer */}
                         {footer && (
-                            <div style={{ padding: '1.5rem', borderTop: '1px solid var(--glass-border)', background: 'rgba(255, 255, 255, 0.02)' }}>
+                            <div style={{ padding: '1.5rem', borderTop: '1px solid var(--glass-border)', background: 'rgba(255, 255, 255, 0.02)', flexShrink: 0 }}>
                                 {footer}
                             </div>
                         )}

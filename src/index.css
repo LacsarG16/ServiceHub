@@ -17,7 +17,7 @@
 
   /* Cinematic Glass Variables - Light Default */
   --glass-bg: rgba(255, 255, 255, 0.35);
-  --glass-card-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.15));
+  --glass-card-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.8));
   --glass-card-border: rgba(255, 255, 255, 1);
   --glass-card-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.08);
   --navbar-bg-scrolled: linear-gradient(to right, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.4));

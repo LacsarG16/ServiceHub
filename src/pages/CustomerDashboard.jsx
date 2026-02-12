@@ -647,7 +647,6 @@ const CustomerDashboard = () => {
                                 color: activeTab === item.id ? 'white' : 'var(--text-muted)',
                                 transition: 'all 0.3s var(--ease-premium)',
                                 position: 'relative',
-                                border: 'none',
                                 cursor: 'pointer',
                                 whiteSpace: 'nowrap',
                                 width: '100%'
