@@ -1,0 +1,99 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id            String   @id @default(uuid())
+  email         String   @unique
+  password      String
+  name          String
+  role          Role     @default(CUSTOMER)
+  phone         String?
+  avatar        String?
+  bio           String?
+  location      String?  @default("Remote")
+  rating        Float    @default(0)
+  reviewCount   Int      @default(0)
+  expertises    String[]
+  projects      String[] // Image URLs
+  completedJobs Int      @default(0)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  
+  // Relations
+  bookings         Booking[] @relation("CustomerBookings")
+  providedServices Service[]
+  reviews          Review[]
+}
+
+enum Role {
+  CUSTOMER
+  PROVIDER
+  ADMIN
+}
+
+model Service {
+  id          String   @id @default(uuid())
+  name        String
+  description String
+  price       Float?
+  type        ServiceType
+  category    String
+  providerId  String
+  provider    User     @relation(fields: [providerId], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  bookings Booking[]
+}
+
+enum ServiceType {
+  FIXED
+  CUSTOM
+}
+
+model Booking {
+  id          String        @id @default(uuid())
+  serviceId   String
+  customerId  String
+  date        DateTime
+  time        String
+  status      BookingStatus @default(PENDING)
+  price       Float
+  message     String?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  
+  service  Service @relation(fields: [serviceId], references: [id])
+  customer User    @relation("CustomerBookings", fields: [customerId], references: [id])
+  review   Review?
+}
+
+enum BookingStatus {
+  PENDING
+  APPROVED
+  CONFIRMED
+  IN_PROGRESS
+  AWAITING_PAYMENT
+  COMPLETED
+  REVIEWED
+  CANCELLED
+  DECLINED
+  EXPIRED
+}
+
+model Review {
+  id        String   @id @default(uuid())
+  bookingId String   @unique
+  userId    String
+  rating    Int
+  comment   String
+  createdAt DateTime @default(now())
+  
+  booking Booking @relation(fields: [bookingId], references: [id])
+  user    User    @relation(fields: [userId], references: [id])
+}

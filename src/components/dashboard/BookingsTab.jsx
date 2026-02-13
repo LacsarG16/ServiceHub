@@ -27,21 +27,21 @@ import {
     isToday
 } from 'date-fns';
 
-const BookingsTab = ({ onBookingClick, onAddBooking }) => {
+const BookingsTab = ({ bookings: bookingsProp = [], onBookingClick, onAddBooking }) => {
     const [view, setView] = useState('calendar');
-    const [currentMonth, setCurrentMonth] = useState(new Date(2026, 1, 1)); // February 2026
-    const [selectedDate, setSelectedDate] = useState(new Date(2026, 1, 25)); // Default selection
+    const [currentMonth, setCurrentMonth] = useState(new Date());
+    const [selectedDate, setSelectedDate] = useState(new Date());
 
-    // ... internal bookings and status logic ...
-
-    const bookings = [
-        { id: 1, customer: "Alice Johnson", service: "Elite Cleaning", date: new Date(2026, 1, 25), time: "09:00 AM", status: "Upcoming", amount: "$120" },
-        { id: 2, customer: "Mark Stevenson", service: "Elite Cleaning", date: new Date(2026, 1, 24), time: "02:00 PM", status: "Completed", amount: "$120" },
-        { id: 3, customer: "Jenny Wilson", service: "Move-out Special", date: new Date(2026, 1, 23), time: "11:00 AM", status: "Cancelled", amount: "$250" },
-        { id: 4, customer: "Robert Fox", service: "Deep Carpet Clean", date: new Date(2026, 1, 26), time: "10:30 AM", status: "Upcoming", amount: "$160" },
-        { id: 5, customer: "Sarah Miller", service: "Elite Cleaning", date: new Date(2026, 1, 27), time: "01:00 PM", status: "Upcoming", amount: "$120" },
-        { id: 6, customer: "Tom Hanks", service: "Elite Cleaning", date: new Date(2026, 1, 25), time: "03:00 PM", status: "Upcoming", amount: "$120" }
-    ];
+    // Format backend bookings for UI display
+    const bookings = bookingsProp.map(b => ({
+        id: b.id,
+        customer: b.customer?.name || "Unknown",
+        service: b.service?.name || "Service",
+        date: new Date(b.date),
+        time: b.time,
+        status: b.status.charAt(0) + b.status.slice(1).toLowerCase(),
+        amount: `R${b.price.toLocaleString()}`
+    }));
 
     // Mock Availability (logic to determine if a date is "Available")
     const getAvailabilityStatus = (date) => {

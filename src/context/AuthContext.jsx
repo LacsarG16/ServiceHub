@@ -1,37 +1,71 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
+import { api } from '../services/api';
+import toast from 'react-hot-toast';
 
 const AuthContext = createContext();
 
 export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
-    const [userType, setUserType] = useState(null); // 'provider' | 'customer' | null
+    const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        // Check local storage for existing session
-        const storedUserType = localStorage.getItem('userType');
-        if (storedUserType) {
-            setUserType(storedUserType);
-        }
-        setLoading(false);
+        const initAuth = async () => {
+            const token = localStorage.getItem('token');
+            if (token) {
+                try {
+                    const userData = await api.getMe();
+                    setUser(userData);
+                } catch (error) {
+                    console.error('Session restoration failed:', error);
+                    localStorage.removeItem('token');
+                }
+            }
+            setLoading(false);
+        };
+        initAuth();
     }, []);
 
-    const login = (type) => {
-        setUserType(type);
-        localStorage.setItem('userType', type);
+    const login = async (email, password) => {
+        try {
+            const data = await api.login(email, password);
+            setUser(data);
+            localStorage.setItem('token', data.token);
+            toast.success('Successfully logged in!');
+            return data;
+        } catch (error) {
+            toast.error(error.message);
+            throw error;
+        }
+    };
+
+    const signup = async (userData) => {
+        try {
+            const data = await api.register(userData);
+            setUser(data);
+            localStorage.setItem('token', data.token);
+            toast.success('Account created successfully!');
+            return data;
+        } catch (error) {
+            toast.error(error.message);
+            throw error;
+        }
     };
 
     const logout = () => {
-        setUserType(null);
-        localStorage.removeItem('userType');
+        setUser(null);
+        localStorage.removeItem('token');
+        toast.success('Logged out');
     };
 
     const value = {
-        userType,
+        user,
+        userType: user?.role?.toLowerCase(),
         login,
+        signup,
         logout,
-        isAuthenticated: !!userType,
+        isAuthenticated: !!user,
         loading
     };
 

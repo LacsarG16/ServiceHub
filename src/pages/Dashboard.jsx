@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     LayoutDashboard,
     List,
@@ -18,6 +18,7 @@ import {
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { api } from '../services/api';
 
 // Tab Components
 import OverviewTab from '../components/dashboard/OverviewTab';
@@ -38,7 +39,7 @@ import BookingFormModal from '../components/modals/BookingFormModal';
 import NotificationDrawer from '../components/drawers/NotificationDrawer';
 
 const Dashboard = () => {
-    const { logout } = useAuth();
+    const { user, logout } = useAuth();
     const navigate = useNavigate();
     const [activeTab, setActiveTab] = useState('overview');
     const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(true);
@@ -54,18 +55,59 @@ const Dashboard = () => {
     const [selectedItem, setSelectedItem] = useState(null);
 
     // ... stats and recentBookings data ...
-    const stats = [
-        { label: "Total Bookings", value: "142", icon: <Calendar color="var(--primary)" />, change: "+12%" },
-        { label: "New Leads", value: "28", icon: <Users color="var(--secondary)" />, change: "+5%" },
-        { label: "Revenue", value: "$3,450", icon: <DollarSign color="var(--accent)" />, change: "+20%" },
-        { label: "Job Completion", value: "98%", icon: <CheckCircle2 color="#10b981" />, change: "0%" }
-    ];
+    const [stats, setStats] = useState([
+        { label: "Total Bookings", value: "0", icon: <Calendar color="var(--primary)" />, change: "0%" },
+        { label: "Completed Jobs", value: "0", icon: <Briefcase color="var(--secondary)" />, change: "0%" },
+        { label: "Revenue", value: "R0", icon: <DollarSign color="var(--accent)" />, change: "0%" },
+        { label: "Completion Rate", value: "0%", icon: <CheckCircle2 color="#10b981" />, change: "0%" }
+    ]);
 
-    const recentBookings = [
-        { id: 1, customer: "Alice Johnson", service: "Elite Cleaning", date: new Date(2026, 1, 25), time: "09:00 AM", status: "Upcoming" },
-        { id: 2, customer: "Mark Stevenson", service: "Elite Cleaning", date: new Date(2026, 1, 24), time: "02:00 PM", status: "Completed" },
-        { id: 3, customer: "Jenny Wilson", service: "Move-out Special", date: new Date(2026, 1, 23), time: "11:00 AM", status: "Cancelled" }
-    ];
+    const [recentBookings, setRecentBookings] = useState([]);
+    const [allBookings, setAllBookings] = useState([]);
+    const [myServices, setMyServices] = useState([]);
+
+    useEffect(() => {
+        const fetchDashboardData = async () => {
+            try {
+                const [providerStats, bookings, services] = await Promise.all([
+                    api.getProviderStats(),
+                    api.getMyBookings(),
+                    api.getServices() // We'll filter these for now, or add a provider filter later
+                ]);
+
+                // Filter services for this provider
+                const filteredServices = services.filter(s => s.providerId === user?.id);
+                setMyServices(filteredServices);
+                setAllBookings(bookings);
+
+                setStats([
+                    { label: "Total Bookings", value: providerStats.totalBookings.toString(), icon: <Calendar color="var(--primary)" />, change: "+0%" },
+                    { label: "Completed Jobs", value: providerStats.completedJobs.toString(), icon: <Briefcase color="var(--secondary)" />, change: "+0%" },
+                    { label: "Revenue", value: `R${providerStats.totalRevenue.toLocaleString()}`, icon: <DollarSign color="var(--accent)" />, change: "+0%" },
+                    { label: "Completion Rate", value: providerStats.completionRate, icon: <CheckCircle2 color="#10b981" />, change: "0%" }
+                ]);
+
+                if (Array.isArray(bookings)) {
+                    setAllBookings(bookings);
+                    setRecentBookings(bookings.slice(0, 5).map(b => ({
+                        id: b.id,
+                        customer: b.customer?.name || 'Unknown Customer',
+                        service: b.service?.name || 'Service',
+                        date: new Date(b.date),
+                        time: b.time,
+                        status: b.status.charAt(0) + b.status.slice(1).toLowerCase()
+                    })));
+                } else {
+                    console.error('Bookings data is not an array:', bookings);
+                    setAllBookings([]);
+                    setRecentBookings([]);
+                }
+            } catch (error) {
+                console.error('Failed to fetch dashboard data:', error);
+            }
+        };
+        fetchDashboardData();
+    }, []);
 
     const openServiceModal = (service = null) => {
         setSelectedItem(service);
@@ -96,9 +138,9 @@ const Dashboard = () => {
             case 'overview':
                 return <OverviewTab stats={stats} recentBookings={recentBookings} onBookingClick={openBookingModal} />;
             case 'services':
-                return <ServicesTab onAddService={() => openServiceModal()} onEditService={openServiceModal} />;
+                return <ServicesTab services={myServices} allBookings={allBookings} onAddService={() => openServiceModal()} onEditService={openServiceModal} />;
             case 'bookings':
-                return <BookingsTab onBookingClick={openBookingModal} onAddBooking={openBookingForm} />;
+                return <BookingsTab bookings={allBookings} onBookingClick={openBookingModal} onAddBooking={openBookingForm} />;
             case 'analytics':
                 return <AnalyticsTab />;
             case 'settings':
@@ -206,10 +248,10 @@ const Dashboard = () => {
                     <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', paddingLeft: '1rem', borderLeft: '1px solid var(--glass-border)' }}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
                             <div>
-                                <h1 style={{ fontSize: '1rem', fontWeight: '700', textAlign: 'right', lineHeight: '1.2' }}>John Doe</h1>
-                                <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', textAlign: 'right' }}>Provider</p>
+                                <h1 style={{ fontSize: '1rem', fontWeight: '700', textAlign: 'right', lineHeight: '1.2' }}>{user?.name || 'Provider'}</h1>
+                                <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', textAlign: 'right' }}>{user?.role?.charAt(0) + user?.role?.slice(1).toLowerCase() || 'Provider'}</p>
                             </div>
-                            <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=100" alt="John" style={{ width: '40px', height: '40px', borderRadius: '50%', objectFit: 'cover', border: '2px solid var(--primary)' }} />
+                            <img src={user?.avatar || "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=100"} alt={user?.name} style={{ width: '40px', height: '40px', borderRadius: '50%', objectFit: 'cover', border: '2px solid var(--primary)' }} />
 
                             <button
                                 onClick={handleLogout}
@@ -343,7 +385,7 @@ const Dashboard = () => {
                         letterSpacing: '-0.5px',
                         marginBottom: '0.5rem',
                         lineHeight: '1.2'
-                    }}>Good day, <span className="text-gradient-primary">John!</span></h1>
+                    }}>Good day, <span className="text-gradient-primary">{user?.name?.split(' ')[0] || 'Partner'}!</span></h1>
                     <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem', fontWeight: '500' }}>Here's what's happening today.</p>
                 </div>
 

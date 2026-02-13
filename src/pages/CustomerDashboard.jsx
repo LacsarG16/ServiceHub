@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
     LayoutDashboard,
@@ -18,16 +18,63 @@ import {
 } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { api } from '../services/api';
 import DepositPaymentModal from '../components/modals/DepositPaymentModal';
 
 const CustomerDashboard = () => {
-    const { logout } = useAuth();
+    const { user, logout } = useAuth();
+    const { bookings, loading: bookingsLoading } = useBooking();
     const navigate = useNavigate();
     const [activeTab, setActiveTab] = useState('overview');
     const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
     const [isDepositModalOpen, setIsDepositModalOpen] = useState(false);
     const [selectedBookingForDeposit, setSelectedBookingForDeposit] = useState(null);
+
+    const [recommendedProviders, setRecommendedProviders] = useState([]);
+    const [recentActivity, setRecentActivity] = useState([]);
+    const [stats, setStats] = useState({ totalSpent: 0, loyaltyPoints: 0, completedJobs: 0 });
+
+    useEffect(() => {
+        const fetchDashboardData = async () => {
+            try {
+                const [recServices, activity, dashboardStats] = await Promise.all([
+                    api.getRecommendedServices(),
+                    api.getActivity(),
+                    api.getCustomerStats()
+                ]);
+                if (Array.isArray(recServices)) {
+                    setRecommendedProviders(recServices.filter(s => s).map(s => ({
+                        id: s.providerId,
+                        name: s.provider?.name || 'Unknown Provider',
+                        service: s.name,
+                        rating: s.provider?.rating || 5.0,
+                        location: s.provider?.location || 'Remote',
+                        image: s.provider?.avatar || 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=200'
+                    })));
+                } else {
+                    console.error('Recommended services is not an array:', recServices);
+                    setRecommendedProviders([]);
+                }
+
+                if (Array.isArray(activity)) {
+                    setRecentActivity(activity.filter(a => a));
+                } else {
+                    console.error('Activity data is not an array:', activity);
+                    setRecentActivity([]);
+                }
+
+                if (dashboardStats) {
+                    setStats(dashboardStats);
+                } else {
+                    console.error('Dashboard stats is invalid:', dashboardStats);
+                }
+            } catch (error) {
+                console.error('Failed to fetch dashboard data:', error);
+            }
+        };
+        fetchDashboardData();
+    }, []);
 
     const handleOpenDeposit = (booking) => {
         setSelectedBookingForDeposit(booking);
@@ -39,19 +86,31 @@ const CustomerDashboard = () => {
         navigate('/');
     };
 
-    // Mock Data
-    const bookings = [
-        { id: 1, service: 'House Cleaning', provider: 'Cleaning Pros', date: 'Oct 24, 2023', time: '10:00 AM', status: 'Confirmed', image: 'https://images.unsplash.com/photo-1581578731117-104f8a3d46a8?auto=format&fit=crop&q=80&w=200', price: 1200 },
-        { id: 2, service: 'Plumbing Repair', provider: 'Quick Fix Plumbing', date: 'Nov 02, 2023', time: '02:00 PM', status: 'Approved', image: 'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?auto=format&fit=crop&q=80&w=200', price: 850 },
-        { id: 3, service: 'Lawn Mowing', provider: 'Green Thumb', date: 'Sept 15, 2023', time: '09:00 AM', status: 'Completed', image: 'https://images.unsplash.com/photo-1558904541-efa843a96f01?auto=format&fit=crop&q=80&w=200', price: 450 },
-        { id: 4, service: 'Electrical Wiring', provider: 'John Doe', date: 'Nov 10, 2023', time: '11:00 AM', status: 'Pending', image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=200', price: 0 }
-    ];
+    // Format bookings for display
+    // Format bookings for display
+    const formattedBookings = (Array.isArray(bookings) ? bookings : []).filter(b => b).map(booking => {
+        // Parse the date properly
+        let formattedDate = 'Date TBD';
+        if (booking.date) {
+            try {
+                // If it's already a Date object or ISO string, handle strictly
+                const dateVal = new Date(booking.date);
+                if (!isNaN(dateVal.getTime())) {
+                    formattedDate = dateVal.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+                }
+            } catch (e) {
+                console.error('Error parsing date:', booking.date, e);
+            }
+        }
 
-    const recommendedProviders = [
-        { id: 1, name: 'John Doe', service: 'Electrician', rating: 4.9, location: 'San Francisco, CA', image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=200' },
-        { id: 2, name: 'Sarah Smith', service: 'Interior Design', rating: 5.0, location: 'Oakland, CA', image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=200' },
-        { id: 3, name: 'Mike Johnson', service: 'Landscaping', rating: 4.8, location: 'San Jose, CA', image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=200' },
-    ];
+        return {
+            ...booking,
+            date: formattedDate,
+            image: booking.image || 'https://images.unsplash.com/photo-1581578731117-104f8a3d46a8?auto=format&fit=crop&q=80&w=200',
+            price: booking.price || booking.totalPrice || 0
+        };
+    });
+
 
     const sidebarItems = [
         { id: 'overview', icon: <LayoutDashboard size={20} />, label: 'Overview' },
@@ -80,15 +139,15 @@ const CustomerDashboard = () => {
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                         <div>
                             <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '0.25rem', fontWeight: '600' }}>Total</p>
-                            <p style={{ fontSize: '1.5rem', fontWeight: '800', color: 'var(--text-main)' }}>{bookings.length}</p>
+                            <p style={{ fontSize: '1.5rem', fontWeight: '800', color: 'var(--text-main)' }}>{formattedBookings.length}</p>
                         </div>
                         <div>
                             <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '0.25rem', fontWeight: '600' }}>Active</p>
-                            <p style={{ fontSize: '1.5rem', fontWeight: '800', color: 'var(--primary)' }}>{bookings.filter(b => b.status !== 'Completed').length}</p>
+                            <p style={{ fontSize: '1.5rem', fontWeight: '800', color: 'var(--primary)' }}>{formattedBookings.filter(b => b.status !== 'completed').length}</p>
                         </div>
                         <div>
                             <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '0.25rem', fontWeight: '600' }}>Completed</p>
-                            <p style={{ fontSize: '1.5rem', fontWeight: '800', color: '#10b981' }}>{bookings.filter(b => b.status === 'Completed').length}</p>
+                            <p style={{ fontSize: '1.5rem', fontWeight: '800', color: '#10b981' }}>{formattedBookings.filter(b => b.status === 'completed').length}</p>
                         </div>
                     </div>
                 </div>
@@ -105,11 +164,11 @@ const CustomerDashboard = () => {
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                         <div>
                             <p style={{ fontSize: '0.75rem', opacity: 0.9, marginBottom: '0.25rem' }}>Total Spent</p>
-                            <p style={{ fontSize: '1.75rem', fontWeight: '900' }}>R{bookings.reduce((sum, b) => sum + b.price, 0).toLocaleString()}</p>
+                            <p style={{ fontSize: '1.75rem', fontWeight: '900' }}>R{stats.totalSpent.toLocaleString()}</p>
                         </div>
                         <div style={{ paddingTop: '0.75rem', borderTop: '1px solid rgba(255,255,255,0.2)' }}>
                             <p style={{ fontSize: '0.75rem', opacity: 0.9, marginBottom: '0.25rem' }}>Avg/Booking</p>
-                            <p style={{ fontSize: '1.1rem', fontWeight: '700' }}>R{Math.round(bookings.reduce((sum, b) => sum + b.price, 0) / bookings.length).toLocaleString()}</p>
+                            <p style={{ fontSize: '1.1rem', fontWeight: '700' }}>R{stats.completedJobs > 0 ? Math.round(stats.totalSpent / stats.completedJobs).toLocaleString() : 0}</p>
                         </div>
                     </div>
                 </div>
@@ -202,7 +261,7 @@ const CustomerDashboard = () => {
                         <button onClick={() => setActiveTab('bookings')} style={{ color: 'var(--primary)', fontWeight: '600', background: 'transparent', border: 'none', cursor: 'pointer' }}>View All</button>
                     </div>
                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem' }}>
-                        {bookings.filter(b => b.status !== 'Completed').slice(0, 2).map(booking => (
+                        {formattedBookings.filter(b => b.status !== 'completed').slice(0, 2).map(booking => (
                             <div key={booking.id} className="glass-card hover-lift" style={{ padding: '1.5rem', borderRadius: '20px', background: 'var(--glass-card-bg)', backdropFilter: 'var(--glass-blur)', WebkitBackdropFilter: 'var(--glass-blur)', border: '1px solid var(--glass-card-border)', boxShadow: 'var(--glass-card-shadow)' }}>
                                 <div style={{ display: 'flex', gap: '1rem', marginBottom: '1rem' }}>
                                     <img src={booking.image} alt={booking.service} style={{ width: '50px', height: '50px', borderRadius: '12px', objectFit: 'cover' }} />
@@ -217,7 +276,7 @@ const CustomerDashboard = () => {
                                 </div>
                             </div>
                         ))}
-                        {bookings.filter(b => b.status !== 'Completed').length === 0 && (
+                        {formattedBookings.filter(b => b.status !== 'completed').length === 0 && (
                             <p style={{ color: 'var(--text-muted)', fontStyle: 'italic' }}>No upcoming bookings.</p>
                         )}
                     </div>
@@ -276,33 +335,19 @@ const CustomerDashboard = () => {
                 }}>
                     <h3 style={{ fontSize: '0.95rem', fontWeight: '800', marginBottom: '1.25rem', color: 'var(--text-main)' }}>Recent Activity</h3>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                        <div style={{
-                            padding: '1rem',
-                            borderRadius: '10px',
-                            background: 'var(--background)',
-                            borderLeft: '3px solid var(--primary)'
-                        }}>
-                            <p style={{ fontSize: '0.8rem', fontWeight: '700', marginBottom: '0.35rem', color: 'var(--text-main)' }}>Booking Confirmed</p>
-                            <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>House Cleaning - Oct 24</p>
-                        </div>
-                        <div style={{
-                            padding: '1rem',
-                            borderRadius: '10px',
-                            background: 'var(--background)',
-                            borderLeft: '3px solid #10b981'
-                        }}>
-                            <p style={{ fontSize: '0.8rem', fontWeight: '700', marginBottom: '0.35rem', color: 'var(--text-main)' }}>Service Completed</p>
-                            <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>Lawn Mowing - Sept 15</p>
-                        </div>
-                        <div style={{
-                            padding: '1rem',
-                            borderRadius: '10px',
-                            background: 'var(--background)',
-                            borderLeft: '3px solid #f59e0b'
-                        }}>
-                            <p style={{ fontSize: '0.8rem', fontWeight: '700', marginBottom: '0.35rem', color: 'var(--text-main)' }}>Payment Pending</p>
-                            <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>Electrical Wiring - Nov 10</p>
-                        </div>
+                        {recentActivity.length > 0 ? recentActivity.map((activity, idx) => (
+                            <div key={idx} style={{
+                                padding: '1rem',
+                                borderRadius: '10px',
+                                background: 'var(--background)',
+                                borderLeft: `3px solid ${activity.color}`
+                            }}>
+                                <p style={{ fontSize: '0.8rem', fontWeight: '700', marginBottom: '0.35rem', color: 'var(--text-main)' }}>{activity.message}</p>
+                                <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>{new Date(activity.time).toLocaleDateString()}</p>
+                            </div>
+                        )) : (
+                            <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', fontStyle: 'italic' }}>No recent activity.</p>
+                        )}
                     </div>
                 </div>
 
@@ -371,7 +416,7 @@ const CustomerDashboard = () => {
                     boxShadow: 'var(--shadow-premium)'
                 }}>
                     <h3 style={{ fontSize: '0.95rem', fontWeight: '800', marginBottom: '0.75rem' }}>Loyalty Points</h3>
-                    <p style={{ fontSize: '2rem', fontWeight: '900', marginBottom: '0.5rem' }}>250</p>
+                    <p style={{ fontSize: '2rem', fontWeight: '900', marginBottom: '0.5rem' }}>{stats.loyaltyPoints}</p>
                     <p style={{ fontSize: '0.75rem', opacity: 0.9 }}>Earn rewards with every booking!</p>
                 </div>
             </div>
@@ -382,7 +427,7 @@ const CustomerDashboard = () => {
         <div>
             <h2 style={{ fontSize: '1.8rem', fontWeight: '700', marginBottom: '2rem', color: 'var(--text-main)' }}>My Bookings</h2>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(350px, 1fr))', gap: '1.5rem' }}>
-                {bookings.map(booking => (
+                {formattedBookings.map(booking => (
                     <div key={booking.id} className="glass-card hover-lift" style={{
                         padding: '1.5rem',
                         borderRadius: '20px',
@@ -572,10 +617,10 @@ const CustomerDashboard = () => {
                     <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', paddingLeft: '1rem', borderLeft: '1px solid var(--glass-border)' }}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
                             <div>
-                                <h1 style={{ fontSize: '1rem', fontWeight: '700', textAlign: 'right', lineHeight: '1.2' }}>Alex Johnson</h1>
-                                <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', textAlign: 'right' }}>Customer</p>
+                                <h1 style={{ fontSize: '1rem', fontWeight: '700', textAlign: 'right', lineHeight: '1.2' }}>{user?.name || 'User'}</h1>
+                                <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', textAlign: 'right' }}>{user?.role?.charAt(0) + user?.role?.slice(1).toLowerCase() || 'Customer'}</p>
                             </div>
-                            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=100" alt="Alex" style={{ width: '40px', height: '40px', borderRadius: '50%', objectFit: 'cover', border: '2px solid var(--primary)' }} />
+                            <img src={user?.avatar || "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=100"} alt={user?.name} style={{ width: '40px', height: '40px', borderRadius: '50%', objectFit: 'cover', border: '2px solid var(--primary)' }} />
 
                             <button
                                 onClick={handleLogout}
@@ -708,7 +753,7 @@ const CustomerDashboard = () => {
                         letterSpacing: '-0.5px',
                         marginBottom: '0.5rem',
                         lineHeight: '1.2'
-                    }}>Welcome back, <span className="text-gradient-primary">Alex!</span></h1>
+                    }}>Welcome back, <span className="text-gradient-primary">{user?.name?.split(' ')[0] || 'Friend'}!</span></h1>
                     <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem', fontWeight: '500' }}>Manage your services and bookings.</p>
                 </div>
 

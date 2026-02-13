@@ -1,50 +1,67 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import { Star, MapPin, Clock, Shield, Check, MessageSquare, Share2, Heart, ChevronLeft, ChevronRight, Send } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import BookingRequestModal from '../components/modals/BookingRequestModal';
-
-const providersData = [
-    {
-        id: 2,
-        name: "John Doe",
-        title: "Master Electrician | 10+ Years Experience",
-        location: "San Francisco, CA",
-        verified: true,
-        rating: 4.8,
-        reviews: 124,
-        price: 85,
-        description: "Over 10 years of experience handling residential and commercial electrical needs. I specialize in panel upgrades, rewiring, and smart home installations. My goal is to provide safe, reliable, and high-quality service to every client. I'm fully licensed in California and carry comprehensive liability insurance for your peace of mind.",
-        image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=400",
-        expertise: ["Electrical Repair", "Panel Upgrades", "Smart Home", "Lighting", "Safety Inspection"],
-        projects: [
-            "https://images.unsplash.com/photo-1621905252507-b354bcadcabc?auto=format&fit=crop&q=80&w=400",
-            "https://images.unsplash.com/photo-1558403194-611308249627?auto=format&fit=crop&q=80&w=400",
-            "https://images.unsplash.com/photo-1585131238918-9368ca91df5a?auto=format&fit=crop&q=80&w=400"
-        ],
-        reviewData: {
-            average: 4.8,
-            total: 124,
-            breakdown: [
-                { rating: 5, percentage: 80 },
-                { rating: 4, percentage: 12 },
-                { rating: 3, percentage: 5 },
-                { rating: 2, percentage: 1 },
-                { rating: 1, percentage: 2 }
-            ],
-            latest: {
-                name: "Sarah M.",
-                rating: 5,
-                date: "2 days ago",
-                comment: "John was fantastic! He arrived on time, fixed our flickering lights quickly, and even explained what caused the issue. Highly recommend for any electrical work."
-            }
-        }
-    }
-];
+import { api } from '../services/api';
 
 const Profile = () => {
+    const { id } = useParams();
+    const [provider, setProvider] = useState(null);
+    const [loading, setLoading] = useState(true);
     const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
     const [initBookingType, setInitBookingType] = useState('fixed');
+
+    useEffect(() => {
+        const fetchService = async () => {
+            setLoading(true);
+            try {
+                const service = await api.getServiceById(id);
+                // Map backend service/provider to the format expected by the Profile UI
+                setProvider({
+                    ...service,
+                    id: service.id,
+                    name: service.provider.name,
+                    title: service.name,
+                    location: service.provider.location || "Remote",
+                    verified: true,
+                    rating: service.provider.rating || 5.0,
+                    reviews: service.provider.reviewCount || 0,
+                    price: service.price,
+                    description: service.provider.bio || service.description,
+                    image: service.provider.avatar || "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=400",
+                    expertise: service.provider.expertises && service.provider.expertises.length > 0
+                        ? service.provider.expertises
+                        : [service.category, "Professional Service"],
+                    projects: service.provider.projects && service.provider.projects.length > 0
+                        ? service.provider.projects
+                        : [
+                            "https://images.unsplash.com/photo-1621905252507-b354bcadcabc?auto=format&fit=crop&q=80&w=400",
+                            "https://images.unsplash.com/photo-1558403194-611308249627?auto=format&fit=crop&q=80&w=400"
+                        ],
+                    reviewData: {
+                        average: service.provider.rating || 5.0,
+                        total: service.provider.reviewCount || 0,
+                        breakdown: [
+                            { rating: 5, percentage: 90 },
+                            { rating: 4, percentage: 8 }
+                        ],
+                        latest: {
+                            name: "Sarah M.",
+                            rating: 5,
+                            date: "2 days ago",
+                            comment: "Great service! Highly recommended."
+                        }
+                    }
+                });
+            } catch (error) {
+                console.error('Failed to fetch service:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchService();
+    }, [id]);
 
     const handleOpenBooking = (type) => {
         setInitBookingType(type);
@@ -55,16 +72,26 @@ const Profile = () => {
     const [selectedTime, setSelectedTime] = useState("01:00 PM");
     const [showConfirmation, setShowConfirmation] = useState(false);
 
-    const provider = providersData[0]; // For demo, always use John Doe
+    const handleBooking = () => {
+        setShowConfirmation(true);
+    };
+
+    if (loading) {
+        return <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <div className="spinner"></div>
+        </div>;
+    }
+
+    if (!provider) {
+        return <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <h2>Service not found</h2>
+        </div>;
+    }
 
     const timeSlots = [
         "09:00 AM", "10:00 AM", "11:30 AM",
         "01:00 PM", "02:30 PM", "04:00 PM"
     ];
-
-    const handleBooking = () => {
-        setShowConfirmation(true);
-    };
 
     return (
         <div className="profile-page" style={{ padding: '2rem 0 4rem', minHeight: '100vh', background: 'transparent' }}>
@@ -304,7 +331,7 @@ const Profile = () => {
                                             position: 'relative',
                                             aspectRatio: '16/10'
                                         }}>
-                                            <img src={proj} alt={`Project ${idx + 1}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                            <img src={proj} alt="Portfolio Image" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                                         </div>
                                     ))}
                                 </div>
@@ -574,10 +601,10 @@ const Profile = () => {
                 onClose={() => setIsBookingModalOpen(false)}
                 onSuccess={handleBooking}
                 service={{
-                    id: 1,
-                    name: initBookingType === 'quote' ? 'Custom Service Request' : 'Standard Electrical Service',
+                    id: provider.id,
+                    name: initBookingType === 'quote' ? 'Custom Service Request' : provider.title,
                     price: provider.price,
-                    type: initBookingType === 'quote' ? 'custom' : 'fixed'
+                    type: initBookingType === 'quote' ? 'CUSTOM' : 'FIXED'
                 }}
                 provider={provider}
             />

@@ -1,82 +1,62 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Search, Filter, SlidersHorizontal, ChevronDown, CheckCircle } from 'lucide-react';
 import ProviderCard from '../components/ProviderCard';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const providersData = [
-    {
-        id: 1,
-        name: "John's Elite Cleaning",
-        sector: "Home Services",
-        rating: 4.9,
-        location: "San Francisco, CA",
-        availability: "Available Tomorrow",
-        price: "$80",
-        image: "https://images.unsplash.com/photo-1581578731548-c64695cc6958?auto=format&fit=crop&q=80&w=800"
-    },
-    {
-        id: 2,
-        name: "TechFix Solutions",
-        sector: "Tech Support",
-        rating: 4.8,
-        location: "Oakland, CA",
-        availability: "Same Day Service",
-        price: "$50",
-        image: "https://images.unsplash.com/photo-1597733336794-12d05021d510?auto=format&fit=crop&q=80&w=800"
-    },
-    {
-        id: 3,
-        name: "Sarah's Personal Training",
-        sector: "Wellness",
-        rating: 5.0,
-        location: "San Jose, CA",
-        availability: "Booking for Next Week",
-        price: "$120",
-        image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&q=80&w=800"
-    },
-    {
-        id: 4,
-        name: "Expert Tutoring Hub",
-        sector: "Education",
-        rating: 4.7,
-        location: "Berkeley, CA",
-        availability: "Available Monday",
-        price: "$45",
-        image: "https://images.unsplash.com/photo-1544377193-33dcf4d68fb5?auto=format&fit=crop&q=80&w=800"
-    },
-    {
-        id: 5,
-        name: "Green Gardeners",
-        sector: "Home Services",
-        rating: 4.6,
-        location: "Palo Alto, CA",
-        availability: "Available Today",
-        price: "$60",
-        image: "https://images.unsplash.com/photo-1592419044706-39796d40f98c?auto=format&fit=crop&q=80&w=800"
-    },
-    {
-        id: 6,
-        name: "Pixel Perfect Design",
-        sector: "Creative",
-        rating: 4.9,
-        location: "Remote",
-        availability: "Accepting Projects",
-        price: "$150",
-        image: "https://images.unsplash.com/photo-1558655146-d09347e92766?auto=format&fit=crop&q=80&w=800"
-    }
-];
+import { api } from '../services/api';
+import toast from 'react-hot-toast';
 
 const Directory = () => {
+    const [providers, setProviders] = useState([]);
+    const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState("");
     const [selectedSector, setSelectedSector] = useState("All");
     const [sortBy, setSortBy] = useState("Rating");
     const [isFocused, setIsFocused] = useState(false);
+    const [sectors, setSectors] = useState(["All"]);
 
-    const sectors = ["All", "Home Services", "Tech Support", "Wellness", "Education", "Creative"];
+    useEffect(() => {
+        const fetchServices = async () => {
+            setLoading(true);
+            try {
+                const services = await api.getServices();
+                if (!Array.isArray(services)) {
+                    console.error('Expected array for services, got:', services);
+                    setProviders([]);
+                    return;
+                }
 
-    const filteredProviders = providersData.filter(p => {
+                // Map backend services to frontend "provider" format expected by ProviderCard
+                const mappedProviders = services.map(s => ({
+                    id: s.id,
+                    name: s.provider?.name || 'Unknown Provider',
+                    serviceName: s.name || 'Unnamed Service',
+                    sector: s.category || 'General',
+                    rating: s.provider?.rating || 5.0,
+                    location: s.provider?.location || "Remote",
+                    availability: "Available Now",
+                    price: s.type === 'FIXED' ? `$${s.price}` : "Request Quote",
+                    image: s.provider?.avatar || `https://images.unsplash.com/photo-1581578731548-c64695cc6958?auto=format&fit=crop&q=80&w=800`
+                }));
+                setProviders(mappedProviders);
+
+                // Get unique sectors from data
+                const uniqueSectors = ["All", ...new Set(services.map(s => s.category).filter(Boolean))];
+                setSectors(uniqueSectors);
+            } catch (error) {
+                console.error('Failed to fetch services:', error);
+                toast.error('Failed to load services. Please check if the backend is running.');
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchServices();
+    }, []);
+
+    const filteredProviders = providers.filter(p => {
         const matchesSearch = p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            p.sector.toLowerCase().includes(searchTerm.toLowerCase());
+            p.sector.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            (p.serviceName && p.serviceName.toLowerCase().includes(searchTerm.toLowerCase()));
         const matchesSector = selectedSector === "All" || p.sector === selectedSector;
         return matchesSearch && matchesSector;
     });
@@ -217,22 +197,28 @@ const Directory = () => {
                 </div>
 
                 {/* Provider Grid */}
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '2rem' }}>
-                    <AnimatePresence>
-                        {filteredProviders.map((provider) => (
-                            <motion.div
-                                key={provider.id}
-                                layout
-                                initial={{ opacity: 0, scale: 0.9 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                exit={{ opacity: 0, scale: 0.9 }}
-                                transition={{ duration: 0.3 }}
-                            >
-                                <ProviderCard provider={provider} />
-                            </motion.div>
-                        ))}
-                    </AnimatePresence>
-                </div>
+                {loading ? (
+                    <div style={{ padding: '5rem', display: 'flex', justifyContent: 'center' }}>
+                        <div className="spinner" style={{ width: '40px', height: '40px', border: '4px solid var(--glass-border)', borderRadius: '50%', borderTopColor: 'var(--primary)', animation: 'spin 1s linear infinite' }}></div>
+                    </div>
+                ) : (
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '2rem' }}>
+                        <AnimatePresence>
+                            {filteredProviders.map((provider) => (
+                                <motion.div
+                                    key={provider.id}
+                                    layout
+                                    initial={{ opacity: 0, scale: 0.9 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    exit={{ opacity: 0, scale: 0.9 }}
+                                    transition={{ duration: 0.3 }}
+                                >
+                                    <ProviderCard provider={provider} />
+                                </motion.div>
+                            ))}
+                        </AnimatePresence>
+                    </div>
+                )}
 
                 {filteredProviders.length === 0 && (
                     <div style={{ textAlign: 'center', padding: '5rem 0' }}>

@@ -2,42 +2,19 @@ import React from 'react';
 import { Plus, MoreVertical, Star, Edit2, Trash2, Sparkles, Scissors, Layers, TrendingUp, Award } from 'lucide-react';
 import { motion } from 'framer-motion';
 
-const ServicesTab = ({ onAddService, onEditService }) => {
-    const services = [
-        {
-            id: 1,
-            name: "Elite Cleaning",
-            category: "Cleaning",
-            price: "$45/hr",
-            rating: 4.8,
-            bookings: 124,
-            status: "Active",
-            icon: <Sparkles size={22} />,
-            color: "#3B82F6"
-        },
-        {
-            id: 2,
-            name: "Deep Carpet Clean",
-            category: "Cleaning",
-            price: "$80/room",
-            rating: 4.9,
-            bookings: 56,
-            status: "Active",
-            icon: <Layers size={22} />,
-            color: "#14B8A6"
-        },
-        {
-            id: 3,
-            name: "Move-out Special",
-            category: "Cleaning",
-            price: "$250+",
-            rating: 4.7,
-            bookings: 89,
-            status: "Paused",
-            icon: <Scissors size={22} />,
-            color: "#F59E0B"
-        }
-    ];
+const ServicesTab = ({ services = [], allBookings = [], onAddService, onEditService }) => {
+    // Format backend services for UI display
+    const formattedServices = services.map(s => ({
+        id: s.id,
+        name: s.name,
+        category: s.category,
+        price: s.type === 'FIXED' ? `R${s.price}` : "Quote",
+        rating: s.provider?.rating || 5.0,
+        bookings: allBookings ? allBookings.filter(b => b.serviceId === s.id).length : 0,
+        status: "Active",
+        icon: <Sparkles size={22} />,
+        color: "#3B82F6"
+    }));
 
     return (
         <motion.div
@@ -79,7 +56,7 @@ const ServicesTab = ({ onAddService, onEditService }) => {
                     }}>
                         <h3 style={{ fontSize: '0.95rem', fontWeight: '800', marginBottom: '1.25rem', color: 'var(--text-main)' }}>Top Performers</h3>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
-                            {services.sort((a, b) => b.bookings - a.bookings).map((service, idx) => (
+                            {formattedServices.sort((a, b) => b.bookings - a.bookings).map((service, idx) => (
                                 <div key={idx} style={{
                                     padding: '0.75rem',
                                     borderRadius: '10px',
@@ -108,16 +85,16 @@ const ServicesTab = ({ onAddService, onEditService }) => {
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                             <div>
                                 <p style={{ fontSize: '0.75rem', opacity: 0.9, marginBottom: '0.25rem' }}>Total Services</p>
-                                <p style={{ fontSize: '1.75rem', fontWeight: '900' }}>{services.length}</p>
+                                <p style={{ fontSize: '1.75rem', fontWeight: '900' }}>{formattedServices.length}</p>
                             </div>
                             <div style={{ paddingTop: '0.75rem', borderTop: '1px solid rgba(255,255,255,0.2)' }}>
                                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
                                     <span style={{ fontSize: '0.75rem', opacity: 0.9 }}>Active</span>
-                                    <span style={{ fontSize: '0.85rem', fontWeight: '700' }}>{services.filter(s => s.status === 'Active').length}</span>
+                                    <span style={{ fontSize: '0.85rem', fontWeight: '700' }}>{formattedServices.filter(s => s.status === 'Active').length}</span>
                                 </div>
                                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                                     <span style={{ fontSize: '0.75rem', opacity: 0.9 }}>Paused</span>
-                                    <span style={{ fontSize: '0.85rem', fontWeight: '700' }}>{services.filter(s => s.status === 'Paused').length}</span>
+                                    <span style={{ fontSize: '0.85rem', fontWeight: '700' }}>{formattedServices.filter(s => s.status === 'Paused').length}</span>
                                 </div>
                             </div>
                         </div>

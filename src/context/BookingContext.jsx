@@ -1,17 +1,20 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { api } from '../services/api';
+import { useAuth } from './AuthContext';
+import toast from 'react-hot-toast';
 
 // Booking status constants
 export const BOOKING_STATUS = {
-    PENDING: 'pending',
-    APPROVED: 'approved',
-    CONFIRMED: 'confirmed',
-    IN_PROGRESS: 'in_progress',
-    AWAITING_PAYMENT: 'awaiting_payment',
-    COMPLETED: 'completed',
-    REVIEWED: 'reviewed',
-    CANCELLED: 'cancelled',
-    DECLINED: 'declined',
-    EXPIRED: 'expired'
+    PENDING: 'PENDING',
+    APPROVED: 'APPROVED',
+    CONFIRMED: 'CONFIRMED',
+    IN_PROGRESS: 'IN_PROGRESS',
+    AWAITING_PAYMENT: 'AWAITING_PAYMENT',
+    COMPLETED: 'COMPLETED',
+    REVIEWED: 'REVIEWED',
+    CANCELLED: 'CANCELLED',
+    DECLINED: 'DECLINED',
+    EXPIRED: 'EXPIRED'
 };
 
 // Valid status transitions
@@ -113,23 +116,31 @@ export const useBooking = () => {
 };
 
 export const BookingProvider = ({ children }) => {
+    const { isAuthenticated } = useAuth();
     const [bookings, setBookings] = useState([]);
+    const [loading, setLoading] = useState(true);
     const [notifications, setNotifications] = useState([]);
 
-    // Load bookings from localStorage on mount
-    useEffect(() => {
-        const savedBookings = localStorage.getItem('bookings');
-        if (savedBookings) {
-            setBookings(JSON.parse(savedBookings));
+    const fetchBookings = async () => {
+        if (!isAuthenticated) {
+            setLoading(false);
+            return;
         }
-    }, []);
+        setLoading(true);
+        try {
+            const data = await api.getMyBookings();
+            setBookings(Array.isArray(data) ? data : []);
+        } catch (error) {
+            console.error('Failed to fetch bookings:', error);
+            toast.error('Failed to load bookings');
+        } finally {
+            setLoading(false);
+        }
+    };
 
-    // Save bookings to localStorage whenever they change
     useEffect(() => {
-        if (bookings.length > 0) {
-            localStorage.setItem('bookings', JSON.stringify(bookings));
-        }
-    }, [bookings]);
+        fetchBookings();
+    }, [isAuthenticated]);
 
     // Validate status transition
     const canTransitionTo = (currentStatus, newStatus) => {
@@ -138,75 +149,43 @@ export const BookingProvider = ({ children }) => {
     };
 
     // Update booking status
-    const updateBookingStatus = (bookingId, newStatus, metadata = {}) => {
-        setBookings(prevBookings => {
-            const booking = prevBookings.find(b => b.id === bookingId);
+    const updateBookingStatus = async (bookingId, newStatus) => {
+        try {
+            const updatedBooking = await api.updateBookingStatus(bookingId, newStatus);
+            setBookings(prev => prev.map(b => b.id === bookingId ? updatedBooking : b));
+            toast.success(`Status updated to ${newStatus}`);
 
-            if (!booking) {
-                console.error(`Booking ${bookingId} not found`);
-                return prevBookings;
-            }
-
-            if (!canTransitionTo(booking.status, newStatus)) {
-                console.error(`Invalid status transition from ${booking.status} to ${newStatus}`);
-                return prevBookings;
-            }
-
-            // Create status history entry
-            const historyEntry = {
-                from: booking.status,
-                to: newStatus,
-                timestamp: new Date().toISOString(),
-                ...metadata
-            };
-
-            // Emit notification
             emitNotification({
                 type: 'status_change',
                 bookingId,
-                oldStatus: booking.status,
                 newStatus,
                 timestamp: new Date().toISOString()
             });
-
-            return prevBookings.map(b =>
-                b.id === bookingId
-                    ? {
-                        ...b,
-                        status: newStatus,
-                        statusHistory: [...(b.statusHistory || []), historyEntry],
-                        updatedAt: new Date().toISOString(),
-                        ...metadata
-                    }
-                    : b
-            );
-        });
+            return updatedBooking;
+        } catch (error) {
+            toast.error(error.message);
+            throw error;
+        }
     };
 
     // Create new booking
-    const createBooking = (bookingData) => {
-        const newBooking = {
-            id: `booking_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
-            status: BOOKING_STATUS.PENDING,
-            createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString(),
-            statusHistory: [{
-                from: null,
-                to: BOOKING_STATUS.PENDING,
+    const createBooking = async (bookingData) => {
+        try {
+            const newBooking = await api.createBooking(bookingData);
+            setBookings(prev => [newBooking, ...prev]);
+            toast.success('Booking request sent successfully!');
+
+            emitNotification({
+                type: 'booking_created',
+                bookingId: newBooking.id,
                 timestamp: new Date().toISOString()
-            }],
-            ...bookingData
-        };
+            });
 
-        setBookings(prev => [...prev, newBooking]);
-
-        emitNotification({
-            type: 'booking_created',
-            bookingId: newBooking.id,
-            timestamp: new Date().toISOString()
-        });
-
-        return newBooking;
+            return newBooking;
+        } catch (error) {
+            toast.error(error.message);
+            throw error;
+        }
     };
 
     // Get bookings by status
@@ -278,6 +257,7 @@ export const BookingProvider = ({ children }) => {
 
     const value = {
         bookings,
+        loading,
         notifications,
         createBooking,
         updateBookingStatus,
@@ -292,6 +272,7 @@ export const BookingProvider = ({ children }) => {
         completeService,
         markAsPaid,
         addReview,
+        refreshBookings: fetchBookings,
         BOOKING_STATUS,
         STATUS_CONFIG
     };

@@ -1,20 +1,34 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Calendar, Users, DollarSign, CheckCircle2, Clock, Bell, TrendingUp, Zap } from 'lucide-react';
+import { api } from '../../services/api';
 
 const OverviewTab = ({ stats, recentBookings, onBookingClick, onUpgrade }) => {
-    // Mock data for sidebars
-    const upcomingAppointments = [
-        { time: '09:00 AM', customer: 'Alice Johnson', service: 'Elite Cleaning' },
-        { time: '02:00 PM', customer: 'Tom Hanks', service: 'Elite Cleaning' },
-        { time: '04:30 PM', customer: 'Sarah Miller', service: 'Deep Carpet Clean' }
-    ];
+    const [notifications, setNotifications] = useState([]);
+    const [upcomingAppointments, setUpcomingAppointments] = useState([]);
 
-    const notifications = [
-        { type: 'booking', message: 'New booking from Alice Johnson', time: '2h ago', color: 'var(--primary)' },
-        { type: 'review', message: 'New 5-star review received', time: '5h ago', color: '#10b981' },
-        { type: 'payment', message: 'Payment received - $120', time: '1d ago', color: 'var(--accent)' }
-    ];
+    useEffect(() => {
+        const fetchOverviewData = async () => {
+            try {
+                const activity = await api.getActivity();
+                setNotifications(activity);
+
+                // Derive today's schedule from recentBookings if they are for today
+                const todayStr = new Date().toDateString();
+                const todayAppointments = recentBookings.filter(b => {
+                    const bDate = new Date(b.date);
+                    const today = new Date();
+                    return bDate.getDate() === today.getDate() &&
+                        bDate.getMonth() === today.getMonth() &&
+                        bDate.getFullYear() === today.getFullYear();
+                });
+                setUpcomingAppointments(todayAppointments);
+            } catch (error) {
+                console.error('Failed to fetch overview activity:', error);
+            }
+        };
+        fetchOverviewData();
+    }, [recentBookings]);
 
     return (
         <div style={{ display: 'grid', gridTemplateColumns: '320px 1fr 350px', gap: '2rem' }}>
@@ -319,7 +333,7 @@ const OverviewTab = ({ stats, recentBookings, onBookingClick, onUpgrade }) => {
                                 }}
                             >
                                 <p style={{ fontWeight: '600', fontSize: '0.8rem', marginBottom: '0.25rem', color: 'var(--text-main)' }}>{notif.message}</p>
-                                <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>{notif.time}</p>
+                                <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>{new Date(notif.time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
                             </motion.div>
                         ))}
                     </div>
